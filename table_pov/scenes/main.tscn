@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://8vq475iel8pb"]
 
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="1_vjgd7"]
-[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_xa4f0"]
+[ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="2_xa4f0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_peehw"]
 size = Vector3(20, 1, 20)
@@ -28,3 +28,8 @@ mesh = SubResource("BoxMesh_8ae0n")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0.226, 15, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0.226, 5.75551, 0)
+spot_range = 15.544
+spot_angle = 30.45
