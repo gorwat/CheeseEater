@@ -7,18 +7,14 @@ var peer = ENetMultiplayerPeer.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Create client.
-	peer.create_client(SERVER_ADDRESS, PORT)
-	peer.peer_connected.connect(_on_connected_to_server)
-	peer.peer_disconnected.connect(_on_server_disconnected)
-	multiplayer.multiplayer_peer = peer
+	#print(IP.get_local_interfaces())
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-
-
+	
 func _on_connected_to_server(id:int) -> void:
 	print("Connected to server, yay!")
 	pass
@@ -26,3 +22,16 @@ func _on_connected_to_server(id:int) -> void:
 func _on_server_disconnected(id:int) -> void:
 	print("Server disconnected")
 	pass
+	
+func set_rat_position(position: ):
+	print("")
+
+func _on_init_connection(ip: String) -> void:
+	# Create client.
+	match peer.create_client(ip, PORT):
+		OK: print("Client created")
+		_ : print("Client not created :(")
+	peer.peer_connected.connect(_on_connected_to_server)
+	peer.peer_disconnected.connect(_on_server_disconnected)
+	multiplayer.multiplayer_peer = peer
+	
