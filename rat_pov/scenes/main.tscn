@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=6 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="2_fv4xt"]
+[ext_resource type="Script" path="res://scripts/spot_light_3d.gd" id="2_uv8rb"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ndlur"]
 size = Vector3(20, 1, 20)
@@ -34,7 +35,14 @@ light_energy = 0.2
 light_angular_distance = 9.75
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Light"]
-transform = Transform3D(1, 0, 0, 0, 0.0295092, 0.999565, 0, -0.999565, 0.0295092, 0, 2.18086, -1.37317)
+transform = Transform3D(1, 0, 0, 0, 0.0295092, 0.999565, 0, -0.999565, 0.0295092, -0.06, 1.901, 0.397)
+light_energy = 2.0
+spot_range = 653.585
+spot_angle = 29.55
+script = ExtResource("2_uv8rb")
 
 [node name="NetworkManager" type="Node" parent="."]
 script = ExtResource("2_fv4xt")
+
+[connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
+[connection signal="spot_position_changed" from="NetworkManager" to="Light/SpotLight3D" method="_on_network_manager_spot_position_changed"]

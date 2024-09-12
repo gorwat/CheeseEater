@@ -5,6 +5,8 @@ const SERVER_ADDRESS = 'localhost'
 
 var peer = ENetMultiplayerPeer.new()
 
+signal rat_pos_recieved
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#print(IP.get_local_interfaces())
@@ -22,9 +24,6 @@ func _on_connected_to_server(id:int) -> void:
 func _on_server_disconnected(id:int) -> void:
 	print("Server disconnected")
 	pass
-	
-func set_rat_position(position: ):
-	print("")
 
 func _on_init_connection(ip: String) -> void:
 	# Create client.
@@ -35,3 +34,14 @@ func _on_init_connection(ip: String) -> void:
 	peer.peer_disconnected.connect(_on_server_disconnected)
 	multiplayer.multiplayer_peer = peer
 	
+func _on_spot_light_3d_spot_position_changed(position : Vector3):
+	set_spot_position.rpc(position)
+
+@rpc
+func set_rat_position(position : Vector3, rotation : Vector3):
+	print("Rat position recieved: ", position, " ", rotation)
+	rat_pos_recieved.emit(position, rotation)
+
+@rpc
+func set_spot_position(position : Vector3):
+	pass
