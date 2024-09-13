@@ -15,7 +15,11 @@ func _ready():
 		print("File does not exist at path: ", file_path)
 		
 	# setup connection to executable
-	var dict = OS.execute_with_pipe(file_path, [])
+	var dict;
+	if OS.get_name() == "Windows":
+		dict = OS.execute_with_pipe("cmd.exe", ["/c", file_path])
+	else:
+		dict = OS.execute_with_pipe(file_path, [])
 	
 	if !dict.is_empty():
 		stdio_pipe = dict["stdio"]
