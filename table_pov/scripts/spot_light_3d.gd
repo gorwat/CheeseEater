@@ -7,22 +7,25 @@ var thread
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# setup connection to stdio to executable
-	var file_path = "res://table_communication/dummy_coordinates.app" 
-	var table_pipe = OS.execute_with_pipe(file_path, [])
-	stdio_pipe = table_pipe["stdio"]
-	
-	# check if file exists
+	# assign and check file path
+	var file_path = "res://table_communication/dummy_coordinates" 
 	if FileAccess.file_exists(file_path):
 		print("File exists at path: ", file_path)
 	else:
 		print("File does not exist at path: ", file_path)
+		
+	# setup connection to executable
+	var dict = OS.execute_with_pipe(file_path, [])
 	
-	# setup thread
-	thread = Thread.new()
-	thread.start(_thread_func)
-	get_window().close_requested.connect(clean_func)
-	
+	if !dict.is_empty():
+		stdio_pipe = dict["stdio"]
+		
+		thread = Thread.new()
+		thread.start(_thread_func)
+		get_window().close_requested.connect(clean_func)
+	else:
+		print("Connection failed; execute_with_pipeline returned: ", dict)
+		
 func _thread_func():
 	print ("Is open: ", stdio_pipe.is_open())
 	while stdio_pipe.is_open() and stdio_pipe.get_error() == OK:
