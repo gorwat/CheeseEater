@@ -14,7 +14,7 @@ func _ready() -> void:
 	peer.peer_connected.connect(_on_client_connected)
 	peer.peer_disconnected.connect(_on_client_disconnected)
 	multiplayer.multiplayer_peer = peer
-
+	print(IP.get_local_interfaces())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -29,14 +29,15 @@ func _on_client_connected(id: int):
 	print("Connected!")
 	
 func _on_player_rat_moved(position : Vector3, rotation : Vector3):
-	print("Attempt to send rat position")
+	#print("Attempt to send rat position")
 	set_rat_position.rpc(position, rotation)
 
 @rpc
 func set_rat_position(position : Vector3, rotation : Vector3):
-	print("Rat position sent")
+	#print("Rat position sent")
+	pass
 	
 @rpc("any_peer")
 func set_spot_position(position : Vector3):
-	print("Spot position recieved")
+	#print("Spot position recieved")
 	spot_position_changed.emit(position)
