@@ -15,6 +15,7 @@ func _thread_func():
 	var dict = OS.execute_with_pipe("table.exe", [])
 	assert(!dict.is_empty())
 	var stdio_pipe = dict["stdio"]
+	var pid = dict["pid"]
 	while stdio_pipe.is_open() and stdio_pipe.get_error() == OK and !should_close:
 		var x = stdio_pipe.get_float()
 		var y = stdio_pipe.get_float()
@@ -22,6 +23,7 @@ func _thread_func():
 		print(x, y, z)
 	print("Error: ", stdio_pipe.get_error())
 	stdio_pipe.close()
+	OS.kill(pid)
 
 func clean_func():
 	should_close = true
