@@ -5,7 +5,8 @@
 int main(void)
 {
    while(1) {
-      printf("spotlight coordinates\n");
+      float pi = 3.14;
+      write(STDOUT_FILENO, &pi, 4);
       sleep(1);
    }
    return 0;
