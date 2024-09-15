@@ -54,6 +54,7 @@ follow_target = NodePath("../Player")
 look_at_target = NodePath("../Player")
 camera_3d_resource = SubResource("Resource_83aph")
 follow_offset = Vector3(0, 3, 2)
+follow_damping = true
 
 [node name="Light" type="Node" parent="."]
 
