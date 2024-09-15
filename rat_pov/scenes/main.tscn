@@ -1,14 +1,29 @@
-[gd_scene load_steps=6 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=10 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="2_fv4xt"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_gy70q"]
 [ext_resource type="Script" path="res://scripts/spot_light_3d.gd" id="2_uv8rb"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_4vf3k"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="5_vsloo"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ndlur"]
 size = Vector3(20, 1, 20)
 
 [sub_resource type="BoxMesh" id="BoxMesh_hna24"]
 size = Vector3(20, 1, 20)
+
+[sub_resource type="Resource" id="Resource_83aph"]
+script = ExtResource("5_vsloo")
+cull_mask = 1048575
+h_offset = 0.0
+v_offset = 0.0
+projection = 0
+fov = 75.0
+size = 1.0
+frustum_offset = Vector2(0, 0)
+near = 1.0
+far = 4000.0
 
 [node name="Main" type="Node"]
 
@@ -25,7 +40,20 @@ shape = SubResource("BoxShape3D_ndlur")
 mesh = SubResource("BoxMesh_hna24")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.877983, 0.478692, 0, -0.478692, 0.877983, 0, 1.918, 3)
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707106, 0, -0.707107, 0.707106, 0, 3.60466, 2.70711)
+near = 1.0
+
+[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
+script = ExtResource("2_gy70q")
+
+[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target", "look_at_target")]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707106, 0, -0.707107, 0.707106, 0, 3.60466, 2.70711)
+script = ExtResource("3_4vf3k")
+follow_mode = 6
+follow_target = NodePath("../Player")
+look_at_target = NodePath("../Player")
+camera_3d_resource = SubResource("Resource_83aph")
+follow_offset = Vector3(0, 3, 2)
 
 [node name="Light" type="Node" parent="."]
 
