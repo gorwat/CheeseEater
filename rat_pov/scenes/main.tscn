@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=12 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="2_fv4xt"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_gy70q"]
 [ext_resource type="Script" path="res://scripts/spot_light_3d.gd" id="2_uv8rb"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_4vf3k"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_8hk0v"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="5_vsloo"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ndlur"]
@@ -12,6 +13,12 @@ size = Vector3(20, 1, 20)
 
 [sub_resource type="BoxMesh" id="BoxMesh_hna24"]
 size = Vector3(20, 1, 20)
+
+[sub_resource type="Resource" id="Resource_65as8"]
+script = ExtResource("4_8hk0v")
+duration = 1.0
+transition = 0
+ease = 2
 
 [sub_resource type="Resource" id="Resource_83aph"]
 script = ExtResource("5_vsloo")
@@ -52,6 +59,7 @@ script = ExtResource("3_4vf3k")
 follow_mode = 6
 follow_target = NodePath("../Player")
 look_at_target = NodePath("../Player")
+tween_resource = SubResource("Resource_65as8")
 camera_3d_resource = SubResource("Resource_83aph")
 follow_offset = Vector3(0, 3, 2)
 follow_damping = true

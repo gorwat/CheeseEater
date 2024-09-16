@@ -4,11 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://ci0ot2updet1v"
-valid=false
+path="res://.godot/imported/SoftToyRat_IKEAstyle.blend-4bb4928a47844b49d20ba8a42f5991c7.scn"
 
 [deps]
 
 source_file="res://art/RiggedSoftToyRat/SoftToyRat_IKEAstyle.blend"
+dest_files=["res://.godot/imported/SoftToyRat_IKEAstyle.blend-4bb4928a47844b49d20ba8a42f5991c7.scn"]
 
 [params]
 
