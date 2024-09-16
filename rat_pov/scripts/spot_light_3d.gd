@@ -11,6 +11,8 @@ func _process(delta):
 	pass
 
 
-func _on_network_manager_spot_position_changed(position : Vector3):
+func _on_network_manager_spot_position_changed(is_on: bool, position : Vector3):
 	self.position = position
+	self.visible = is_on
+	print("Visible: ", is_on)
 	print(position)

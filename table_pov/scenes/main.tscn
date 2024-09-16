@@ -10,7 +10,7 @@
 size = Vector3(20, 1, 20)
 
 [sub_resource type="BoxMesh" id="BoxMesh_8ae0n"]
-size = Vector3(20, 1, 20)
+size = Vector3(48, 1, 27)
 
 [node name="Main" type="Node"]
 
@@ -30,7 +30,7 @@ shape = SubResource("BoxShape3D_peehw")
 mesh = SubResource("BoxMesh_8ae0n")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 0.226, 15, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 17, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.999974, 8.77334e-08, -0.00715579, -0.00171772, 0.970758, 0.240053, 0.00694657, 0.240059, -0.970734, 0.226, 11.4781, 0)
@@ -38,9 +38,9 @@ light_energy = 0.5
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(-0.999974, 8.77333e-08, -0.00715579, -0.00715579, -4.30847e-08, 0.999974, 8.74228e-08, 1, 4.37114e-08, 0.226, 5.75551, 0)
+light_energy = 2.0
 spot_range = 15.544
-spot_attenuation = 0.09
-spot_angle = 13.18
+spot_angle = 13.0
 script = ExtResource("3_2wysb")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

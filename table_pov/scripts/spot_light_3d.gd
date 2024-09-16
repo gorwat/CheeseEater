@@ -17,10 +17,13 @@ func _thread_func():
 	var stdio_pipe = dict["stdio"]
 	var pid = dict["pid"]
 	while stdio_pipe.is_open() and stdio_pipe.get_error() == OK and !should_close:
-		var x = stdio_pipe.get_float()
-		var y = stdio_pipe.get_float()
-		var z = stdio_pipe.get_float()
-		call_deferred("change_spot_position", Vector3(x, y, z))
+		var is_on = stdio_pipe.get_8()
+		if is_on == 1:
+			var x_scale = stdio_pipe.get_float()
+			var y_scale = stdio_pipe.get_float()
+			call_deferred("change_spot_position", true, Vector2(x_scale, y_scale))
+		else:
+			call_deferred("change_spot_position", false, Vector2(0, 0))
 	print("Error: ", stdio_pipe.get_error())
 	stdio_pipe.close()
 	OS.kill(pid)
@@ -29,7 +32,15 @@ func clean_func():
 	should_close = true
 	thread.wait_to_finish()
 
-func change_spot_position(new_pos: Vector3) -> void:
-	print(new_pos.x, ", ", new_pos.y, ", ", new_pos.z)
-	self.position = new_pos
-	spot_position_changed.emit(self.position)
+func change_spot_position(is_on: bool, new_pos_scale: Vector2) -> void:
+	if is_on:
+		self.visible = true
+		self.position.x = 48*(new_pos_scale.x - 0.5)
+		self.position.z = 27*(new_pos_scale.y - 0.5)
+		spot_position_changed.emit(is_on, self.position)
+	else:
+		if self.visible:
+			self.visible = false
+			spot_position_changed.emit(is_on, self.position)
+		else:
+			pass

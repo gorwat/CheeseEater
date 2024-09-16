@@ -6,21 +6,24 @@ int main(void)
 {
    float arr[12] = 
    { 
-      5.0, 6.0, 5.0,
-      -5.0, 6.0, 5.0,
-      -5.0, 6.0, -5.0,
-      5.0, 6.0, -5.0,
+      1.0, 1.0,
+      0.75, 0.75, 
+      0.25, 0.25,
+      0.0, 0.0, 
    };
 
    int index = 0;
+   int is_on = 1;
    while(1) {
-      write(STDOUT_FILENO, &arr[index * 3 + 0], 4);
-      write(STDOUT_FILENO, &arr[index * 3 + 1], 4);
-      write(STDOUT_FILENO, &arr[index * 3 + 2], 4);
+      write(STDOUT_FILENO, &is_on, 1);
+      if (is_on){
+         write(STDOUT_FILENO, &arr[index * 2 + 0], 4);
+         write(STDOUT_FILENO, &arr[index * 2 + 1], 4);
 
+      }
       index += 1;
       index %= 4;
-
+      is_on ^= 1;
       sleep(1);
    }
    return 0;

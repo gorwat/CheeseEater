@@ -34,8 +34,8 @@ func _on_init_connection(ip: String) -> void:
 	peer.peer_disconnected.connect(_on_server_disconnected)
 	multiplayer.multiplayer_peer = peer
 	
-func _on_spot_light_3d_spot_position_changed(position : Vector3):
-	set_spot_position.rpc(position)
+func _on_spot_light_3d_spot_position_changed(is_on: bool, position : Vector3):
+	set_spot_position.rpc(is_on, position)
 
 @rpc
 func set_rat_position(position : Vector3, rotation : Vector3):
@@ -43,5 +43,5 @@ func set_rat_position(position : Vector3, rotation : Vector3):
 	rat_pos_recieved.emit(position, rotation)
 
 @rpc
-func set_spot_position(position : Vector3):
+func set_spot_position(is_on: bool, position : Vector3):
 	pass
