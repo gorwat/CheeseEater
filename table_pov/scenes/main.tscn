@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="1_vjgd7"]
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="2_xa4f0"]
-[ext_resource type="Script" path="res://scenes/spot_light_3d.gd" id="3_2wysb"]
+[ext_resource type="Script" path="res://scripts/spot_light_3d.gd" id="3_2wysb"]
 [ext_resource type="Script" path="res://scripts/server_menu.gd" id="3_3v8dj"]
 [ext_resource type="Script" path="res://scripts/server_connect_button.gd" id="3_aufbq"]
 
