@@ -1,0 +1,98 @@
+[gd_scene load_steps=9 format=3 uid="uid://b054yrndyyhyx"]
+
+[ext_resource type="Texture2D" uid="uid://dp7ilgf5ntnau" path="res://art/Rocks/stylized_rocks_0.png" id="1_66cuj"]
+[ext_resource type="PackedScene" path="res://scenes/trashcan.tscn" id="2_0taov"]
+[ext_resource type="PackedScene" path="res://scenes/bench.tscn" id="3_4cngf"]
+[ext_resource type="PackedScene" path="res://scenes/wire_fence.tscn" id="4_t1smj"]
+[ext_resource type="PackedScene" path="res://scenes/rocks.tscn" id="5_nolp2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nunhs"]
+size = Vector3(48, 1, 27)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gvbfa"]
+albedo_texture = ExtResource("1_66cuj")
+
+[sub_resource type="BoxMesh" id="BoxMesh_hna24"]
+material = SubResource("StandardMaterial3D_gvbfa")
+size = Vector3(48, 1, 27)
+
+[node name="Environment" type="Node3D"]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_nunhs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0436916, 0)
+mesh = SubResource("BoxMesh_hna24")
+skeleton = NodePath("")
+
+[node name="Objects" type="Node3D" parent="."]
+
+[node name="Trashcan" parent="Objects" instance=ExtResource("2_0taov")]
+transform = Transform3D(0.1919, 0, -2.34717, 0, 2.355, 0, 2.34717, 0, 0.1919, -3.43192, -0.453244, -8.9029)
+
+[node name="Bench" parent="Objects" instance=ExtResource("3_4cngf")]
+transform = Transform3D(5.31, 0, 0, 0, 5.31, 0, 0, 0, 5.31, -1.20594, -0.472171, -8.40725)
+
+[node name="Fence" type="Node3D" parent="."]
+visible = false
+
+[node name="Wire Fence" parent="Fence" instance=ExtResource("4_t1smj")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -8.06049, -0.5, -11.6682)
+
+[node name="Wire Fence2" parent="Fence" instance=ExtResource("4_t1smj")]
+transform = Transform3D(3, 0, 0, 0, 2.99994, 0.0187447, 0, -0.0187447, 2.99994, 0.0992308, -0.400118, -11.6775)
+
+[node name="Wire Fence3" parent="Fence" instance=ExtResource("4_t1smj")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 8.23676, -0.5, -11.6682)
+
+[node name="Walls" type="Node3D" parent="."]
+
+[node name="WallLeft" type="Node3D" parent="Walls"]
+transform = Transform3D(0.0482222, 0, 0.998837, 0, 1, 0, -0.998837, 0, 0.0482222, -9.62864, 0, 0)
+
+[node name="Sketchfab_Scene3" parent="Walls/WallLeft" instance=ExtResource("5_nolp2")]
+transform = Transform3D(-0.493447, 0.00296388, 0.0806275, 0.012803, 0.496208, 0.0601147, -0.0796597, 0.0613915, -0.489781, -8.28061, -1.0279, -18.0244)
+
+[node name="Sketchfab_Scene2" parent="Walls/WallLeft" instance=ExtResource("5_nolp2")]
+transform = Transform3D(0.499788, 0.0026408, 0.0143044, -0.00105895, 0.496992, -0.0547528, -0.0145075, 0.0546994, 0.496787, 5.59949, -0.75, -15.7475)
+
+[node name="WallLeft" type="Node3D" parent="Walls/WallLeft"]
+transform = Transform3D(0.991963, 0, 0.126528, 0, 1, 0, -0.126528, 0, 0.991963, 6.98686, 0, 52.4888)
+
+[node name="Sketchfab_Scene3" parent="Walls/WallLeft/WallLeft" instance=ExtResource("5_nolp2")]
+transform = Transform3D(-0.493447, 0.00296388, 0.0806275, 0.012803, 0.496208, 0.0601147, -0.0796597, 0.0613915, -0.489781, -8.63478, -1.0279, -18.0523)
+
+[node name="Sketchfab_Scene2" parent="Walls/WallLeft/WallLeft" instance=ExtResource("5_nolp2")]
+transform = Transform3D(-0.497786, -0.00619366, -0.0465925, -0.00105895, 0.496992, -0.0547528, 0.0469904, -0.0544117, -0.494804, 4.54585, -0.75, -17.6243)
+
+[node name="WallBack" type="Node3D" parent="Walls"]
+
+[node name="Sketchfab_Scene4" parent="Walls/WallBack" instance=ExtResource("5_nolp2")]
+transform = Transform3D(0.484832, 0, 0.122222, 0, 0.5, 0, -0.122222, 0, 0.484832, -19.2074, -1.6875, -14.0046)
+
+[node name="Sketchfab_Scene3" parent="Walls/WallBack" instance=ExtResource("5_nolp2")]
+transform = Transform3D(-0.493161, 0, -0.082412, 0, 0.5, 0, 0.082412, 0, -0.493161, -6.427, -1.125, -16.9514)
+
+[node name="Sketchfab_Scene2" parent="Walls/WallBack" instance=ExtResource("5_nolp2")]
+transform = Transform3D(0.499791, 0, 0.0144494, 0, 0.5, 0, -0.0144494, 0, 0.499791, 3.22534, -0.75, -15.6329)
+
+[node name="Sketchfab_Scene" parent="Walls/WallBack" instance=ExtResource("5_nolp2")]
+transform = Transform3D(-0.495916, 0, 0.0637746, 0, 0.5, 0, -0.0637746, 0, -0.495916, 16.2564, -0.5, -15.9324)
+
+[node name="WallFront" type="Node3D" parent="Walls"]
+
+[node name="Sketchfab_Scene5" parent="Walls/WallFront" instance=ExtResource("5_nolp2")]
+transform = Transform3D(0.49437, 0, -0.0748192, 0, 0.5, 0, 0.0748192, 0, 0.49437, -19.636, -1.6875, 16.0852)
+
+[node name="Sketchfab_Scene3" parent="Walls/WallFront" instance=ExtResource("5_nolp2")]
+transform = Transform3D(-0.499161, 0, -0.0289478, 0, 0.5, 0, 0.0289478, 0, -0.499161, -7.14101, -0.93253, 15.9684)
+
+[node name="Sketchfab_Scene2" parent="Walls/WallFront" instance=ExtResource("5_nolp2")]
+transform = Transform3D(0.499165, 0, 0.0288868, 0, 0.5, 0, -0.0288868, 0, 0.499165, 6.58631, -1.125, 16.2541)
+
+[node name="Sketchfab_Scene6" parent="Walls/WallFront" instance=ExtResource("5_nolp2")]
+transform = Transform3D(-0.477577, 0, -0.148054, 0, 0.5, 0, 0.148054, 0, -0.477577, 18.7497, -0.5, 13.9701)

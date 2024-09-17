@@ -1,28 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=5 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="2_fv4xt"]
 [ext_resource type="Script" path="res://scripts/spot_light_3d.gd" id="2_uv8rb"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_nunhs"]
-size = Vector3(48, 1, 27)
-
-[sub_resource type="BoxMesh" id="BoxMesh_hna24"]
-size = Vector3(48, 1, 27)
+[ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="4_qiups"]
 
 [node name="Main" type="Node"]
 
 [node name="Player" parent="." instance=ExtResource("1_i7pi5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
-
-[node name="Ground" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-shape = SubResource("BoxShape3D_nunhs")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-mesh = SubResource("BoxMesh_hna24")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.877983, 0.478692, 0, -0.478692, 0.877983, 0, 1.918, 3)
@@ -35,7 +21,7 @@ light_energy = 0.2
 light_angular_distance = 9.75
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Light"]
-transform = Transform3D(1, 0, 0, 0, 0.0295092, 0.999565, 0, -0.999565, 0.0295092, -0.06, 1.901, 0.397)
+transform = Transform3D(1, 0, 0, 0, 0.0295092, 0.999565, 0, -0.999565, 0.0295092, -0.06, 4.83648, 0.397)
 light_energy = 2.0
 spot_range = 650.0
 spot_angle = 13.0
@@ -43,6 +29,8 @@ script = ExtResource("2_uv8rb")
 
 [node name="NetworkManager" type="Node" parent="."]
 script = ExtResource("2_fv4xt")
+
+[node name="Environment" parent="." instance=ExtResource("4_qiups")]
 
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
 [connection signal="spot_position_changed" from="NetworkManager" to="Light/SpotLight3D" method="_on_network_manager_spot_position_changed"]

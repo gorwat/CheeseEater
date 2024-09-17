@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx0h14sckcu42"]
+
+[ext_resource type="PackedScene" uid="uid://i2fortegik75" path="res://art/Fence/Wire Fence.glb" id="1_v4fnk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fwj7i"]
+size = Vector3(2.72876, 2.3064, 0.0660782)
+
+[node name="Wire Fence" instance=ExtResource("1_v4fnk")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.30125, 2.20459, 0.00223213)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.84, -1.29351, -1.11096, -0.00807816)
+shape = SubResource("BoxShape3D_fwj7i")
