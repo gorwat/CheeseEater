@@ -13,24 +13,23 @@ func _ready():
 
 func _thread_func():
 	var dict = OS.execute_with_pipe("table.exe",[])
-	var server = TCPServer.new()
-	server.listen(PORT, "127.0.0.1")
+	var server = UDPServer.new()
+	server.listen(PORT)
 	print("Listening on localhost ", PORT)
-	while !server.is_connection_available():
-		pass
-	print("Connection is available")
-	var peer = server.take_connection()
-	while peer.get_status() == 1:
-		pass
-	print("Connected")
-	while peer.poll() != 3:
-		var is_on = peer.get_8()
-		if is_on == 1:
-			var x_scale = peer.get_float()
-			var y_scale = peer.get_float()
-			call_deferred("change_spot_position", true, Vector2(x_scale, y_scale))
-		else:
-			call_deferred("change_spot_position", false, Vector2(0, 0))
+	while true:
+		server.poll() # Important!
+		if server.is_connection_available():
+			var peer: PacketPeerUDP = server.take_connection()
+			var packets = peer.get_available_packet_count()
+			for p in range(packets):
+				var packet = peer.get_packet()
+				var is_on = packet.decode_u8(0)
+				if is_on == 1:
+					var x_scale = packet.decode_float(1)
+					var y_scale = packet.decode_float(5)
+					call_deferred("change_spot_position", true, Vector2(x_scale, y_scale))
+				else:
+					call_deferred("change_spot_position", false, Vector2(0, 0))
 	OS.kill(dict["pid"])
 
 func clean_func():
