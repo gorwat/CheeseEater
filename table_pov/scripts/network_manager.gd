@@ -4,9 +4,10 @@ const PORT = 3353 #CH3353
 const SERVER_ADDRESS = 'localhost'
 
 var peer = ENetMultiplayerPeer.new()
-var is_connected = false
+enum Status{CONNECTED, DISCONNECTED, CONNECTING}
+var connection_status = Status.DISCONNECTED
 signal rat_pos_recieved
-
+signal connection_status_schanged
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#print(IP.get_local_interfaces())
@@ -18,19 +19,24 @@ func _process(delta: float) -> void:
 	pass
 	
 func _on_connected_to_server(id:int) -> void:
-	is_connected = true;
+	connection_status = Status.CONNECTED
+	connection_status_schanged.emit(connection_status)
 	print("Connected to server, yay!")
 	pass
 
 func _on_server_disconnected(id:int) -> void:
-	is_connected = false;
+	connection_status = Status.DISCONNECTED
+	connection_status_schanged.emit(connection_status)
 	print("Server disconnected")
 	pass
 
 func _on_init_connection(ip: String) -> void:
 	# Create client.
 	match peer.create_client(ip, PORT):
-		OK: print("Client created")
+		OK: 
+			print("Client created")
+			connection_status = Status.CONNECTING
+			connection_status_schanged.emit(connection_status)
 		_ : print("Client not created :(")
 	peer.peer_connected.connect(_on_connected_to_server)
 	peer.peer_disconnected.connect(_on_server_disconnected)

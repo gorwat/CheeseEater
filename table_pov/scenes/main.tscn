@@ -81,6 +81,7 @@ layout_mode = 2
 text = "Connect"
 script = ExtResource("3_aufbq")
 
+[connection signal="connection_status_schanged" from="NetworkManager" to="Server Menu" method="_on_network_manager_connection_status_schanged"]
 [connection signal="rat_pos_recieved" from="NetworkManager" to="Player" method="_on_network_manager_rat_pos_recieved"]
 [connection signal="spot_position_changed" from="SpotLight3D" to="NetworkManager" method="_on_spot_light_3d_spot_position_changed"]
 [connection signal="init_connection" from="Server Menu" to="NetworkManager" method="_on_init_connection"]

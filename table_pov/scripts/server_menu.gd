@@ -20,3 +20,12 @@ func _on_button_pressed() -> void:
 
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	emit_signal("init_connection", new_text)
+
+
+func _on_network_manager_connection_status_schanged(status) -> void:
+	match status:
+		0: self.visible = false # Connected
+		1: self.visible = true # Disconnected
+		2: pass # Connecting
+		_: pass
+	
