@@ -1,7 +1,7 @@
 extends SpotLight3D
 
 signal spot_position_changed
-
+const PORT = 1337
 var thread
 var should_close: bool = false
 
@@ -12,25 +12,26 @@ func _ready():
 	get_window().close_requested.connect(clean_func)
 
 func _thread_func():
-	var hwnd = DisplayServer.window_get_native_handle(DisplayServer.WINDOW_HANDLE)
-	var exe_path = "./table.exe"
-	if OS.get_name() == "Windows":
-		exe_path = "table.exe"
-	var dict = OS.execute_with_pipe(exe_path, [str(hwnd)])
-	assert(!dict.is_empty())
-	var stdio_pipe = dict["stdio"]
-	var pid = dict["pid"]
-	while stdio_pipe.is_open() and stdio_pipe.get_error() == OK and !should_close:
-		var is_on = stdio_pipe.get_8()
+	var dict = OS.execute_with_pipe("table.exe",[])
+	var server = TCPServer.new()
+	server.listen(PORT, "127.0.0.1")
+	print("Listening on localhost ", PORT)
+	while !server.is_connection_available():
+		pass
+	print("Connection is available")
+	var peer = server.take_connection()
+	while peer.get_status() == 1:
+		pass
+	print("Connected")
+	while peer.poll() != 3:
+		var is_on = peer.get_8()
 		if is_on == 1:
-			var x_scale = stdio_pipe.get_float()
-			var y_scale = stdio_pipe.get_float()
+			var x_scale = peer.get_float()
+			var y_scale = peer.get_float()
 			call_deferred("change_spot_position", true, Vector2(x_scale, y_scale))
 		else:
 			call_deferred("change_spot_position", false, Vector2(0, 0))
-	print("Error: ", stdio_pipe.get_error())
-	stdio_pipe.close()
-	OS.kill(pid)
+	OS.kill(dict["pid"])
 
 func clean_func():
 	should_close = true
