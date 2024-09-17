@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="2_fv4xt"]
 [ext_resource type="Script" path="res://scripts/spot_light_3d.gd" id="2_uv8rb"]
-[ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="4_qiups"]
+[ext_resource type="PackedScene" path="res://scenes/environment.tscn" id="4_qiups"]
 
 [node name="Main" type="Node"]
 
@@ -11,7 +11,7 @@
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.877983, 0.478692, 0, -0.478692, 0.877983, 0, 1.918, 3)
+transform = Transform3D(0.503932, 0.620027, -0.601348, 0.0790272, 0.660194, 0.746926, 0.86012, -0.423923, 0.283694, -15.4247, 9.48442, 4.5681)
 
 [node name="Light" type="Node" parent="."]
 
