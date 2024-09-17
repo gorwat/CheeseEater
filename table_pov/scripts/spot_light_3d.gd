@@ -13,7 +13,10 @@ func _ready():
 
 func _thread_func():
 	var hwnd = DisplayServer.window_get_native_handle(DisplayServer.WINDOW_HANDLE)
-	var dict = OS.execute_with_pipe("./table.exe", [str(hwnd)])
+	var exe_path = "./table.exe"
+	if OS.get_name() == "Windows":
+		exe_path = "table.exe"
+	var dict = OS.execute_with_pipe(exe_path, [str(hwnd)])
 	assert(!dict.is_empty())
 	var stdio_pipe = dict["stdio"]
 	var pid = dict["pid"]
