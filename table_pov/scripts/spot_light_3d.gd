@@ -12,7 +12,8 @@ func _ready():
 	get_window().close_requested.connect(clean_func)
 
 func _thread_func():
-	var dict = OS.execute_with_pipe("./table.exe", [])
+	var hwnd = DisplayServer.window_get_native_handle(DisplayServer.WINDOW_HANDLE)
+	var dict = OS.execute_with_pipe("./table.exe", [str(hwnd)])
 	assert(!dict.is_empty())
 	var stdio_pipe = dict["stdio"]
 	var pid = dict["pid"]
