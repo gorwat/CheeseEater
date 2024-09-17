@@ -13,8 +13,9 @@ size = Vector3(20, 1, 20)
 
 [node name="Main" type="Node"]
 
-[node name="Player" parent="." instance=ExtResource("1_i7pi5")]
+[node name="Player" parent="." node_paths=PackedStringArray("camera_node") instance=ExtResource("1_i7pi5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
+camera_node = NodePath("../Camera3D")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
