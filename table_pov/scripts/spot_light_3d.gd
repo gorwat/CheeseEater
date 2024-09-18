@@ -2,6 +2,7 @@ extends SpotLight3D
 
 signal spot_position_changed
 const PORT = 1337
+const ADDRESS = "127.0.0.1"
 var thread
 var should_close: bool = false
 
@@ -13,23 +14,19 @@ func _ready():
 
 func _thread_func():
 	var dict = OS.execute_with_pipe("table.exe",[])
-	var server = UDPServer.new()
-	server.listen(PORT)
+	var socket = PacketPeerUDP.new()
+	socket.bind(PORT, ADDRESS)
 	print("Listening on localhost ", PORT)
 	while true:
-		server.poll() # Important!
-		if server.is_connection_available():
-			var peer: PacketPeerUDP = server.take_connection()
-			var packets = peer.get_available_packet_count()
-			for p in range(packets):
-				var packet = peer.get_packet()
-				var is_on = packet.decode_u8(0)
-				if is_on == 1:
-					var x_scale = packet.decode_float(1)
-					var y_scale = packet.decode_float(5)
-					call_deferred("change_spot_position", true, Vector2(x_scale, y_scale))
-				else:
-					call_deferred("change_spot_position", false, Vector2(0, 0))
+		socket.wait()
+		var packet = socket.get_packet()
+		var is_on = packet.decode_u8(0)
+		if is_on == 1:
+			var x_scale = packet.decode_float(1)
+			var y_scale = packet.decode_float(5)
+			call_deferred("change_spot_position", true, Vector2(x_scale, y_scale))
+		else:
+			call_deferred("change_spot_position", false, Vector2(0, 0))
 	OS.kill(dict["pid"])
 
 func clean_func():
