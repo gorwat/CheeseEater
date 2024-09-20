@@ -5,34 +5,37 @@ const PORT = 1337
 const ADDRESS = "127.0.0.1"
 var thread
 var should_close: bool = false
+var socket
+var exec_dict
 
 func _ready():
-	# setup connection to executable
-	thread = Thread.new()
-	thread.start(_thread_func)
-	get_window().close_requested.connect(clean_func)
-
-func _thread_func():
-	var dict = OS.execute_with_pipe("table.exe",[])
-	var socket = PacketPeerUDP.new()
+	exec_dict = OS.execute_with_pipe("table.exe",[])
+	socket = PacketPeerUDP.new()
 	socket.bind(PORT, ADDRESS)
 	print("Listening on localhost ", PORT)
-	while true:
-		socket.wait()
-		var packet = socket.get_packet()
-		var is_on = packet.decode_u8(0)
+	
+func _exit_tree() -> void:
+	OS.kill(exec_dict["pid"])
+	
+func _process(delta: float) -> void:
+	var packets = socket.get_available_packet_count()
+	if packets > 0:
+		var last_packet
+		for i in range(packets):
+			var packet = socket.get_packet()
+			if i == packets - 1:
+				last_packet = packet
+		
+		var is_on = last_packet.decode_u8(0)
 		if is_on == 1:
-			var x_scale = packet.decode_float(1)
-			var y_scale = packet.decode_float(5)
-			call_deferred("change_spot_position", true, Vector2(x_scale, y_scale))
+			var x_scale = last_packet.decode_float(1)
+			var y_scale = last_packet.decode_float(5)
+			change_spot_position( true, Vector2(x_scale, y_scale))
 		else:
-			call_deferred("change_spot_position", false, Vector2(0, 0))
-	OS.kill(dict["pid"])
-
-func clean_func():
-	should_close = true
-	thread.wait_to_finish()
-
+			change_spot_position( false, Vector2(0, 0))
+	else:
+		pass
+		
 func change_spot_position(is_on: bool, new_pos_scale: Vector2) -> void:
 	if is_on:
 		self.visible = true
