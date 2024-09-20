@@ -5,7 +5,7 @@ extends CharacterBody3D
 @export var jump_velocity: float = 4.5
 @export var camera_node: Camera3D  # Assign in editor
 
-signal rat_moved(position: Vector3)
+signal rat_moved(position: Vector3, rotation: Vector3)
 
 func _physics_process(delta: float) -> void:
 	# Handle gravity and jumping (when implemented, idk not using this)
@@ -42,4 +42,4 @@ func _physics_process(delta: float) -> void:
 
 	# Emit signal if moving
 	if velocity.length_squared() > 0.0:
-		rat_moved.emit(global_position)
+		rat_moved.emit(self.position, self.rotation)
