@@ -1,17 +1,35 @@
-[gd_scene load_steps=5 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=8 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="2_fv4xt"]
 [ext_resource type="Script" path="res://scripts/spot_light_3d.gd" id="2_uv8rb"]
-[ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="4_qiups"]
+[ext_resource type="Script" path="res://scripts/CameraControl.gd" id="3_itbph"]
+[ext_resource type="PackedScene" path="res://scenes/environment.tscn" id="4_qiups"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ndlur"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hna24"]
+size = Vector3(20, 1, 20)
 
 [node name="Main" type="Node"]
 
-[node name="Player" parent="." instance=ExtResource("1_i7pi5")]
+[node name="Player" parent="." node_paths=PackedStringArray("camera_node") instance=ExtResource("1_i7pi5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
+camera_node = NodePath("../Camera3D")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.877983, 0.478692, 0, -0.478692, 0.877983, 0, 1.918, 3)
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ndlur")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_hna24")
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("follow_target")]
+script = ExtResource("3_itbph")
+follow_target = NodePath("../Player")
 
 [node name="Light" type="Node" parent="."]
 

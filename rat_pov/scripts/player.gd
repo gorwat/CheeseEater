@@ -1,48 +1,45 @@
 extends CharacterBody3D
 
-@export var speed = 5.0
-@export var jump_velocity = 4.5
+@export var speed: float = 15.0
+@export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+@export var jump_velocity: float = 4.5
+@export var camera_node: Camera3D  # Assign in editor
 
-signal rat_moved
+signal rat_moved(position: Vector3, rotation: Vector3)
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+func _physics_process(delta: float) -> void:
+	# Handle gravity and jumping (when implemented, idk not using this)
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	else:
+		if Input.is_action_just_pressed("jump"):
+			velocity.y = jump_velocity
 
-# Updates when moving the character
-var target_velocity = Vector3.ZERO
-
-func _physics_process(delta):
-
-	# Handle jump
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		target_velocity.y = jump_velocity
-
-	# Get the input direction and handle the movement/deceleration.
-	var direction = Vector3.ZERO
-	
-	if Input.is_action_pressed("move_right"):
-		direction.x += 1
-	if Input.is_action_pressed("move_left"):
-		direction.x -= 1
+	# Handle forward/backward movement
+	var forward_input = 0.0
 	if Input.is_action_pressed("move_back"):
-		direction.z += 1
+		forward_input -= 1
 	if Input.is_action_pressed("move_forward"):
-		direction.z -= 1
-		
-	if direction != Vector3.ZERO:
-		direction = direction.normalized()
-		# Setting the basis property will affect the rotation of the node.
-		$Pivot.basis = Basis.looking_at(direction)
-		
-	# Ground Velocity
-	target_velocity.x = direction.x * speed
-	target_velocity.z = direction.z * speed
-	
-	# Vertical Velocity
-	if not is_on_floor(): 
-		target_velocity.y = target_velocity.y - (gravity * delta)
-	
-	velocity = target_velocity
+		forward_input += 1
+
+	var target_velocity = Vector3.ZERO
+
+	if camera_node:
+		# Calculate movement direction based on camera
+		if forward_input != 0.0:
+			var forward_direction = -camera_node.global_transform.basis.z.normalized()
+			target_velocity.x = forward_direction.x * speed * forward_input
+			target_velocity.z = forward_direction.z * speed * forward_input
+	else:
+		print("Error: 'camera_node' is missing.")
+		return
+
+	# Apply horizontal movement
+	velocity.x = target_velocity.x
+	velocity.z = target_velocity.z
+
 	move_and_slide()
-	if velocity.length_squared() > 0:
-		rat_moved.emit(self.position, $Pivot.rotation)
+
+	# Emit signal if moving
+	if velocity.length_squared() > 0.0:
+		rat_moved.emit(self.position, self.rotation)

@@ -23,6 +23,14 @@ PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_came
 
 enabled=PackedStringArray()
 
+[autoload]
+
+PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg")
+
 [filesystem]
 
 import/fbx/enabled=false
