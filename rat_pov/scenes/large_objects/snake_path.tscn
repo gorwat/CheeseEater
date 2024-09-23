@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=4 uid="uid://dwpv5jtw204xv"]
 
-[ext_resource type="PackedScene" uid="uid://cq403ulsh8fqx" path="res://art_maybe/gravel/snake_3d.glb" id="1_7fkvb"]
-[ext_resource type="Texture2D" uid="uid://ccvkn582rds0i" path="res://art_maybe/gravel/snake_3d_0.png" id="2_sswra"]
-[ext_resource type="Texture2D" uid="uid://bpm108wgwyms2" path="res://art_maybe/gravel/snake_3d_1.png" id="3_sisfg"]
+[ext_resource type="PackedScene" uid="uid://cq403ulsh8fqx" path="res://art/models/snake/snake_3d.glb" id="1_7fkvb"]
+[ext_resource type="Texture2D" uid="uid://ccvkn582rds0i" path="res://art/models/snake/snake_3d_0.png" id="2_sswra"]
+[ext_resource type="Texture2D" uid="uid://bpm108wgwyms2" path="res://art/models/snake/snake_3d_1.png" id="3_sisfg"]
 [ext_resource type="Texture2D" uid="uid://b1tra00s0ar5x" path="res://art/textures/dirt_path/Ground_Dirt_009_BaseColor.jpg" id="4_uvxjg"]
 [ext_resource type="Texture2D" uid="uid://bsnrqflhw58mw" path="res://art/textures/dirt_path/Ground_Dirt_009_Normal.jpg" id="5_j4i8m"]
 
