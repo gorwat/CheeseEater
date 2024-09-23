@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://duq5bwje3l5bc" path="res://scenes/small_objects/plant.tscn" id="7_chrys"]
 [ext_resource type="PackedScene" uid="uid://c75tt6q07y6cg" path="res://scenes/small_objects/trashcan_open.tscn" id="11_k0c66"]
 [ext_resource type="PackedScene" uid="uid://cvsny5mldfj18" path="res://scenes/large_objects/complete_fence.tscn" id="17_5klwt"]
-[ext_resource type="Texture2D" uid="uid://ccmmfbi6cohpc" path="res://art_maybe/gravel/Gravel_001_BaseColor.jpg" id="18_gcvwq"]
+[ext_resource type="Texture2D" uid="uid://ccmmfbi6cohpc" path="res://art/textures/gravel/Gravel_001_BaseColor.jpg" id="18_gcvwq"]
 [ext_resource type="PackedScene" uid="uid://dbsudbg6pjt5d" path="res://scenes/large_objects/walls.tscn" id="18_m4h5s"]
 [ext_resource type="PackedScene" uid="uid://dwpv5jtw204xv" path="res://scenes/large_objects/snake_path.tscn" id="19_omh5u"]
 [ext_resource type="PackedScene" uid="uid://ba2e8aa08oi43" path="res://art/models/poster/poster_basic__low_poly.glb" id="19_wmaa5"]
