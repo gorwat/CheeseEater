@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=11 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="2_fv4xt"]
 [ext_resource type="Script" path="res://scripts/spot_light_3d.gd" id="2_uv8rb"]
 [ext_resource type="Script" path="res://scripts/CameraControl.gd" id="3_itbph"]
 [ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="4_qiups"]
+[ext_resource type="PackedScene" uid="uid://csvqa6creqkrv" path="res://scenes/small_objects/stones/stone_1.tscn" id="6_ggyla"]
+[ext_resource type="PackedScene" uid="uid://duq5bwje3l5bc" path="res://scenes/small_objects/plant.tscn" id="7_dw7ku"]
+[ext_resource type="PackedScene" uid="uid://b6ljwync4n4el" path="res://scenes/small_objects/grass.tscn" id="8_44pi4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ndlur"]
 size = Vector3(20, 1, 20)
@@ -28,15 +31,21 @@ shape = SubResource("BoxShape3D_ndlur")
 mesh = SubResource("BoxMesh_hna24")
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("follow_target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.795, 1.7)
 script = ExtResource("3_itbph")
 follow_target = NodePath("../Player")
+camera_offset = Vector3(0, 1, -1.5)
+view_offset = Vector3(0, 0.6, 0)
 
 [node name="Light" type="Node" parent="."]
 
 [node name="Ambient" type="DirectionalLight3D" parent="Light"]
-transform = Transform3D(1, 0, 0, 0, 0.0295092, 0.999565, 0, -0.999565, 0.0295092, 0, 10, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 12, 0)
 light_energy = 0.2
 light_angular_distance = 9.75
+shadow_enabled = true
+shadow_opacity = 0.5
+shadow_blur = 0.1
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Light"]
 transform = Transform3D(1, 0, 0, 0, 0.0295092, 0.999565, 0, -0.999565, 0.0295092, -0.06, 4.83648, 0.397)
@@ -49,6 +58,53 @@ script = ExtResource("2_uv8rb")
 script = ExtResource("2_fv4xt")
 
 [node name="Environment" parent="." instance=ExtResource("4_qiups")]
+
+[node name="RatExclusiveDecoration" type="Node3D" parent="."]
+
+[node name="Stone" parent="RatExclusiveDecoration" instance=ExtResource("6_ggyla")]
+transform = Transform3D(0.612038, 0, -0.790828, 0, 1, 0, 0.790828, 0, 0.612038, 29.5159, 0, -1.0888)
+
+[node name="Stone2" parent="RatExclusiveDecoration" instance=ExtResource("6_ggyla")]
+transform = Transform3D(-0.276828, 0, 0.960919, 0, 1, 0, -0.960919, 0, -0.276828, 28.1453, 0, -5.67619)
+
+[node name="Stone3" parent="RatExclusiveDecoration" instance=ExtResource("6_ggyla")]
+transform = Transform3D(0.336799, 0, -0.941576, 0, 1, 0, 0.941576, 0, 0.336799, 25.5223, -1.20805, 5.06398)
+
+[node name="Plant" parent="RatExclusiveDecoration" instance=ExtResource("7_dw7ku")]
+transform = Transform3D(0.0237726, -0.00773704, 0, 0.00773704, 0.0237726, 0, 0, 0, 0.025, 25.4263, 0.160056, -8.0604)
+
+[node name="Plant2" parent="RatExclusiveDecoration" instance=ExtResource("7_dw7ku")]
+transform = Transform3D(0.0470017, 0.00790066, 0.0151137, -0.00359961, 0.0479085, -0.0138498, -0.01667, 0.0119312, 0.0456044, 27.6966, -0.770472, 1.12874)
+
+[node name="Plant3" parent="RatExclusiveDecoration" instance=ExtResource("7_dw7ku")]
+transform = Transform3D(0.0264198, -0.0263875, 0.033252, 0.0259419, 0.0410379, 0.0119544, -0.0336008, 0.0109357, 0.0353751, 27.2089, 0.331389, -3.53632)
+
+[node name="Plant4" parent="RatExclusiveDecoration" instance=ExtResource("7_dw7ku")]
+transform = Transform3D(0.0515443, -0.027599, 0.0283986, 0.0277896, 0.0584176, 0.00633388, -0.0282121, 0.0071186, 0.058124, 27.8893, -0.115953, 10.7284)
+
+[node name="Plant5" parent="RatExclusiveDecoration" instance=ExtResource("7_dw7ku")]
+transform = Transform3D(0.0177203, -0.00255563, 0.00891402, 0.00326152, 0.0197147, -0.000831449, -0.00868064, 0.00219034, 0.0178843, -14.2572, -0.378641, 15.2122)
+
+[node name="Plant6" parent="RatExclusiveDecoration" instance=ExtResource("7_dw7ku")]
+transform = Transform3D(0.0141731, -0.00292691, -0.0138042, 0.00110903, 0.0197356, -0.00304587, 0.0140675, 0.00139301, 0.014148, -13.1523, -0.441601, 14.5831)
+
+[node name="Plant7" parent="RatExclusiveDecoration" instance=ExtResource("7_dw7ku")]
+transform = Transform3D(0.0141731, -0.00292691, -0.0138042, 0.00110903, 0.0197356, -0.00304587, 0.0140675, 0.00139301, 0.014148, -25.0317, -0.4416, 4.21865)
+
+[node name="Plant8" parent="RatExclusiveDecoration" instance=ExtResource("7_dw7ku")]
+transform = Transform3D(0.0143607, -0.000138667, 0.00433038, 0.000831775, 0.0148017, -0.0022844, -0.00425201, 0.00242716, 0.0141785, -25.0317, -0.4416, 2.54507)
+
+[node name="Plant9" parent="RatExclusiveDecoration" instance=ExtResource("7_dw7ku")]
+transform = Transform3D(0.0143607, -0.000138667, 0.00433038, 0.000831775, 0.0148017, -0.0022844, -0.00425201, 0.00242716, 0.0141785, -0.352425, -0.4416, -14.4152)
+
+[node name="Grass" parent="RatExclusiveDecoration" instance=ExtResource("8_44pi4")]
+transform = Transform3D(0.703295, 0, -0.710898, 0, 1, 0, 0.710898, 0, 0.703295, -1.37357, -0.438862, 15.1464)
+
+[node name="Grass2" parent="RatExclusiveDecoration" instance=ExtResource("8_44pi4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65014, -0.438862, 15.6449)
+
+[node name="Plant10" parent="RatExclusiveDecoration" instance=ExtResource("7_dw7ku")]
+transform = Transform3D(0.0158592, 0.0020742, 0.0192141, 0.00138629, 0.0246695, -0.00380734, -0.019276, 0.00348071, 0.0155345, 13.4599, -0.118549, -14.7792)
 
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
 [connection signal="spot_position_changed" from="NetworkManager" to="Light/SpotLight3D" method="_on_network_manager_spot_position_changed"]
