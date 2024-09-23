@@ -120,7 +120,7 @@ transform = Transform3D(0.553722, 0, -1.53435, 0, 1, 0, 1.83182, 0, 0.463803, -2
 [node name="Fence" parent="Constraints" instance=ExtResource("17_5klwt")]
 
 [node name="Walls" parent="Constraints" instance=ExtResource("18_m4h5s")]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 1.85454, 0, 0)
+transform = Transform3D(1.2, 0, 0, 0, 1.425, 0, 0, 0, 1.2, 1.85454, 0, 0)
 
 [node name="StonesOutside" type="Node3D" parent="Constraints"]
 

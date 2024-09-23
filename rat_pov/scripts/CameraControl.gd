@@ -4,6 +4,7 @@ extends Camera3D
 @export var follow_speed: float = 15.0  # Follow/Mouse speed
 @export var rotation_speed_deg: float = 90.0  # Rotation speed (deg/sec)
 @export var camera_offset: Vector3 = Vector3(0, 3, -5)  # cam offset
+@export var view_offset: Vector3 = Vector3(0, 0.7, 0) # offset center of the view from followed object
 
 var current_rotation_angle: float = 0.0  # Tracker
 
@@ -35,7 +36,7 @@ func _process(delta: float) -> void:
 		global_position = target_position
 
 		# Keep the camera looking at the player
-		look_at(follow_target.global_position, Vector3.UP)
+		look_at(follow_target.global_position + view_offset, Vector3.UP)
 
 		# Rotate the player to face the same direction as the camera
 		follow_target.rotation.y = current_rotation_angle + PI
