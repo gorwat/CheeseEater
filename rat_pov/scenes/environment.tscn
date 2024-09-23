@@ -26,7 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://csvqa6creqkrv" path="res://scenes/small_objects/stones/stone_1.tscn" id="23_4snuu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nunhs"]
-size = Vector3(48, 1, 27)
+size = Vector3(55, 1, 35)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t5nrl"]
 albedo_color = Color(0.53, 0.53, 0.53, 1)
@@ -273,7 +273,7 @@ transform = Transform3D(0.0533294, -0.0671645, -0.0766153, 0.0900624, 0.0715106,
 transform = Transform3D(0.822611, -0.568605, 0.000568208, 0.000102315, 0.00114732, 1, -0.568605, -0.82261, 0.00100198, -7.18306, 0.437909, 11.1228)
 
 [node name="Stone7" parent="Hideouts/Stones" instance=ExtResource("20_1hy7r")]
-transform = Transform3D(0.73019, 0, 0.463732, 0, 0.865, 0, -0.463732, 0, 0.73019, -13.9774, -0.5, 11.7025)
+transform = Transform3D(0.29912, 0.137795, 0.48953, -0.128745, 0.569947, -0.0817639, -0.491987, -0.0653682, 0.319022, -13.7704, -0.5, 10.9614)
 
 [node name="Stone8" parent="Hideouts/Stones" instance=ExtResource("20_1hy7r")]
 transform = Transform3D(-0.0658447, -0.463482, -0.0418169, 0.391249, -0.0780011, 0.248476, -0.25197, 0, 0.396751, -15.6479, -0.5, 10.9368)
