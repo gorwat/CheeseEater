@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://8vq475iel8pb"]
+[gd_scene load_steps=12 format=3 uid="uid://8vq475iel8pb"]
 
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="1_vjgd7"]
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="2_xa4f0"]
@@ -6,10 +6,8 @@
 [ext_resource type="Script" path="res://scripts/server_menu.gd" id="3_3v8dj"]
 [ext_resource type="Script" path="res://scripts/server_connect_button.gd" id="3_aufbq"]
 [ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="6_ii8w1"]
-[ext_resource type="Texture2D" uid="uid://ci62nrk80blvv" path="res://art/Sprites/grab-frame.png" id="7_02mxe"]
 [ext_resource type="PackedScene" uid="uid://ufh5bg2edko8" path="res://scoop.fbx" id="7_erhes"]
 [ext_resource type="Script" path="res://scripts/scoop.gd" id="8_rrg8s"]
-[ext_resource type="Texture2D" uid="uid://w1v0yd27cod2" path="res://art/Sprites/grab-icon.png" id="8_ytdv6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_peehw"]
 size = Vector3(20, 1, 20)
@@ -39,22 +37,9 @@ shape = SubResource("BoxShape3D_peehw")
 mesh = SubResource("BoxMesh_8ae0n")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0942447, 50.1483, -0.0823721)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50.148, -0.482112)
 projection = 1
-size = 30.0
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.999974, 8.77334e-08, -0.00715579, -0.00171772, 0.970758, 0.240053, 0.00694657, 0.240059, -0.970734, 0.226, 11.4781, 0)
-light_energy = 0.5
-
-[node name="SpotLight3D" type="SpotLight3D" parent="."]
-transform = Transform3D(-0.999974, 8.77333e-08, -0.00715579, -0.00715579, -4.30847e-08, 0.999974, 8.74228e-08, 1, 4.37114e-08, 0.226, 5.75551, 0)
-light_energy = 2.0
-spot_range = 15.544
-spot_angle = 13.0
-script = ExtResource("3_2wysb")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+size = 26.3697
 
 [node name="Server Menu" type="Control" parent="."]
 layout_mode = 3
@@ -113,21 +98,34 @@ shape = SubResource("BoxShape3D_7ejrd")
 [node name="outline" type="Sprite3D" parent="Scoop"]
 transform = Transform3D(0.348871, 0, 0, 0, 0.583032, 0, 0, 0, -0.523406, 0, 0, 0)
 axis = 1
-texture = ExtResource("7_02mxe")
 
 [node name="icon" type="Sprite3D" parent="Scoop"]
 transform = Transform3D(0.18758, 0, 0, 0, 0.341416, 0, 0, 0, 0.275154, 0, 0, 0)
 pixel_size = 0.02
 axis = 1
-texture = ExtResource("8_ytdv6")
 
 [node name="Label" type="Label3D" parent="Scoop"]
 transform = Transform3D(2.8161, 0, 0, 0, -2.62116e-07, 2.95427, 0, -5.99653, -1.29135e-07, 0.999999, 0, 0.999999)
 text = "TEST"
 
+[node name="Light" type="Node" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Light"]
+transform = Transform3D(-0.999974, 9.62315e-08, -0.0071558, -0.00171772, 0.970758, 0.240053, 0.00694657, 0.240059, -0.970733, 0.226, 11.4781, 0)
+light_energy = 0.5
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Light"]
+transform = Transform3D(-0.999974, 8.77334e-08, -0.00715579, -0.00715579, -4.30847e-08, 0.999974, 8.74228e-08, 1, 4.37114e-08, 0.226, 5.75551, 0)
+light_energy = 2.0
+spot_range = 15.544
+spot_angle = 13.0
+script = ExtResource("3_2wysb")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Light"]
+
 [connection signal="connection_status_schanged" from="NetworkManager" to="Server Menu" method="_on_network_manager_connection_status_schanged"]
 [connection signal="rat_pos_recieved" from="NetworkManager" to="Player" method="_on_network_manager_rat_pos_recieved"]
-[connection signal="spot_position_changed" from="SpotLight3D" to="NetworkManager" method="_on_spot_light_3d_spot_position_changed"]
 [connection signal="init_connection" from="Server Menu" to="NetworkManager" method="_on_init_connection"]
 [connection signal="text_submitted" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Address Input" to="Server Menu" method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Button" to="Server Menu" method="_on_button_pressed"]
+[connection signal="spot_position_changed" from="Light/SpotLight3D" to="NetworkManager" method="_on_spot_light_3d_spot_position_changed"]

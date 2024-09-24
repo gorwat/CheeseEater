@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://du0e1jyg7afq0"]
+
+[ext_resource type="PackedScene" uid="uid://dmsb7ysgcbk06" path="res://art/models/foliage_stylized/stylized_handpainted_foliage.glb" id="1_e6fou"]
+
+[node name="PlantCollection" instance=ExtResource("1_e6fou")]
+
+[node name="polySurface224_aiStandardSurface1_0" parent="Sketchfab_model/97c8273a5eb34687b2fd88053178577f_fbx/RootNode/group1/pPlane1/polySurface1/polySurface3/polySurface11/polySurface15/polySurface19/polySurface224" index="0"]
+transform = Transform3D(1, -4.84288e-08, -2.23517e-08, 2.70084e-08, 1, -1.49012e-08, 1.11759e-08, -5.96046e-08, 1, 626.602, -45.5189, 158.838)
