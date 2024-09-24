@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="1_vjgd7"]
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="2_xa4f0"]
-[ext_resource type="Script" path="res://scripts/spot_light_3d.gd" id="3_2wysb"]
+[ext_resource type="Script" path="res://scripts/TableLight.cs" id="3_1gi0y"]
 [ext_resource type="Script" path="res://scripts/server_menu.gd" id="3_3v8dj"]
 [ext_resource type="Script" path="res://scripts/server_connect_button.gd" id="3_aufbq"]
 [ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="6_ii8w1"]
@@ -52,7 +52,7 @@ transform = Transform3D(-0.999974, 8.77333e-08, -0.00715579, -0.00715579, -4.308
 light_energy = 2.0
 spot_range = 15.544
 spot_angle = 13.0
-script = ExtResource("3_2wysb")
+script = ExtResource("3_1gi0y")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
@@ -127,7 +127,7 @@ text = "TEST"
 
 [connection signal="connection_status_schanged" from="NetworkManager" to="Server Menu" method="_on_network_manager_connection_status_schanged"]
 [connection signal="rat_pos_recieved" from="NetworkManager" to="Player" method="_on_network_manager_rat_pos_recieved"]
-[connection signal="spot_position_changed" from="SpotLight3D" to="NetworkManager" method="_on_spot_light_3d_spot_position_changed"]
+[connection signal="SpotPositionChanged" from="SpotLight3D" to="NetworkManager" method="_on_spot_light_3d_spot_position_changed"]
 [connection signal="init_connection" from="Server Menu" to="NetworkManager" method="_on_init_connection"]
 [connection signal="text_submitted" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Address Input" to="Server Menu" method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Button" to="Server Menu" method="_on_button_pressed"]

@@ -12,8 +12,12 @@ config_version=5
 
 config/name="CheeseEater - Table POV"
 run/main_scene="res://scenes/main.tscn"
-config/features=PackedStringArray("4.3", "GL Compatibility")
+config/features=PackedStringArray("4.3", "C#", "GL Compatibility")
 config/icon="res://art/light.png"
+
+[dotnet]
+
+project/assembly_name="CheeseEater - Table POV"
 
 [input]
 
