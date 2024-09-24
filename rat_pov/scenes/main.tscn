@@ -16,7 +16,7 @@ size = Vector3(20, 1, 20)
 [node name="Main" type="Node"]
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera_node") instance=ExtResource("1_i7pi5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, -0.102446, 0)
 camera_node = NodePath("../Camera3D")
 
 [node name="Ground" type="StaticBody3D" parent="."]
@@ -32,8 +32,7 @@ mesh = SubResource("BoxMesh_hna24")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.795, 1.7)
 script = ExtResource("3_itbph")
 follow_target = NodePath("../Player")
-camera_offset = Vector3(0, 1, -1.5)
-view_offset = Vector3(0, 0.6, 0)
+camera_offset = Vector3(0, 1, -1.4)
 
 [node name="Light" type="Node" parent="."]
 
