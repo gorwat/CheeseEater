@@ -38,9 +38,8 @@ namespace Cheese_Eater_Library
         private static ImageMetrics normalizedMetrics;
         volatile private static byte[] normalizedImage;
 
-        private static uint bestX = 0;
-        private static uint bestY = 0;
-        private static bool foundLight = false;
+        private static Blob bestBlob;
+        private static bool foundBlob = false;
 
         volatile private static byte[] blobMembership = new byte[960 * 540];  // Holds the index of the blob the sensor is part of
         volatile private static Blob[] blobs = new Blob[255];
@@ -66,19 +65,38 @@ namespace Cheese_Eater_Library
         [DllExport]
         public static bool isOn()
         {
-            return foundLight;
+            return foundBlob;
         }
 
         [DllExport]
         public static float getX()
         {
-            return ((float)bestX) / ((float)sensorWidth);
+            if (!foundBlob) return 0.0f;
+
+            return (float)((bestBlob.maxX + bestBlob.minX) / 2) / ((float)sensorWidth);
         }
 
         [DllExport]
         public static float getY()
         {
-            return ((float)bestY) / ((float)sensorHeight);
+            if (!foundBlob) return 0.0f;
+            return (float)((bestBlob.maxY + bestBlob.minY) / 2) / ((float)sensorHeight);
+        }
+
+        [DllExport]
+        public static float getSizeX()
+        {
+            if (!foundBlob) return 0.0f;
+
+            return (float)(bestBlob.maxX - bestBlob.minX) / ((float)sensorWidth);
+        }
+
+        [DllExport]
+        public static float getSizeY()
+        {
+            if (!foundBlob) return 0.0f;
+
+            return (float)(bestBlob.maxY - bestBlob.minY) / ((float)sensorHeight);
         }
 
         private static uint SensorIdx(uint x, uint y)
@@ -111,9 +129,8 @@ namespace Cheese_Eater_Library
                         1920, 1080);
                 }
 
-                bestX = 0;
-                bestY = 0;
-                foundLight = false;
+                Nullable<Blob> candidateBestBlob = null;
+                bool candidateFoundBlob = false;
                 uint bestPixelCount = 0;
                 // reset blobcount and blob merge
                 blobCount = 0;
@@ -198,17 +215,19 @@ namespace Cheese_Eater_Library
                 {
                     if (blobs[bi].pixelCount == 0) continue;
 
-                    uint centerX = (blobs[bi].minX + blobs[bi].maxX) / 2;
-                    uint centerY = (blobs[bi].maxY + blobs[bi].minY) / 2;
+                    
 
                     if (blobs[bi].pixelCount > bestPixelCount && blobs[bi].pixelCount >= 100)
                     {
                         bestPixelCount = blobs[bi].pixelCount;
-                        bestX = centerX;
-                        bestY = centerY;
-                        foundLight = true;
+                        candidateFoundBlob = true;
+                        candidateBestBlob = blobs[bi];
                     }
                 }
+
+
+                bestBlob = candidateBestBlob.GetValueOrDefault();
+                foundBlob = candidateFoundBlob;
             }
         }
     }
