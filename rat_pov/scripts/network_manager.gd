@@ -38,9 +38,9 @@ func set_rat_position(position : Vector3, rotation : Vector3):
 	pass
 	
 @rpc("any_peer")
-func set_spot_position(is_on: bool, position : Vector3):
+func set_spot_position(is_on: bool, position : Vector3, angle: float):
 	#print("Spot position recieved")
-	spot_position_changed.emit(is_on, position)
+	spot_position_changed.emit(is_on, position, angle)
 
 @rpc
 func catch_rat():

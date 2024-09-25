@@ -26,7 +26,7 @@ public static class Table
 public partial class TableLight : SpotLight3D
 {
 	[Signal]
-	public delegate void SpotPositionChangedEventHandler(bool isOn, Vector3 position);
+	public delegate void SpotPositionChangedEventHandler(bool isOn, Vector3 position, float angle);
 
 	public override void _Ready()
 	{
@@ -42,12 +42,12 @@ public partial class TableLight : SpotLight3D
 			Vector3 p = new Vector3(27.0f * (Table.getX() - 0.5f) * 2.0f, 10.0f, 16.0f * (Table.getY() - 0.5f) * 2.0f);
 			SetPosition(p);
 			Visible = true;
-			EmitSignal(SignalName.SpotPositionChanged, Visible, p);
-			SpotAngle = ((float)Math.Atan((Math.Max(Table.getSizeX() * 27.0f, Table.getSizeY() * 16.0f))/10.0f)) * (180.0f / 3.14f);
+			SpotAngle = ((float)Math.Atan((Math.Max(Table.getSizeX() * 27.0f, Table.getSizeY() * 16.0f))/10.0f)) * 2.0f * (180.0f / 3.14f);
+			EmitSignal(SignalName.SpotPositionChanged, Visible, p, SpotAngle);
 		} else if(Visible)
 		{
 			Visible = false;
-			EmitSignal(SignalName.SpotPositionChanged, Visible, new Vector3(0.0f, 0.0f, 0.0f));
+			EmitSignal(SignalName.SpotPositionChanged, Visible, new Vector3(0.0f, 0.0f, 0.0f), 1.0f);
 		}
 	}
 }
