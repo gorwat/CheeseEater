@@ -54,3 +54,9 @@ func set_rat_position(position : Vector3, rotation : Vector3):
 @rpc
 func set_spot_position(is_on: bool, position : Vector3):
 	pass
+
+@rpc	
+func catch_rat(): # This function is called when the rat is caught
+	print("THE RAT HAS BEEN CAUGHT!");
+	
+	

@@ -19,13 +19,9 @@ config/icon="res://art/rat.png"
 
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 
-[editor_plugins]
+[dotnet]
 
-enabled=PackedStringArray()
-
-[autoload]
-
-PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
+project/assembly_name="CheeseEater - Rat POV"
 
 [editor_plugins]
 

@@ -41,3 +41,7 @@ func set_rat_position(position : Vector3, rotation : Vector3):
 func set_spot_position(is_on: bool, position : Vector3):
 	#print("Spot position recieved")
 	spot_position_changed.emit(is_on, position)
+
+@rpc
+func catch_rat():
+	print("YOU HAVE BEEN CAUGHT! RIP RAT")
