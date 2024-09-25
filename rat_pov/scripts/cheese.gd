@@ -29,4 +29,4 @@ func _on_area_3d_body_entered(body):
 	print("Ate cheese!")
 	despawn()
 	been_eaten.emit()
-	pass # Replace with function body.
+	get_parent().current_cheese_count -= 1
