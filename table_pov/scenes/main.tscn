@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://8vq475iel8pb"]
+[gd_scene load_steps=16 format=3 uid="uid://8vq475iel8pb"]
 
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="1_vjgd7"]
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="2_xa4f0"]
@@ -7,9 +7,9 @@
 [ext_resource type="Script" path="res://scripts/server_connect_button.gd" id="3_aufbq"]
 [ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="6_ii8w1"]
 [ext_resource type="Texture2D" uid="uid://ci62nrk80blvv" path="res://art/Sprites/grab-frame.png" id="7_02mxe"]
-[ext_resource type="PackedScene" uid="uid://ufh5bg2edko8" path="res://scoop.fbx" id="7_erhes"]
-[ext_resource type="Script" path="res://scripts/scoop.gd" id="8_rrg8s"]
-[ext_resource type="Texture2D" uid="uid://w1v0yd27cod2" path="res://art/Sprites/grab-icon.png" id="8_ytdv6"]
+[ext_resource type="Script" path="res://scripts/claw.gd" id="7_x6ysg"]
+[ext_resource type="Texture2D" uid="uid://dwuo68e35f5a7" path="res://art/Sprites/crosshair-frame.png" id="9_fms65"]
+[ext_resource type="Texture2D" uid="uid://c2kxohtafda8f" path="res://art/Sprites/crosshair-full.png" id="10_wdlnr"]
 [ext_resource type="Script" path="res://scripts/clock.gd" id="11_v4x7t"]
 [ext_resource type="Script" path="res://scripts/game_info.gd" id="12_feh1c"]
 [ext_resource type="Texture2D" uid="uid://bko11hpbsvmlw" path="res://art/title.png" id="13_fxb7x"]
@@ -20,16 +20,14 @@ size = Vector3(20, 1, 20)
 [sub_resource type="BoxMesh" id="BoxMesh_8ae0n"]
 size = Vector3(48, 1, 27)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_7ejrd"]
-size = Vector3(2, 1, 2)
-
 [node name="Main" type="Node"]
 
 [node name="NetworkManager" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("1_vjgd7")
 
 [node name="Player" parent="." instance=ExtResource("2_xa4f0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00593543, 0, 0.0861781)
+unique_name_in_owner = true
 
 [node name="Floor" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -100,35 +98,33 @@ script = ExtResource("3_aufbq")
 [node name="Environment" parent="." instance=ExtResource("6_ii8w1")]
 transform = Transform3D(1.00562, 0, 0, 0, 1.00562, 0, 0, 0, 1.00562, -0.118774, 0.195028, -0.418333)
 
-[node name="Scoop" type="Node3D" parent="."]
-transform = Transform3D(1.50141, 0, 0, 0, 1.00094, 0, 0, 0, 1.00094, 0, 5.03, 0)
-script = ExtResource("8_rrg8s")
+[node name="Claw" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.03, 0)
+script = ExtResource("7_x6ysg")
 
-[node name="3Dmodel" parent="Scoop" instance=ExtResource("7_erhes")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00747681, 0.0987549, -0.104004)
-visible = false
-
-[node name="Area3D" type="Area3D" parent="Scoop"]
-transform = Transform3D(0.999616, 0, 0, 0, 0.999616, 0, 0, 0, 0.999616, 0, -0.89142, 0)
-
-[node name="ClawCollider" type="CollisionShape3D" parent="Scoop/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0324707, 0.0848389, -0.100224)
-shape = SubResource("BoxShape3D_7ejrd")
-
-[node name="outline" type="Sprite3D" parent="Scoop"]
-transform = Transform3D(0.348871, 0, 0, 0, 0.583032, 0, 0, 0, -0.523406, 0, 0, 0)
+[node name="outline" type="Sprite3D" parent="Claw"]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, -0.1, 0)
 axis = 1
 texture = ExtResource("7_02mxe")
 
-[node name="icon" type="Sprite3D" parent="Scoop"]
-transform = Transform3D(0.18758, 0, 0, 0, 0.341416, 0, 0, 0, 0.275154, 0, 0, 0)
-pixel_size = 0.02
-axis = 1
-texture = ExtResource("8_ytdv6")
-
-[node name="Label" type="Label3D" parent="Scoop"]
+[node name="Label" type="Label3D" parent="Claw"]
 transform = Transform3D(2.8161, 0, 0, 0, -2.62116e-07, 2.95427, 0, -5.99653, -1.29135e-07, 0.999999, 0, 0.999999)
 text = "TEST"
+
+[node name="Crosshair" type="Node3D" parent="Claw"]
+
+[node name="frame" type="Sprite3D" parent="Claw/Crosshair"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+pixel_size = 0.02
+axis = 1
+texture = ExtResource("9_fms65")
+
+[node name="full" type="Sprite3D" parent="Claw/Crosshair"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.1, 0)
+visible = false
+pixel_size = 0.02
+axis = 1
+texture = ExtResource("10_wdlnr")
 
 [node name="GameInfo" type="Control" parent="."]
 layout_mode = 3
