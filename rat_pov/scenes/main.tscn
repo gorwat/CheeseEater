@@ -18,6 +18,8 @@ tonemap_mode = 3
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.1
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_whs82"]
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o25xb"]
 playback_mode = 2
 random_pitch = 1.1
@@ -42,6 +44,12 @@ follow_target = NodePath("../Player")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
+
+[node name="Probe" type="ShapeCast3D" parent="CameraRig/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.102446, 0)
+shape = SubResource("SphereShape3D_whs82")
+target_position = Vector3(0, 0, 0)
+margin = 0.25
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.102446, 0)

@@ -1,9 +1,9 @@
 extends CharacterBody3D
 
-@export var speed: float = 10.0
+@export var speed: float = 5.0
 @export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var jump_velocity: float = 4.5
-@export var camera_node: Camera3D  # Assign in editor
+@export var camera_node: Camera3D  # Assign the Camera3D node in the editor
 
 @onready var step_sound: AudioStreamPlayer = $RatTippyTaps
 
@@ -19,7 +19,7 @@ func _process(delta: float) -> void:
 		step_sound.playing = false
 
 func _physics_process(delta: float) -> void:
-	# Handle gravity and jumping
+	# Handle gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	# We will not jump
@@ -45,9 +45,9 @@ func _physics_process(delta: float) -> void:
 		var direction = Vector3(movement_input.x, 0, movement_input.y)
 
 		# Rotate the direction based on the camera's orientation
-		var camera_basis = camera_node.global_transform.basis
-		var forward = -camera_basis.z.normalized()
-		var right = camera_basis.x.normalized()
+		var camera_transform = camera_node.global_transform
+		var forward = -camera_transform.basis.z.normalized()
+		var right = camera_transform.basis.x.normalized()
 		var move_direction = (right * direction.x + forward * direction.z).normalized() * speed
 
 		# Apply movement
@@ -56,7 +56,7 @@ func _physics_process(delta: float) -> void:
 
 		# Rotate player to face movement direction if moving
 		if movement_input != Vector2.ZERO:
-			var target_rotation = atan2(move_direction.x, move_direction.z)
+			var target_rotation = atan2(-move_direction.x, -move_direction.z)
 			rotation.y = lerp_angle(rotation.y, target_rotation, 0.1)
 	else:
 		print("Error: 'camera_node' is not assigned.")
@@ -66,7 +66,6 @@ func _physics_process(delta: float) -> void:
 	# Emit signal if moving
 	if velocity.length_squared() > 0.0:
 		rat_moved.emit(self.position, self.rotation)
-
 
 func _on_network_manager_rat_was_caught() -> void:
 	rat_caught = true
