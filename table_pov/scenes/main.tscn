@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://8vq475iel8pb"]
+[gd_scene load_steps=19 format=3 uid="uid://8vq475iel8pb"]
 
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="1_vjgd7"]
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="2_xa4f0"]
@@ -19,6 +19,16 @@ size = Vector3(20, 1, 20)
 
 [sub_resource type="BoxMesh" id="BoxMesh_8ae0n"]
 size = Vector3(48, 1, 27)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5oljj"]
+height = 0.217195
+radius = 1.59227
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wuayu"]
+size = Vector3(4.2688, 0.337402, 2.96973)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rmx0v"]
+size = Vector3(6.31946, 0.153809, 2.15198)
 
 [node name="Main" type="Node"]
 
@@ -193,6 +203,26 @@ theme_override_font_sizes/font_size = 50
 text = "Game over!"
 horizontal_alignment = 1
 uppercase = true
+
+[node name="TEMP-clawblockers" type="Node" parent="."]
+
+[node name="Area3D3" type="Area3D" parent="TEMP-clawblockers"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D3"]
+transform = Transform3D(0.88545, 0, -0.464734, 0, 1, 0, 0.464734, 0, 0.88545, 10.5577, 2.08854, 10.908)
+shape = SubResource("CylinderShape3D_5oljj")
+
+[node name="Area3D2" type="Area3D" parent="TEMP-clawblockers"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D2"]
+transform = Transform3D(0.88545, 0, -0.464734, 0, 1, 0, 0.464734, 0, 0.88545, 16.0173, 2.08854, 9.50628)
+shape = SubResource("BoxShape3D_wuayu")
+
+[node name="Area3D" type="Area3D" parent="TEMP-clawblockers"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.61177, 1.50517, -9.16158)
+shape = SubResource("BoxShape3D_rmx0v")
 
 [connection signal="connection_status_schanged" from="NetworkManager" to="Server Menu" method="_on_network_manager_connection_status_schanged"]
 [connection signal="connection_status_schanged" from="NetworkManager" to="GameInfo" method="_on_network_manager_connection_status_schanged"]
