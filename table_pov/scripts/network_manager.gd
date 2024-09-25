@@ -8,6 +8,7 @@ enum Status{CONNECTED, DISCONNECTED, CONNECTING}
 var connection_status = Status.DISCONNECTED
 signal rat_pos_recieved
 signal connection_status_schanged
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#print(IP.get_local_interfaces())
@@ -16,7 +17,11 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if Input.is_action_just_pressed("fullscreen"):
+		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_MAXIMIZED:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		else:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 	
 func _on_connected_to_server(id:int) -> void:
 	connection_status = Status.CONNECTED
