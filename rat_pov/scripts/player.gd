@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var speed: float = 15.0
+@export var speed: float = 10.0
 @export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var jump_velocity: float = 4.5
 @export var camera_node: Camera3D  # Assign in editor
@@ -21,9 +21,10 @@ func _physics_process(delta: float) -> void:
 	# Handle gravity and jumping (when implemented, idk not using this)
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-	else:
-		if Input.is_action_just_pressed("jump"):
-			velocity.y = jump_velocity
+	# We will not jump
+	#else:
+	#	if Input.is_action_just_pressed("jump"):
+	#		velocity.y = jump_velocity
 
 	# Handle forward/backward movement
 	var forward_input = 0.0

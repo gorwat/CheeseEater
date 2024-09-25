@@ -1,7 +1,7 @@
 extends Node3D
 enum ScoopState {Passive, MovingUp, MovingDown, }
 
-var scoop_speed: float = 4.0;
+var scoop_speed: float = 10.0;
 var scoop_drop_speed: float = 6.0;
 var scoop_state: ScoopState = ScoopState.Passive;
 var top_y = 10.0;
@@ -81,6 +81,6 @@ func _process(delta: float):
 	var s = lerp( crosshair_min_scale, 1.0, time_to_catch / max_time_to_catch)
 	crosshair.set_scale(Vector3(s,1,s));
 	
-	label.text = str(round(time_to_catch * 10) / 10) + "s"
+	#label.text = str(round(time_to_catch * 10) / 10) + "s"
 		
 		
