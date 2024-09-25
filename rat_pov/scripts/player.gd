@@ -5,7 +5,17 @@ extends CharacterBody3D
 @export var jump_velocity: float = 4.5
 @export var camera_node: Camera3D  # Assign in editor
 
+@onready var step_sound: AudioStreamPlayer = $RatTippyTaps
+
 signal rat_moved(position: Vector3, rotation: Vector3)
+
+func _process(delta: float) -> void:
+	if self.velocity.length_squared() > 0:
+		if !step_sound.playing:
+			step_sound.play()
+			
+	else:
+		step_sound.playing = false
 
 func _physics_process(delta: float) -> void:
 	# Handle gravity and jumping (when implemented, idk not using this)

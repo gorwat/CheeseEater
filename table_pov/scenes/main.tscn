@@ -1,13 +1,17 @@
-[gd_scene load_steps=12 format=3 uid="uid://8vq475iel8pb"]
+[gd_scene load_steps=17 format=3 uid="uid://8vq475iel8pb"]
 
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="1_vjgd7"]
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="2_xa4f0"]
-[ext_resource type="Script" path="res://scripts/spot_light_3d.gd" id="3_2wysb"]
+[ext_resource type="Script" path="res://scripts/TableLight.cs" id="3_1gi0y"]
 [ext_resource type="Script" path="res://scripts/server_menu.gd" id="3_3v8dj"]
 [ext_resource type="Script" path="res://scripts/server_connect_button.gd" id="3_aufbq"]
 [ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="6_ii8w1"]
 [ext_resource type="PackedScene" uid="uid://ufh5bg2edko8" path="res://scoop.fbx" id="7_erhes"]
 [ext_resource type="Script" path="res://scripts/scoop.gd" id="8_rrg8s"]
+[ext_resource type="Texture2D" uid="uid://w1v0yd27cod2" path="res://art/Sprites/grab-icon.png" id="8_ytdv6"]
+[ext_resource type="Script" path="res://scripts/clock.gd" id="11_v4x7t"]
+[ext_resource type="Script" path="res://scripts/game_info.gd" id="12_feh1c"]
+[ext_resource type="Texture2D" uid="uid://bko11hpbsvmlw" path="res://art/title.png" id="13_fxb7x"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_peehw"]
 size = Vector3(20, 1, 20)
@@ -39,13 +43,27 @@ mesh = SubResource("BoxMesh_8ae0n")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 50.148, -0.482112)
 projection = 1
+
 size = 26.3697
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.999974, 8.77334e-08, -0.00715579, -0.00171772, 0.970758, 0.240053, 0.00694657, 0.240059, -0.970734, 0.226, 11.4781, 0)
+light_energy = 0.5
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.999974, 8.77333e-08, -0.00715579, -0.00715579, -4.30847e-08, 0.999974, 8.74228e-08, 1, 4.37114e-08, 0.226, 5.75551, 0)
+light_energy = 2.0
+spot_range = 15.544
+spot_angle = 13.0
+script = ExtResource("3_1gi0y")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
 [node name="Server Menu" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1152.0
+offset_bottom = 648.0
 script = ExtResource("3_3v8dj")
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="Server Menu"]
@@ -123,9 +141,80 @@ script = ExtResource("3_2wysb")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Light"]
 
+[node name="GameInfo" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("12_feh1c")
+
+[node name="Clock" type="Label" parent="GameInfo"]
+layout_mode = 0
+offset_left = 511.0
+offset_right = 593.0
+offset_bottom = 23.0
+text = "00:00"
+horizontal_alignment = 1
+script = ExtResource("11_v4x7t")
+
+[node name="Timer" type="Timer" parent="GameInfo/Clock"]
+wait_time = 10.0
+one_shot = true
+
+[node name="StartMenu" type="Control" parent="GameInfo"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StartButton" type="Button" parent="GameInfo/StartMenu"]
+layout_mode = 2
+offset_left = 526.0
+offset_top = 268.0
+offset_right = 623.0
+offset_bottom = 299.0
+disabled = true
+text = "Start game!"
+
+[node name="TextureRect" type="TextureRect" parent="GameInfo/StartMenu"]
+layout_mode = 0
+offset_left = 314.0
+offset_top = 115.0
+offset_right = 818.0
+offset_bottom = 242.0
+texture = ExtResource("13_fxb7x")
+expand_mode = 1
+
+[node name="GameOverMenu" type="Control" parent="GameInfo"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RestartButton" type="Button" parent="GameInfo/GameOverMenu"]
+layout_mode = 0
+offset_left = 540.0
+offset_top = 268.0
+offset_right = 609.0
+offset_bottom = 299.0
+text = "Restart!"
+
+[node name="Label" type="Label" parent="GameInfo/GameOverMenu"]
+layout_mode = 0
+offset_left = 434.0
+offset_top = 196.0
+offset_right = 735.0
+offset_bottom = 265.0
+theme_override_font_sizes/font_size = 50
+text = "Game over!"
+horizontal_alignment = 1
+uppercase = true
+
 [connection signal="connection_status_schanged" from="NetworkManager" to="Server Menu" method="_on_network_manager_connection_status_schanged"]
+[connection signal="connection_status_schanged" from="NetworkManager" to="GameInfo" method="_on_network_manager_connection_status_schanged"]
 [connection signal="rat_pos_recieved" from="NetworkManager" to="Player" method="_on_network_manager_rat_pos_recieved"]
+[connection signal="SpotPositionChanged" from="SpotLight3D" to="NetworkManager" method="_on_spot_light_3d_spot_position_changed"]
 [connection signal="init_connection" from="Server Menu" to="NetworkManager" method="_on_init_connection"]
 [connection signal="text_submitted" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Address Input" to="Server Menu" method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Button" to="Server Menu" method="_on_button_pressed"]
-[connection signal="spot_position_changed" from="Light/SpotLight3D" to="NetworkManager" method="_on_spot_light_3d_spot_position_changed"]
+[connection signal="timeout" from="GameInfo/Clock/Timer" to="GameInfo" method="_on_timer_timeout"]
+[connection signal="pressed" from="GameInfo/StartMenu/StartButton" to="GameInfo" method="_on_start_button_pressed"]
+[connection signal="pressed" from="GameInfo/GameOverMenu/RestartButton" to="GameInfo" method="_on_restart_button_pressed"]
