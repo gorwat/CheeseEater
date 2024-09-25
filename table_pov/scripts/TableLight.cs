@@ -33,7 +33,7 @@ public partial class TableLight : SpotLight3D
 	{
 		if(Table.isOn())
 		{
-			Vector3 p = new Vector3(48.0f * (Table.getX() - 0.5f), 10.0f, 27.0f * (Table.getY() - 0.5f));
+			Vector3 p = new Vector3(27.0f * (Table.getX() - 0.5f) * 2.0f, 10.0f, 16.0f * (Table.getY() - 0.5f) * 2.0f);
 			SetPosition(p);
 			Visible = true;
 			EmitSignal(SignalName.SpotPositionChanged, Visible, p);
