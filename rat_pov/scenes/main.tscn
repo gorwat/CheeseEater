@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="2_fv4xt"]
 [ext_resource type="AudioStream" uid="uid://dulhdyomx2nvc" path="res://art/audio/footsteps-tap.wav" id="2_rj644"]
 [ext_resource type="Script" path="res://scripts/spot_light_3d.gd" id="2_uv8rb"]
-[ext_resource type="Script" path="res://scripts/CameraControl.gd" id="3_itbph"]
+[ext_resource type="Script" path="res://scripts/CameraRig.gd" id="3_itbph"]
 [ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="4_qiups"]
 [ext_resource type="AudioStream" uid="uid://bv3r07rew3747" path="res://art/audio/humming_long.ogg" id="5_xxgte"]
 [ext_resource type="AudioStream" uid="uid://hp2x18qw2hh3" path="res://art/audio/mixkit-light-rain-atmosphere-2474.ogg" id="6_8wg4h"]
@@ -36,9 +36,19 @@ size = Vector3(20, 1, 20)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7us62")
 
+[node name="CameraRig" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
+script = ExtResource("3_itbph")
+follow_target = NodePath("../Player")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.102446, 0)
+
 [node name="Player" parent="." node_paths=PackedStringArray("camera_node") instance=ExtResource("1_i7pi5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
-camera_node = NodePath("../Camera3D")
+camera_node = NodePath("../CameraRig/SpringArm3D/Camera3D")
 
 [node name="RatTippyTaps" type="AudioStreamPlayer" parent="Player"]
 stream = SubResource("AudioStreamRandomizer_o25xb")
@@ -57,10 +67,6 @@ shape = SubResource("BoxShape3D_ndlur")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 mesh = SubResource("BoxMesh_hna24")
-
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("follow_target")]
-script = ExtResource("3_itbph")
-follow_target = NodePath("../Player")
 
 [node name="Light" type="Node" parent="."]
 

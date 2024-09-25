@@ -13,14 +13,13 @@ signal rat_moved(position: Vector3, rotation: Vector3)
 
 func _process(delta: float) -> void:
 	if self.velocity.length_squared() > 0:
-		if !step_sound.playing:
+		if not step_sound.playing:
 			step_sound.play()
-			
 	else:
 		step_sound.playing = false
 
 func _physics_process(delta: float) -> void:
-	# Handle gravity and jumping (when implemented, idk not using this)
+	# Handle gravity and jumping
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	# We will not jump
@@ -28,28 +27,39 @@ func _physics_process(delta: float) -> void:
 	#	if Input.is_action_just_pressed("jump"):
 	#		velocity.y = jump_velocity
 
-	# Handle forward/backward movement
-	var forward_input = 0.0
-	if Input.is_action_pressed("move_back") and not rat_caught:
-		forward_input -= 1
-	if Input.is_action_pressed("move_forward") and not rat_caught:
-		forward_input += 1
+	# Handle movement input
+	var movement_input = Vector2.ZERO
+	if Input.is_action_pressed("move_forward"):
+		movement_input.y += 1
+	if Input.is_action_pressed("move_back"):
+		movement_input.y -= 1
+	if Input.is_action_pressed("move_left"):
+		movement_input.x -= 1
+	if Input.is_action_pressed("move_right"):
+		movement_input.x += 1
 
-	var target_velocity = Vector3.ZERO
+	movement_input = movement_input.normalized()
 
 	if camera_node:
-		# Calculate movement direction based on camera
-		if forward_input != 0.0:
-			var forward_direction = -camera_node.global_transform.basis.z.normalized()
-			target_velocity.x = forward_direction.x * speed * forward_input
-			target_velocity.z = forward_direction.z * speed * forward_input
-	else:
-		print("Error: 'camera_node' is missing.")
-		return
+		# Convert 2D movement input to 3D
+		var direction = Vector3(movement_input.x, 0, movement_input.y)
 
-	# Apply horizontal movement
-	velocity.x = target_velocity.x
-	velocity.z = target_velocity.z
+		# Rotate the direction based on the camera's orientation
+		var camera_basis = camera_node.global_transform.basis
+		var forward = -camera_basis.z.normalized()
+		var right = camera_basis.x.normalized()
+		var move_direction = (right * direction.x + forward * direction.z).normalized() * speed
+
+		# Apply movement
+		velocity.x = move_direction.x
+		velocity.z = move_direction.z
+
+		# Rotate player to face movement direction if moving
+		if movement_input != Vector2.ZERO:
+			var target_rotation = atan2(move_direction.x, move_direction.z)
+			rotation.y = lerp_angle(rotation.y, target_rotation, 0.1)
+	else:
+		print("Error: 'camera_node' is not assigned.")
 
 	move_and_slide()
 
