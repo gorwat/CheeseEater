@@ -15,6 +15,12 @@ public static class Table
 
 	[DllImport("table")]
 	public static extern float getY();
+	
+	[DllImport("table")]
+	public static extern float getSizeX();
+
+	[DllImport("table")]
+	public static extern float getSizeY();
 }
 
 public partial class TableLight : SpotLight3D
@@ -37,6 +43,7 @@ public partial class TableLight : SpotLight3D
 			SetPosition(p);
 			Visible = true;
 			EmitSignal(SignalName.SpotPositionChanged, Visible, p);
+			SpotAngle = ((float)Math.Atan((Math.Max(Table.getSizeX() * 27.0f, Table.getSizeY() * 16.0f))/10.0f)) * (180.0f / 3.14f);
 		} else if(Visible)
 		{
 			Visible = false;
