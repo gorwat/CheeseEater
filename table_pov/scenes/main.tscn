@@ -198,7 +198,6 @@ uppercase = true
 [connection signal="connection_status_schanged" from="NetworkManager" to="Server Menu" method="_on_network_manager_connection_status_schanged"]
 [connection signal="connection_status_schanged" from="NetworkManager" to="GameInfo" method="_on_network_manager_connection_status_schanged"]
 [connection signal="rat_pos_recieved" from="NetworkManager" to="Player" method="_on_network_manager_rat_pos_recieved"]
-[connection signal="SpotPositionChanged" from="SpotLight3D" to="NetworkManager" method="_on_spot_light_3d_spot_position_changed"]
 [connection signal="init_connection" from="Server Menu" to="NetworkManager" method="_on_init_connection"]
 [connection signal="text_submitted" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Address Input" to="Server Menu" method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Button" to="Server Menu" method="_on_button_pressed"]

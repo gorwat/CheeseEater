@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://ci6d4m528yd2"]
+
+[ext_resource type="PackedScene" uid="uid://c2e7ltojm14e" path="res://art/models/drain/drain.glb" id="1_t6up6"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qp8a2"]
+noise_type = 3
+frequency = 0.0669
+offset = Vector3(550.72, 0, 0)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uxbx5"]
+noise = SubResource("FastNoiseLite_qp8a2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3huru"]
+albedo_color = Color(0.16, 0.16, 0.16, 1)
+metallic = 0.14
+metallic_specular = 0.44
+roughness_texture = SubResource("NoiseTexture2D_uxbx5")
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_t6up6")]
+
+[node name="Object_2" parent="Sketchfab_model/8279852cd83e48dc89709826540a2c89_obj_cleaner_materialmerger_gles" index="0"]
+transform = Transform3D(0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_3huru")

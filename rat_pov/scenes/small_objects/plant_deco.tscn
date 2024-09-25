@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=4 uid="uid://u2siy40iiifx"]
+
+[ext_resource type="Texture2D" uid="uid://ct61s4h8lhk8t" path="res://art/models/foliage_stylized/stylized_handpainted_foliage_0.png" id="1_dl40e"]
+[ext_resource type="Texture2D" uid="uid://ox2d7d73ux2m" path="res://art/models/foliage_stylized/stylized_handpainted_foliage_1.png" id="2_urcyt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfwwu"]
+resource_name = "aiStandardSurface1"
+transparency = 2
+alpha_scissor_threshold = 0.85
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_dl40e")
+metallic_texture = ExtResource("2_urcyt")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_urcyt")
+roughness_texture_channel = 1
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_tob17"]
+_surfaces = [{
+"aabb": AABB(-325.949, 61.8735, 300.446, 400.51, 38.4299, 425.211),
+"format": 34896613377,
+"index_count": 105,
+"index_data": PackedByteArray("AAACAAEAAwAFAAQABgAIAAcAAAAIAAYACQAKAAYACgAAAAYACQAMAAsADAAJAA0ABgAHAAQABgAEAA4ADwAGAA4AEAAGAA8AEQAGABAADQAGABEACQAGAA0AEgAJAAsAEgAKAAkACAABABMACAAAAAEAFAAOABUAFAAPAA4AFgAQABcAFgARABAABwATABgABwAIABMAEgAAAAoAEgACAAAAFgANABEAFgAMAA0AFwAPABQAFwAQAA8ABAAVAA4ABAAFABUABwADAAQABwAYAAMA"),
+"lods": [38.6292, PackedByteArray("AAACAAEAEgACAAAAAAABABMAEgAAAAkAEgAJAAsACQAMAAsADAAJABEACQAAABEAFgAMABEAFgARABcAFwARAA8AFwAPABQAEQAAAAQADwARAAQABAAAABMAFAAPAAQABAATABgAFAAEABUABAAYAAMABAAFABUAAwAFAAQA")],
+"name": "aiStandardSurface1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 25,
+"vertex_data": PackedByteArray("UrLd6lNbAACD5P7/9TkAAKLA/v9tFwAA6OX+/4XBAABZmqziqLgAAEms/v/J1gAAPHkAADWCAAAwwkP5WJgAACnCPe6hfwAAPGuq/Oo4AADZkIL8EjMAAM5m/v89EAAAAAD+/xEzAACzPVz57lUAAEZ6G9YOvQAAQWGi2+a5AACaPcrOQIoAAJ06mtdnfwAAqp7+/wAAAADl9v7/PZUAAAA+/v///wAAvHr+/73vAABDB/7/8nwAAN4Z//+sjAAA///+/9mvAAA=")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_sfawq"]
+resource_name = "Sketchfab_Scene_polySurface224_aiStandardSurface1_0"
+_surfaces = [{
+"aabb": AABB(-325.949, 61.8735, 300.446, 400.51, 38.4299, 425.211),
+"attribute_data": PackedByteArray("7XfONGOL/z/qe6BHmoWxGNhxGRugdtMSH2kWKuV77CPke74qsGVgPk1v7z+SZJtJ2kn/P9VZXTaHaeQZCWPEGsVZ6if/WOgqFnMWTieK9CT3WXQHwGnwC71LnSuTUEYnYoyRHQ=="),
+"format": 34896613399,
+"index_count": 105,
+"index_data": PackedByteArray("AAACAAEAAwAFAAQABgAIAAcAAAAIAAYACQAKAAYACgAAAAYACQAMAAsADAAJAA0ABgAHAAQABgAEAA4ADwAGAA4AEAAGAA8AEQAGABAADQAGABEACQAGAA0AEgAJAAsAEgAKAAkACAABABMACAAAAAEAFAAOABUAFAAPAA4AFgAQABcAFgARABAABwATABgABwAIABMAEgAAAAoAEgACAAAAFgANABEAFgAMAA0AFwAPABQAFwAQAA8ABAAVAA4ABAAFABUABwADAAQABwAYAAMA"),
+"lods": [38.6292, PackedByteArray("AAACAAEAEgACAAAAAAABABMAEgAAAAkAEgAJAAsACQAMAAsADAAJABEACQAAABEAFgAMABEAFgARABcAFwARAA8AFwAPABQAEQAAAAQADwARAAQABAAAABMAFAAPAAQABAATABgAFAAEABUABAAYAAMABAAFABUAAwAFAAQA")],
+"material": SubResource("StandardMaterial3D_bfwwu"),
+"name": "aiStandardSurface1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 25,
+"vertex_data": PackedByteArray("UrLd6lNbtkKD5P7/9TlnQKLA/v9tF85A6OX+/4XBAEBZmqziqLjyOkms/v/J1hc9PHkAADWCbkAwwkP5WJghPinCPe6hf3lAPGuq/Oo4m0TZkIL8EjMrQ85m/v89EEhAAAD+/xEzzkCzPVz57lXqQkZ6G9YOvbU6QWGi2+a5ojyaPcrOQIoxPZ06mtdnfxxBqp7+/wAAlUDl9v7/PZXLPwA+/v///xQ+vHr+/73vcD1DB/7/8nzTQN4Z//+sjFc+///+/9mv8z8Z9zWMFfEyicf4poMY/mCDm/owiqn9WYSc/iR/SPq1irn4l4sz+h99vf7agrf/139e/aN+bvZne9H+ToKG92p7ivKeeLzx83iC/8F/F/0Ug+D6Yn30/tSBj/u4fcn2E3sU/smC")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_tob17")
+
+[node name="PlantDeco" type="Node3D"]
+
+[node name="polySurface224_aiStandardSurface1_0" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.003, -8.10251e-11, -3.35276e-11, 8.10251e-11, 0.003, 1.78814e-10, 3.35276e-11, -1.78814e-10, 0.003, 0.534672, -0.218223, -1.43935)
+mesh = SubResource("ArrayMesh_sfawq")
+skeleton = NodePath("")
