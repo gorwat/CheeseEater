@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=14 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="2_fv4xt"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="4_qiups"]
 [ext_resource type="AudioStream" uid="uid://bv3r07rew3747" path="res://audio/humming_long.ogg" id="5_xxgte"]
 [ext_resource type="AudioStream" uid="uid://hp2x18qw2hh3" path="res://audio/mixkit-light-rain-atmosphere-2474.ogg" id="6_8wg4h"]
+[ext_resource type="PackedScene" uid="uid://cmohcowv2ef6d" path="res://scenes/small_objects/cheese.tscn" id="9_7sksj"]
+[ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="9_36pyg"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o25xb"]
 playback_mode = 2
@@ -85,6 +87,30 @@ autoplay = true
 bus = &"Ambience"
 playback_type = 1
 parameters/looping = true
+
+[node name="CheeseManager" type="Node" parent="."]
+script = ExtResource("9_36pyg")
+
+[node name="Cheese7" parent="CheeseManager" instance=ExtResource("9_7sksj")]
+transform = Transform3D(0.929789, 0, 0.368092, 0, 1, 0, -0.368092, 0, 0.929789, 3.92672, -0.5, -3.16118)
+
+[node name="Cheese" parent="CheeseManager" instance=ExtResource("9_7sksj")]
+transform = Transform3D(0.626236, 0, 0.779633, 0, 1, 0, -0.779633, 0, 0.626236, -11.3396, -0.5, -9.87414)
+
+[node name="Cheese2" parent="CheeseManager" instance=ExtResource("9_7sksj")]
+transform = Transform3D(0.510723, 0, 0.859745, 0, 1, 0, -0.859745, 0, 0.510723, -12.9147, -0.5, 5.88585)
+
+[node name="Cheese3" parent="CheeseManager" instance=ExtResource("9_7sksj")]
+transform = Transform3D(0.878267, 0, 0.478171, 0, 1, 0, -0.478171, 0, 0.878267, 20.5156, -0.5, -7.85761)
+
+[node name="Cheese4" parent="CheeseManager" instance=ExtResource("9_7sksj")]
+transform = Transform3D(0.907712, 0, -0.419595, 0, 1, 0, 0.419595, 0, 0.907712, 15.6658, -0.5, 4.82063)
+
+[node name="Cheese5" parent="CheeseManager" instance=ExtResource("9_7sksj")]
+transform = Transform3D(0.662489, 0, -0.749071, 0, 1, 0, 0.749071, 0, 0.662489, -18.1699, -0.5, -4.56431)
+
+[node name="Cheese6" parent="CheeseManager" instance=ExtResource("9_7sksj")]
+transform = Transform3D(0.984192, 0, -0.177102, 0, 1, 0, 0.177102, 0, 0.984192, -3.15838, -0.5, 10.5411)
 
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
 [connection signal="spot_position_changed" from="NetworkManager" to="Light/SpotLight3D" method="_on_network_manager_spot_position_changed"]
