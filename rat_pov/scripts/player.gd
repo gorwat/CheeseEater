@@ -12,20 +12,23 @@ var rat_caught = false
 signal rat_moved(position: Vector3, rotation: Vector3)
 
 func _process(delta: float) -> void:
-	if self.velocity.length_squared() > 0:
+	# Play footstep sounds only when the rat is moving and on the ground
+	if is_on_floor() and velocity.length_squared() > 0:
 		if not step_sound.playing:
 			step_sound.play()
 	else:
 		step_sound.playing = false
 
 func _physics_process(delta: float) -> void:
-	# Handle gravity
+	# Handle gravity and jumping
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-	# We will not jump
-	#else:
-	#	if Input.is_action_just_pressed("jump"):
-	#		velocity.y = jump_velocity
+	else:
+		# Jumping
+		if Input.is_action_just_pressed("jump"):
+			velocity.y = jump_velocity
+		else:
+			velocity.y = 0  # Reset vertical velocity when on the ground
 
 	# Handle movement input
 	var movement_input = Vector2.ZERO
@@ -69,7 +72,6 @@ func _physics_process(delta: float) -> void:
 
 func _on_network_manager_rat_was_caught() -> void:
 	rat_caught = true
-
 
 func _on_network_manager_game_started() -> void:
 	rat_caught = false
