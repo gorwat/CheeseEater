@@ -19,6 +19,10 @@ config/icon="res://art/rat.png"
 
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 
+[display]
+
+window/size/mode=3
+
 [dotnet]
 
 project/assembly_name="CheeseEater - Rat POV"
