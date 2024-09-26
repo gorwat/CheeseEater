@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="2_xa4f0"]
 [ext_resource type="Script" path="res://scripts/TableLight.cs" id="3_1gi0y"]
 [ext_resource type="Script" path="res://scripts/server_menu.gd" id="3_3v8dj"]
-[ext_resource type="Script" path="res://scripts/server_connect_button.gd" id="3_aufbq"]
 [ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="6_ii8w1"]
 [ext_resource type="Texture2D" uid="uid://ci62nrk80blvv" path="res://art/Sprites/grab-frame.png" id="7_02mxe"]
 [ext_resource type="Script" path="res://scripts/claw.gd" id="7_x6ysg"]
@@ -117,7 +116,6 @@ placeholder_text = "IPv4 Address"
 [node name="Button" type="Button" parent="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Connect"
-script = ExtResource("3_aufbq")
 
 [node name="Environment" parent="." instance=ExtResource("6_ii8w1")]
 transform = Transform3D(1.00562, 0, 0, 0, 1.00562, 0, 0, 0, 1.00562, -0.118774, 0.195028, -0.418333)
@@ -303,7 +301,6 @@ shape = SubResource("BoxShape3D_dm842")
 [connection signal="connection_status_schanged" from="NetworkManager" to="Server Menu" method="_on_network_manager_connection_status_schanged"]
 [connection signal="connection_status_schanged" from="NetworkManager" to="GameInfo" method="_on_network_manager_connection_status_schanged"]
 [connection signal="rat_pos_recieved" from="NetworkManager" to="Player" method="_on_network_manager_rat_pos_recieved"]
-[connection signal="SpotPositionChanged" from="SpotLight3D" to="NetworkManager" method="_on_spot_light_3d_spot_position_changed"]
 [connection signal="init_connection" from="Server Menu" to="NetworkManager" method="_on_init_connection"]
 [connection signal="text_submitted" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Address Input" to="Server Menu" method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Button" to="Server Menu" method="_on_button_pressed"]

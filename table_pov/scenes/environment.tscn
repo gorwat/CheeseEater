@@ -1,14 +1,10 @@
-[gd_scene load_steps=32 format=3 uid="uid://b054yrndyyhyx"]
+[gd_scene load_steps=24 format=3 uid="uid://b054yrndyyhyx"]
 
 [ext_resource type="Texture2D" uid="uid://cgdkg8jwy45nv" path="res://art/textures/dirt_ground/Ground_Dirt_007_basecolor.jpg" id="1_fovi5"]
-[ext_resource type="Texture2D" uid="uid://bek77us2ijek7" path="res://art/textures/stone_ground/Flooring_Stone_001_COLOR.png" id="1_i170i"]
 [ext_resource type="Texture2D" uid="uid://dqtukar8wsied" path="res://art/textures/dirt_ground/Ground_Dirt_007_ambientOcclusion.jpg" id="2_mgtth"]
-[ext_resource type="Texture2D" uid="uid://ca53kpgruxyqh" path="res://art/textures/stone_ground/Flooring_Stone_001_OCC.png" id="2_wxwwy"]
 [ext_resource type="PackedScene" uid="uid://bye27nkkyv4m" path="res://scenes/small_objects/bench.tscn" id="3_4cngf"]
 [ext_resource type="Texture2D" uid="uid://vcql436ica1l" path="res://art/textures/dirt_ground/Ground_Dirt_007_height.png" id="3_r66qx"]
-[ext_resource type="Texture2D" uid="uid://cpmmhu2et7gpw" path="res://art/textures/stone_ground/Flooring_Stone_001_DISP.png" id="3_s2dtv"]
 [ext_resource type="Texture2D" uid="uid://bjba37j010523" path="res://art/textures/dirt_ground/Ground_Dirt_007_normal.jpg" id="4_s8y0f"]
-[ext_resource type="Texture2D" uid="uid://bkdf840ebkw2" path="res://art/textures/stone_ground/Flooring_Stone_001_NRM.png" id="4_whppm"]
 [ext_resource type="Texture2D" uid="uid://ckbseaeso4886" path="res://art/textures/dirt_ground/Ground_Dirt_007_roughness.jpg" id="5_6w3k4"]
 [ext_resource type="PackedScene" uid="uid://ci6d4m528yd2" path="res://scenes/small_objects/drain.tscn" id="5_litay"]
 [ext_resource type="PackedScene" uid="uid://rbid62jl58gs" path="res://scenes/small_objects/trashcan_lid.tscn" id="7_cbq87"]
@@ -16,30 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://c75tt6q07y6cg" path="res://scenes/small_objects/trashcan_open.tscn" id="11_k0c66"]
 [ext_resource type="PackedScene" uid="uid://bloah3x6ygdr0" path="res://art/models/wooden_cart/wooden_cart.glb" id="12_r6t15"]
 [ext_resource type="PackedScene" uid="uid://6bhv25swfflg" path="res://scenes/small_objects/stones/stone_2.tscn" id="20_1hy7r"]
-[ext_resource type="PackedScene" uid="uid://du2kitbpfky3h" path="res://art/models/fern/fern.glb" id="20_3bp7s"]
-[ext_resource type="PackedScene" uid="uid://u2siy40iiifx" path="res://scenes/small_objects/plant_deco.tscn" id="21_px8td"]
 [ext_resource type="PackedScene" uid="uid://b6ljwync4n4el" path="res://scenes/small_objects/grass.tscn" id="22_h2836"]
 [ext_resource type="PackedScene" uid="uid://csvqa6creqkrv" path="res://scenes/small_objects/stones/stone_1.tscn" id="23_4snuu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nunhs"]
 size = Vector3(55, 1, 35)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t5nrl"]
-albedo_color = Color(0.53, 0.53, 0.53, 1)
-albedo_texture = ExtResource("1_i170i")
-roughness_texture = ExtResource("5_6w3k4")
-normal_enabled = true
-normal_texture = ExtResource("4_whppm")
-ao_enabled = true
-ao_texture = ExtResource("2_wxwwy")
-heightmap_enabled = true
-heightmap_texture = ExtResource("3_s2dtv")
-uv1_scale = Vector3(30, 15, 20)
-
-[sub_resource type="BoxMesh" id="BoxMesh_us68g"]
-lightmap_size_hint = Vector2i(379, 256)
-material = SubResource("StandardMaterial3D_t5nrl")
-size = Vector3(48, 1, 27)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kk0ae"]
 albedo_color = Color(0.3, 0.3, 0.3, 1)
@@ -86,11 +63,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Constraints/Ground"]
 shape = SubResource("BoxShape3D_nunhs")
-
-[node name="StoneFloor" type="MeshInstance3D" parent="Constraints/Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0253028, -0.0316963)
-visible = false
-mesh = SubResource("BoxMesh_us68g")
 
 [node name="DirtFloor" type="MeshInstance3D" parent="Constraints/Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0253028, -0.0316963)
@@ -351,15 +323,6 @@ transform = Transform3D(0.00855752, 0.00598013, 0.0107706, -0.0024933, 0.0136836
 transform = Transform3D(0.015, 0, 0, 0, 0.0144071, 0.00417556, 0, -0.00417556, 0.0144071, -6.30849, -0.00561523, 0.377281)
 
 [node name="Posters" type="Node3D" parent="Decoration"]
-
-[node name="PossiblePlants" type="Node3D" parent="Decoration"]
-visible = false
-
-[node name="Fern" parent="Decoration/PossiblePlants" instance=ExtResource("20_3bp7s")]
-transform = Transform3D(0.025, 0, 0, 0, 0.025, 0, 0, 0, 0.025, -4.18214, -0.493192, -10.7057)
-
-[node name="DecoPlant" parent="Decoration/PossiblePlants" instance=ExtResource("21_px8td")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.07763, -0.465501, -9.09238)
 
 [editable path="Hideouts/Wagon"]
 [editable path="Decoration/Grass/Grass"]

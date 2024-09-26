@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3qh5l2rqerod"
-path.s3tc="res://.godot/imported/rat_map_normal.jpg-8b02b1b8ce2e551e4b704778051751a9.s3tc.ctex"
+uid="uid://dp7ilgf5ntnau"
+path.s3tc="res://.godot/imported/stylized_rocks_0.png-16271ed844ede1adde9f5fd443ce1fe9.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "ca19a5d9c4ef575b01e7252d582355b9"
+}
 
 [deps]
 
-source_file="res://art/models/rat/rat_map_normal.jpg"
-dest_files=["res://.godot/imported/rat_map_normal.jpg-8b02b1b8ce2e551e4b704778051751a9.s3tc.ctex"]
+source_file="res://art/textures/stylized_rocks_0.png"
+dest_files=["res://.godot/imported/stylized_rocks_0.png-16271ed844ede1adde9f5fd443ce1fe9.s3tc.ctex"]
 
 [params]
 
@@ -20,12 +23,12 @@ compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=1
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=1
-roughness/src_normal="res://art/RiggedSoftToyRat/rat_map_normal.jpg"
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

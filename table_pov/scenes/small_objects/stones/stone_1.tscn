@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=4 uid="uid://csvqa6creqkrv"]
 
-[ext_resource type="Texture2D" uid="uid://dp7ilgf5ntnau" path="res://art/models/rocks_stylized/stylized_rocks_0.png" id="1_0ajbo"]
+[ext_resource type="Texture2D" uid="uid://dp7ilgf5ntnau" path="res://art/textures/stylized_rocks_0.png" id="1_0ajbo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6qjwa"]
 resource_name = "rock_generic_8"
