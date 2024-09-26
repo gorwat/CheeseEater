@@ -54,6 +54,9 @@ func _on_spot_light_3d_spot_position_changed(is_on: bool, position : Vector3, an
 func _on_claw_rat_caught() -> void:
 	catch_rat.rpc()
 	
+func _on_game_info_game_started() -> void:
+	start_game.rpc()
+
 @rpc
 func set_rat_position(position : Vector3, rotation : Vector3):
 	#print("Rat position recieved: ", position, " ", rotation)
@@ -66,5 +69,13 @@ func set_spot_position(is_on: bool, position : Vector3, angle: float):
 @rpc	
 func catch_rat(): # This function is called when the rat is caught
 	print("THE RAT HAS BEEN CAUGHT!");
+	
+@rpc
+func time_out():
+	pass
+	
+@rpc
+func start_game():
+	pass
 	
 	

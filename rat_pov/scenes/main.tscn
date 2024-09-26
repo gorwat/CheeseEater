@@ -178,7 +178,52 @@ theme_override_font_sizes/font_size = 30
 text = "You were caught!
 "
 
+[node name="TimerOutScreen" type="Control" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -259.0
+offset_top = -110.0
+offset_right = 259.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverText" type="Label" parent="HUD/TimerOutScreen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -285.0
+offset_right = 285.0
+offset_bottom = 137.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 100
+text = "Game Over!"
+
+[node name="CaughtText" type="Label" parent="HUD/TimerOutScreen"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -95.0
+offset_top = -42.0
+offset_right = 95.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "You escaped!
+"
+
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
+[connection signal="game_started" from="NetworkManager" to="HUD" method="_on_network_manager_game_started"]
 [connection signal="rat_was_caught" from="NetworkManager" to="HUD" method="_on_network_manager_rat_was_caught"]
 [connection signal="spot_position_changed" from="NetworkManager" to="Light/SpotLight3D" method="_on_network_manager_spot_position_changed"]
+[connection signal="timer_out" from="NetworkManager" to="HUD" method="_on_network_manager_timer_out"]
 [connection signal="update_cheeses_eaten" from="CheeseManager" to="HUD" method="_on_cheese_manager_update_cheeses_eaten"]

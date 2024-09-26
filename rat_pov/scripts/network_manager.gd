@@ -5,6 +5,8 @@ const MAX_CLIENTS = 1
 
 signal spot_position_changed
 signal rat_was_caught
+signal timer_out
+signal game_started
 
 var peer = ENetMultiplayerPeer.new()
 
@@ -46,3 +48,11 @@ func set_spot_position(is_on: bool, position : Vector3, angle: float):
 @rpc("any_peer")
 func catch_rat():
 	rat_was_caught.emit()
+
+@rpc("any_peer")
+func time_out():
+	timer_out.emit()
+
+@rpc("any_peer")
+func start_game():
+	game_started.emit()
