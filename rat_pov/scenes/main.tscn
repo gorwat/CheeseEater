@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=15 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="2_fv4xt"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://hp2x18qw2hh3" path="res://audio/mixkit-light-rain-atmosphere-2474.ogg" id="6_8wg4h"]
 [ext_resource type="PackedScene" uid="uid://cmohcowv2ef6d" path="res://scenes/small_objects/cheese.tscn" id="9_7sksj"]
 [ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="9_36pyg"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="11_uvd6r"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o25xb"]
 playback_mode = 2
@@ -113,5 +114,27 @@ transform = Transform3D(0.662489, 0, -0.749071, 0, 1, 0, 0.749071, 0, 0.662489, 
 [node name="Cheese6" parent="CheeseManager" instance=ExtResource("9_7sksj")]
 transform = Transform3D(0.984192, 0, -0.177102, 0, 1, 0, 0.177102, 0, 0.984192, -3.15838, -0.5, 10.5411)
 
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_uvd6r")
+
+[node name="CheeseCounter" type="Label" parent="HUD"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "0"
+
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
 [connection signal="spot_position_changed" from="NetworkManager" to="Light/SpotLight3D" method="_on_network_manager_spot_position_changed"]
+[connection signal="update_cheeses_eaten" from="CheeseManager" to="HUD" method="_on_cheese_manager_update_cheeses_eaten"]
