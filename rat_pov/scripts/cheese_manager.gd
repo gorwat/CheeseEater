@@ -1,5 +1,7 @@
 extends Node
 
+signal update_cheeses_eaten
+
 var cheese_positions = [Vector3(1,1,2),
 						Vector3(1,1,4)]
 var cheese_template
@@ -10,11 +12,14 @@ var max_cheese_count = 0;
 var time_to_cheese = 0
 var time_between_cheese = 5
 
+var cheeses_eaten = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	time_to_cheese = time_between_cheese
 	cheese_template = load("res://scenes/small_objects/cheese.tscn")
 	for cheese in get_children():
+		cheese.connect("been_eaten", _on_cheese_been_eaten)
 		cheese.despawn()
 		max_cheese_count += 1
 	
@@ -31,8 +36,6 @@ func spawn_random_cheese():
 	else:
 		cheese.spawn()
 		current_cheese_count += 1
-	
-	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -41,3 +44,9 @@ func _process(delta):
 		spawn_random_cheese()
 		time_to_cheese = time_between_cheese
 		
+
+
+func _on_cheese_been_eaten() -> void:
+	cheeses_eaten += 1;
+	update_cheeses_eaten.emit(cheeses_eaten)
+	pass # Replace with function body.
