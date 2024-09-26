@@ -57,6 +57,9 @@ func _on_claw_rat_caught() -> void:
 func _on_game_info_game_started() -> void:
 	start_game.rpc()
 
+func _on_timer_timeout() -> void:
+	time_out.rpc()
+
 @rpc
 func set_rat_position(position : Vector3, rotation : Vector3):
 	#print("Rat position recieved: ", position, " ", rotation)

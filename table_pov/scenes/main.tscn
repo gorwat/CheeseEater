@@ -282,6 +282,7 @@ shape = SubResource("BoxShape3D_rmx0v")
 [connection signal="rat_caught" from="Claw" to="NetworkManager" method="_on_claw_rat_caught"]
 [connection signal="rat_caught" from="Claw" to="GameInfo" method="_on_claw_rat_caught"]
 [connection signal="game_started" from="GameInfo" to="NetworkManager" method="_on_game_info_game_started"]
+[connection signal="timeout" from="GameInfo/Clock/Timer" to="NetworkManager" method="_on_timer_timeout"]
 [connection signal="timeout" from="GameInfo/Clock/Timer" to="GameInfo" method="_on_timer_timeout"]
 [connection signal="pressed" from="GameInfo/StartMenu/StartButton" to="GameInfo" method="_on_start_button_pressed"]
 [connection signal="pressed" from="GameInfo/GameOverMenu/RestartButton" to="GameInfo" method="_on_restart_button_pressed"]
