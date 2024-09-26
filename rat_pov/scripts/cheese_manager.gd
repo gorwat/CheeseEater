@@ -19,6 +19,7 @@ func _ready():
 	time_to_cheese = time_between_cheese
 	cheese_template = load("res://scenes/small_objects/cheese.tscn")
 	for cheese in get_children():
+		cheese.connect("been_eaten", _on_cheese_been_eaten)
 		cheese.despawn()
 		max_cheese_count += 1
 	
@@ -34,7 +35,6 @@ func spawn_random_cheese():
 		spawn_random_cheese()
 	else:
 		cheese.spawn()
-		cheese.connect("been_eaten", _on_cheese_been_eaten)
 		current_cheese_count += 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
