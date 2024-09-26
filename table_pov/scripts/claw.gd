@@ -23,6 +23,8 @@ var max_time_to_catch = 0.60;
 @onready var rat: CharacterBody3D = %Player;
 @onready var networkmanager: Node = %NetworkManager;
 
+signal rat_caught
+
 func _ready():
 	$outline.modulate = Color(1,1,1,0.75);
 	
@@ -76,7 +78,7 @@ func _process(delta: float):
 		crosshair_frame.modulate = Color(0.5, 1, 0.5);
 		if Input.get_action_strength("scoop_drop"):
 			print("WE GOT THE RAT!");
-			networkmanager.catch_rat();
+			rat_caught.emit()
 	
 	var s = lerp( crosshair_min_scale, 1.0, time_to_catch / max_time_to_catch)
 	crosshair.set_scale(Vector3(s,1,s));

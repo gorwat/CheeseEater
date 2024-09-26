@@ -2,7 +2,7 @@ extends Control
 signal game_started
 signal game_stopped
 
-enum GameState {INIT, RUNNING, TIME_OUT}
+enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT}
 
 @export var current_game_state: GameState = GameState.INIT
 
@@ -59,3 +59,9 @@ func _on_restart_button_pressed() -> void:
 func _on_start_button_pressed() -> void:
 	game_menu.visible = false
 	start_game()
+
+
+func _on_claw_rat_caught() -> void:
+	self.current_game_state = GameState.RAT_CAUGHT
+	stop_game()
+	pass # Replace with function body.

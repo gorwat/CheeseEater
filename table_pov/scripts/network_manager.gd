@@ -51,6 +51,9 @@ func _on_spot_light_3d_spot_position_changed(is_on: bool, position : Vector3, an
 	if connection_status == Status.CONNECTED:
 		set_spot_position.rpc(is_on, position, angle)
 
+func _on_claw_rat_caught() -> void:
+	catch_rat.rpc()
+	
 @rpc
 func set_rat_position(position : Vector3, rotation : Vector3):
 	#print("Rat position recieved: ", position, " ", rotation)
