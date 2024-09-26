@@ -55,8 +55,9 @@ follow_target = NodePath("../Player")
 [node name="Light" type="Node" parent="."]
 
 [node name="Ambient" type="DirectionalLight3D" parent="Light"]
-transform = Transform3D(1, 0, 0, 0, 0.0295092, 0.999565, 0, -0.999565, 0.0295092, 0, 10, 0)
-light_energy = 0.2
+transform = Transform3D(0.887412, -0.344747, -0.306023, 0.335517, 0.0277987, 0.941624, -0.316115, -0.938284, 0.140338, 0, 10, 0)
+light_color = Color(0.67451, 0.67451, 0.756863, 1)
+light_energy = 0.4
 light_angular_distance = 9.75
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Light"]
