@@ -7,6 +7,8 @@ extends CharacterBody3D
 
 @onready var step_sound: AudioStreamPlayer = $RatTippyTaps
 
+var rat_caught = false
+
 signal rat_moved(position: Vector3, rotation: Vector3)
 
 func _process(delta: float) -> void:
@@ -28,9 +30,9 @@ func _physics_process(delta: float) -> void:
 
 	# Handle forward/backward movement
 	var forward_input = 0.0
-	if Input.is_action_pressed("move_back"):
+	if Input.is_action_pressed("move_back") and not rat_caught:
 		forward_input -= 1
-	if Input.is_action_pressed("move_forward"):
+	if Input.is_action_pressed("move_forward") and not rat_caught:
 		forward_input += 1
 
 	var target_velocity = Vector3.ZERO
@@ -54,3 +56,11 @@ func _physics_process(delta: float) -> void:
 	# Emit signal if moving
 	if velocity.length_squared() > 0.0:
 		rat_moved.emit(self.position, self.rotation)
+
+
+func _on_network_manager_rat_was_caught() -> void:
+	rat_caught = true
+
+
+func _on_network_manager_game_started() -> void:
+	rat_caught = false

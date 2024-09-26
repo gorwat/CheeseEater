@@ -50,3 +50,8 @@ func _on_cheese_been_eaten() -> void:
 	cheeses_eaten += 1;
 	update_cheeses_eaten.emit(cheeses_eaten)
 	pass # Replace with function body.
+
+
+func _on_network_manager_game_started() -> void:
+	cheeses_eaten = 0
+	update_cheeses_eaten.emit(cheeses_eaten)

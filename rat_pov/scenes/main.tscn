@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=16 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="2_fv4xt"]
@@ -233,7 +233,10 @@ text = "You escaped!
 "
 
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
+[connection signal="game_started" from="NetworkManager" to="Player" method="_on_network_manager_game_started"]
+[connection signal="game_started" from="NetworkManager" to="CheeseManager" method="_on_network_manager_game_started"]
 [connection signal="game_started" from="NetworkManager" to="HUD" method="_on_network_manager_game_started"]
+[connection signal="rat_was_caught" from="NetworkManager" to="Player" method="_on_network_manager_rat_was_caught"]
 [connection signal="rat_was_caught" from="NetworkManager" to="HUD" method="_on_network_manager_rat_was_caught"]
 [connection signal="spot_position_changed" from="NetworkManager" to="Light/SpotLight3D" method="_on_network_manager_spot_position_changed"]
 [connection signal="timer_out" from="NetworkManager" to="HUD" method="_on_network_manager_timer_out"]
