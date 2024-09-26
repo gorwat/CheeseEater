@@ -4,6 +4,7 @@ const PORT = 3353 #CH3353
 const MAX_CLIENTS = 1
 
 signal spot_position_changed
+signal rat_was_caught
 
 var peer = ENetMultiplayerPeer.new()
 
@@ -42,6 +43,6 @@ func set_spot_position(is_on: bool, position : Vector3, angle: float):
 	#print("Spot position recieved")
 	spot_position_changed.emit(is_on, position, angle)
 
-@rpc
+@rpc("any_peer")
 func catch_rat():
-	print("YOU HAVE BEEN CAUGHT! RIP RAT")
+	rat_was_caught.emit()
