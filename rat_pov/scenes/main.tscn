@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=15 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="2_fv4xt"]
@@ -10,6 +10,11 @@
 [ext_resource type="AudioStream" uid="uid://hp2x18qw2hh3" path="res://audio/mixkit-light-rain-atmosphere-2474.ogg" id="6_8wg4h"]
 [ext_resource type="PackedScene" uid="uid://cmohcowv2ef6d" path="res://scenes/small_objects/cheese.tscn" id="9_7sksj"]
 [ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="9_36pyg"]
+
+[sub_resource type="Environment" id="Environment_7us62"]
+background_energy_multiplier = 0.2
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.1
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o25xb"]
 playback_mode = 2
@@ -25,6 +30,9 @@ size = Vector3(20, 1, 20)
 size = Vector3(20, 1, 20)
 
 [node name="Main" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7us62")
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera_node") instance=ExtResource("1_i7pi5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
@@ -63,6 +71,7 @@ light_angular_distance = 9.75
 [node name="SpotLight3D" type="SpotLight3D" parent="Light"]
 transform = Transform3D(1, 0, 0, 0, 0.0295092, 0.999565, 0, -0.999565, 0.0295092, -0.06, 10, 0.397)
 light_energy = 10.0
+light_volumetric_fog_energy = 2.0
 shadow_enabled = true
 spot_range = 650.0
 spot_angle = 13.0
