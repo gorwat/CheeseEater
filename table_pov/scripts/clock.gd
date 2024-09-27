@@ -1,7 +1,7 @@
 extends Label
 
 @onready var game_timer: Timer = $Timer
-const DEFAULT_TIME = 10 #5*60 
+const DEFAULT_TIME = 1*60 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
