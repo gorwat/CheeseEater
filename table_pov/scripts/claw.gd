@@ -55,7 +55,7 @@ func _process(delta: float):
 	var charge_fraction = 1 - time_to_catch / max_time_to_catch; # one - zero: how near are we to catch
 	
 	#print("ratInBox: " + str(rat_in_bounds) + "  ratRayHit: " + str(rat_ray_clear));
-	if (rat_in_bounds):
+	if (rat_in_bounds and rat_ray_clear):
 		time_to_catch -= delta;
 		time_to_catch = max(time_to_catch, 0);
 		
