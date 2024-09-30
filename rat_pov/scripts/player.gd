@@ -24,11 +24,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	else:
-		# Jumping
-		if Input.is_action_just_pressed("jump"):
-			velocity.y = jump_velocity
-		else:
-			velocity.y = 0  # Reset vertical velocity when on the ground
+		velocity.y = 0  # Reset vertical velocity when on the ground
 
 	# Handle movement input
 	var movement_input = Vector2.ZERO
