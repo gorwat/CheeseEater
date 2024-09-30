@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Microsoft.Surface.Core;
 
 namespace Cheese_Eater_Library
@@ -30,7 +31,8 @@ namespace Cheese_Eater_Library
         private const uint sensorWidth = 960;
         private const uint sensorHeight = 540;
         private const uint sensorCount = sensorWidth * sensorHeight;
-        private const byte blobThreshhold = 180;
+        private const byte brightnessThreshhold = 180;
+        private const byte pixelCountThreshhold = 100;
         private const byte NULL_BLOB = 0xff;
 
         private static TouchTarget touchTarget;
@@ -38,15 +40,14 @@ namespace Cheese_Eater_Library
         private static ImageMetrics normalizedMetrics;
         volatile private static byte[] normalizedImage;
 
-        private static Blob bestBlob;
-        private static bool foundBlob = false;
-
         volatile private static byte[] blobMembership = new byte[960 * 540];  // Holds the index of the blob the sensor is part of
-        volatile private static Blob[] blobs = new Blob[255];
         volatile private static byte[] mergeTable = new byte[256];
-        volatile private static uint blobCount = 0;
+        volatile private static Blob[] tmpBlobs = new Blob[255];
 
-        private static readonly object syncObject = new object();
+        volatile private static Blob[] validBlobs = new Blob[255];
+        volatile private static uint validBlobCount = 0;
+
+        private static Mutex mutex = new Mutex();
 
         [DllExport]
         public static void init(IntPtr hwnd)
@@ -63,40 +64,40 @@ namespace Cheese_Eater_Library
         }
 
         [DllExport]
-        public static bool isOn()
+        public static uint accuireAccess()
         {
-            return foundBlob;
+            mutex.WaitOne();
+            return validBlobCount;
         }
 
         [DllExport]
-        public static float getX()
+        public static void releaseAccess()
         {
-            if (!foundBlob) return 0.0f;
-
-            return (float)((bestBlob.maxX + bestBlob.minX) / 2) / ((float)sensorWidth);
+            mutex.ReleaseMutex();
         }
 
         [DllExport]
-        public static float getY()
+        public static float getX(uint i)
         {
-            if (!foundBlob) return 0.0f;
-            return (float)((bestBlob.maxY + bestBlob.minY) / 2) / ((float)sensorHeight);
+            return (float)((validBlobs[i].maxX + validBlobs[i].minX) / 2) / ((float)sensorWidth);
         }
 
         [DllExport]
-        public static float getSizeX()
+        public static float getY(uint i)
         {
-            if (!foundBlob) return 0.0f;
-
-            return (float)(bestBlob.maxX - bestBlob.minX) / ((float)sensorWidth);
+            return (float)((validBlobs[i].maxY + validBlobs[i].minY) / 2) / ((float)sensorHeight);
         }
 
         [DllExport]
-        public static float getSizeY()
+        public static float getSizeX(uint i)
         {
-            if (!foundBlob) return 0.0f;
+            return (float)(validBlobs[i].maxX - validBlobs[i].minX) / ((float)sensorWidth);
+        }
 
-            return (float)(bestBlob.maxY - bestBlob.minY) / ((float)sensorHeight);
+        [DllExport]
+        public static float getSizeY(uint i)
+        {
+            return (float)(validBlobs[i].maxY - validBlobs[i].minY) / ((float)sensorHeight);
         }
 
         private static uint SensorIdx(uint x, uint y)
@@ -106,129 +107,109 @@ namespace Cheese_Eater_Library
 
         private static void OnTouchTargetFrameReceived(object sender, FrameReceivedEventArgs e)
         {
-            // Lock the syncObject object so normalizedImage isn't changed while the Update method is using it
-            lock (syncObject)
+            if (normalizedImage == null)
             {
-                if (normalizedImage == null)
-                {
-                    // get rawimage data for a specific area
-                    e.TryGetRawImage(
-                        ImageType.Normalized,
-                        0, 0,
-                        1920, 1080,
-                        out normalizedImage,
-                        out normalizedMetrics);
-                }
-                else
-                {
-                    // get the updated rawimage data for the specified area
-                    e.UpdateRawImage(
-                        ImageType.Normalized,
-                        normalizedImage,
-                        0, 0,
-                        1920, 1080);
-                }
-
-                Nullable<Blob> candidateBestBlob = null;
-                bool candidateFoundBlob = false;
-                uint bestPixelCount = 0;
-                // reset blobcount and blob merge
-                blobCount = 0;
-                for (uint y = 1; y < sensorHeight; y++)
-                {
-                    for (uint x = 1; x < sensorWidth; x++)
-                    {
-                        uint i = SensorIdx(x, y);
-                        blobMembership[i] = NULL_BLOB;
-
-                        if (normalizedImage[i] < blobThreshhold)
-                            continue;
-
-                        byte downBlobId = blobMembership[SensorIdx(x, y - 1)];
-                        byte backBlobId = blobMembership[SensorIdx(x - 1, y)];
-
-                        // if either is not NULL_BLOB make the sensor a member of one
-                        if (downBlobId != NULL_BLOB || downBlobId != NULL_BLOB)
-                        {
-                            byte blobId = Math.Min(downBlobId, backBlobId);
-                            blobMembership[SensorIdx(x, y)] = blobId;
-                            // update blob
-
-                            blobs[blobId].maxX = Math.Max(x, blobs[blobId].maxX);
-                            blobs[blobId].minX = Math.Min(x, blobs[blobId].minX);
-
-                            blobs[blobId].maxY = Math.Max(y, blobs[blobId].maxY);
-                            blobs[blobId].minY = Math.Min(y, blobs[blobId].minY);
-                            blobs[blobId].pixelCount += 1;
-
-                            // if neither is NULL_BLOB, map higher index to lower index
-                            if (downBlobId != backBlobId && downBlobId != NULL_BLOB && backBlobId != NULL_BLOB)
-                            {
-                                while (blobId != mergeTable[blobId])
-                                {
-                                    blobId = mergeTable[blobId];
-                                }
-                                mergeTable[Math.Max(downBlobId, backBlobId)] = blobId;
-                            }
-                        }
-                        else
-                        {
-                            // start new blob
-                            if (blobCount == 255)
-                                continue;
-
-                            blobMembership[SensorIdx(x, y)] = (byte)blobCount;
-                            blobs[blobCount] = new Blob(x, y);
-                            mergeTable[blobCount] = (byte)blobCount;
-                            blobCount += 1;
-                        }
-                    }
-                }
-
-                // iter backwards if things fuck up
-                for (uint revBlobId = 0; revBlobId < blobCount; revBlobId++)
-                {
-                    byte blobId = (byte)(blobCount - revBlobId - 1);
-                    byte mergeTo = mergeTable[blobId];
-                    if (blobId == mergeTo) continue;
-                    for (uint x = blobs[blobId].minX; x <= blobs[blobId].maxX; x++)
-                    {
-                        for (uint y = blobs[blobId].minY; y <= blobs[blobId].maxY; y++)
-                        {
-                            if (blobMembership[SensorIdx(x, y)] == blobId)
-                            {
-                                blobMembership[SensorIdx(x, y)] = mergeTo;
-                            }
-                        }
-                    }
-
-                    blobs[mergeTo].maxX = Math.Max(blobs[mergeTo].maxX, blobs[blobId].maxX);
-                    blobs[mergeTo].maxY = Math.Max(blobs[mergeTo].maxY, blobs[blobId].maxY);
-                    blobs[mergeTo].minX = Math.Min(blobs[mergeTo].minX, blobs[blobId].minX);
-                    blobs[mergeTo].minY = Math.Min(blobs[mergeTo].minY, blobs[blobId].minY);
-
-                    blobs[mergeTo].pixelCount += blobs[blobId].pixelCount;
-                    blobs[blobId].pixelCount = 0;
-                }
-
-                for (int bi = 0; bi < blobCount; bi++)
-                {
-                    if (blobs[bi].pixelCount == 0) continue;
-
-                    
-
-                    if (blobs[bi].pixelCount > bestPixelCount && blobs[bi].pixelCount >= 100)
-                    {
-                        bestPixelCount = blobs[bi].pixelCount;
-                        candidateFoundBlob = true;
-                        candidateBestBlob = blobs[bi];
-                    }
-                }
-
-
-                bestBlob = candidateBestBlob.GetValueOrDefault();
-                foundBlob = candidateFoundBlob;
+                // get rawimage data for a specific area
+                e.TryGetRawImage(
+                    ImageType.Normalized,
+                    0, 0,
+                    1920, 1080,
+                    out normalizedImage,
+                    out normalizedMetrics);
             }
+            else
+            {
+                // get the updated rawimage data for the specified area
+                e.UpdateRawImage(
+                    ImageType.Normalized,
+                    normalizedImage,
+                    0, 0,
+                    1920, 1080);
+            }
+
+            uint tmpBlobCount = 0;
+            for (uint y = 1; y < sensorHeight; y++)
+            {
+                for (uint x = 1; x < sensorWidth; x++)
+                {
+                    uint i = SensorIdx(x, y);
+                    blobMembership[i] = NULL_BLOB;
+                    if (normalizedImage[i] < brightnessThreshhold)
+                        continue;
+                    byte downBlobId = blobMembership[SensorIdx(x, y - 1)];
+                    byte backBlobId = blobMembership[SensorIdx(x - 1, y)];
+                    // if either is not NULL_BLOB make the sensor a member of one
+                    if (downBlobId != NULL_BLOB || downBlobId != NULL_BLOB)
+                    {
+                        byte blobId = Math.Min(downBlobId, backBlobId);
+                        blobMembership[SensorIdx(x, y)] = blobId;
+                        // update blob
+                        tmpBlobs[blobId].maxX = Math.Max(x, tmpBlobs[blobId].maxX);
+                        tmpBlobs[blobId].minX = Math.Min(x, tmpBlobs[blobId].minX);
+                        tmpBlobs[blobId].maxY = Math.Max(y, tmpBlobs[blobId].maxY);
+                        tmpBlobs[blobId].minY = Math.Min(y, tmpBlobs[blobId].minY);
+                        tmpBlobs[blobId].pixelCount += 1;
+                        // if neither is NULL_BLOB, map higher index to lower index
+                        if (downBlobId != backBlobId && downBlobId != NULL_BLOB && backBlobId != NULL_BLOB)
+                        {
+                            while (blobId != mergeTable[blobId])
+                            {
+                                blobId = mergeTable[blobId];
+                            }
+                            mergeTable[Math.Max(downBlobId, backBlobId)] = blobId;
+                        }
+                    }
+                    else
+                    {
+                        // start new blob
+                        if (tmpBlobCount == 255)
+                            continue;
+                        blobMembership[SensorIdx(x, y)] = (byte)tmpBlobCount;
+                        tmpBlobs[tmpBlobCount] = new Blob(x, y);
+                        mergeTable[tmpBlobCount] = (byte)tmpBlobCount;
+                        tmpBlobCount += 1;
+                    }
+                }
+            }
+            
+            // iter backwards if things fuck up
+            for (uint revBlobId = 0; revBlobId < tmpBlobCount; revBlobId++)
+            {
+                byte blobId = (byte)(tmpBlobCount - revBlobId - 1);
+                byte mergeTo = mergeTable[blobId];
+                if (blobId == mergeTo) continue;
+                for (uint x = tmpBlobs[blobId].minX; x <= tmpBlobs[blobId].maxX; x++)
+                {
+                    for (uint y = tmpBlobs[blobId].minY; y <= tmpBlobs[blobId].maxY; y++)
+                    {
+                        if (blobMembership[SensorIdx(x, y)] == blobId)
+                        {
+                            blobMembership[SensorIdx(x, y)] = mergeTo;
+                        }
+                    }
+                }
+                tmpBlobs[mergeTo].maxX = Math.Max(tmpBlobs[mergeTo].maxX, tmpBlobs[blobId].maxX);
+                tmpBlobs[mergeTo].maxY = Math.Max(tmpBlobs[mergeTo].maxY, tmpBlobs[blobId].maxY);
+                tmpBlobs[mergeTo].minX = Math.Min(tmpBlobs[mergeTo].minX, tmpBlobs[blobId].minX);
+                tmpBlobs[mergeTo].minY = Math.Min(tmpBlobs[mergeTo].minY, tmpBlobs[blobId].minY);
+                tmpBlobs[mergeTo].pixelCount += tmpBlobs[blobId].pixelCount;
+                tmpBlobs[blobId].pixelCount = 0;
+            }
+
+            mutex.WaitOne();
+            validBlobCount = 0;
+            for (int bi = 0; bi < tmpBlobCount; bi++)
+            {
+                if (tmpBlobs[bi].pixelCount == 0) continue;
+                
+                if (tmpBlobs[bi].pixelCount >= pixelCountThreshhold)
+                {
+                    validBlobs[validBlobCount] = tmpBlobs[bi];
+                    validBlobCount += 1;
+                }
+            }
+
+            mutex.ReleaseMutex();
         }
     }
 }
