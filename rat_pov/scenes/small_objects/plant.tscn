@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=4 uid="uid://duq5bwje3l5bc"]
+[gd_scene load_steps=12 format=4 uid="uid://duq5bwje3l5bc"]
 
 [ext_resource type="Texture2D" uid="uid://ct61s4h8lhk8t" path="res://art/models/foliage_stylized/stylized_handpainted_foliage_0.png" id="1_5yq8j"]
 [ext_resource type="Texture2D" uid="uid://ox2d7d73ux2m" path="res://art/models/foliage_stylized/stylized_handpainted_foliage_1.png" id="2_c7io5"]
+[ext_resource type="Shader" path="res://shaders/plant.gdshader" id="3_ix0to"]
+[ext_resource type="Script" path="res://scripts/plant.gd" id="4_5nmvt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sbar7"]
 resource_name = "aiStandardSurface1"
@@ -50,10 +52,52 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_4suho")
 
-[node name="Node3D" type="Node3D"]
-transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+[sub_resource type="Skin" id="Skin_pw2g2"]
 
-[node name="polySurface223_aiStandardSurface1_0" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -850, 0, 0)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wwek8"]
+render_priority = 0
+shader = ExtResource("3_ix0to")
+shader_parameter/shaking_bush = false
+shader_parameter/time_left = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1yiir"]
+render_priority = 0
+shader = ExtResource("3_ix0to")
+shader_parameter/shaking_bush = false
+shader_parameter/time_left = 0.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qv3gq"]
+height = 27.4688
+radius = 22.2385
+
+[node name="Plant" type="Node3D"]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+script = ExtResource("4_5nmvt")
+
+[node name="PlantMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -850, -0.434401, 8.54733)
+mesh = SubResource("ArrayMesh_kaecw")
+skin = SubResource("Skin_pw2g2")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("ShaderMaterial_wwek8")
+
+[node name="PlantMesh2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.541811, 0, 0.8405, 0, 1, 0, -0.8405, 0, 0.541811, -432.589, -0.000152588, 701.311)
 mesh = SubResource("ArrayMesh_kaecw")
 skeleton = NodePath("")
+surface_material_override/0 = SubResource("ShaderMaterial_1yiir")
+
+[node name="PlantMesh3" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.984756, 0, -0.17394, 0, 1, 0, 0.17394, 0, -0.984756, 855.098, -0.000152588, -138.874)
+mesh = SubResource("ArrayMesh_kaecw")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("ShaderMaterial_1yiir")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.308511, 9.00384, 0)
+shape = SubResource("CylinderShape3D_qv3gq")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

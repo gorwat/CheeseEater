@@ -136,18 +136,6 @@ transform = Transform3D(1, 0, 0, 0, 0.914508, -0.404567, 0, 0.404567, 0.914508, 
 [node name="Bench" parent="Hideouts/BenchCorner" instance=ExtResource("3_4cngf")]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 5.48018, -0.524679, -8.50947)
 
-[node name="Leaves9" parent="Hideouts/BenchCorner" instance=ExtResource("7_chrys")]
-transform = Transform3D(0.00907151, 0, 0.0232961, 0, 0.025, 0, -0.0232961, 0, 0.00907151, 1.86118, -0.359037, -10.3101)
-
-[node name="Leaves10" parent="Hideouts/BenchCorner" instance=ExtResource("7_chrys")]
-transform = Transform3D(0.0145144, 0, 0.0372737, 0, 0.04, 0, -0.0372737, 0, 0.0145144, 5.3855, -0.264513, -11.5768)
-
-[node name="Leaves11" parent="Hideouts/BenchCorner" instance=ExtResource("7_chrys")]
-transform = Transform3D(0.00630477, 0, 0.0445561, 0, 0.045, 0, -0.0445561, 0, 0.00630477, 14.6938, -0.257845, -10.4122)
-
-[node name="Leaves12" parent="Hideouts/BenchCorner" instance=ExtResource("7_chrys")]
-transform = Transform3D(-0.0082427, 0, 0.0391415, -0.00706579, 0.0393429, -0.00148797, -0.0384985, -0.00722077, -0.00810728, 10.5088, -0.36257, -11.7931)
-
 [node name="DrainCorner" type="Node3D" parent="Hideouts"]
 
 [node name="Drain" parent="Hideouts/DrainCorner" instance=ExtResource("5_litay")]
@@ -224,6 +212,20 @@ transform = Transform3D(0.0166408, 0, -0.0110943, 0, 0.02, 0, 0.0110943, 0, 0.01
 
 [node name="Leaves12" parent="Hideouts/Vegitation/LeafCorner3" instance=ExtResource("7_chrys")]
 transform = Transform3D(0.01999, 0, 0.000633115, 0, 0.02, 0, -0.000633115, 0, 0.01999, -23.4178, -0.384459, 5.39895)
+
+[node name="Bench" type="Node3D" parent="Hideouts/Vegitation"]
+
+[node name="Leaves9" parent="Hideouts/Vegitation/Bench" instance=ExtResource("7_chrys")]
+transform = Transform3D(0.00907151, 0, 0.0232961, 0, 0.025, 0, -0.0232961, 0, 0.00907151, 1.86118, -0.359037, -10.3101)
+
+[node name="Leaves10" parent="Hideouts/Vegitation/Bench" instance=ExtResource("7_chrys")]
+transform = Transform3D(0.0145144, 0, 0.0372737, 0, 0.04, 0, -0.0372737, 0, 0.0145144, 5.3855, -0.264513, -11.5768)
+
+[node name="Leaves11" parent="Hideouts/Vegitation/Bench" instance=ExtResource("7_chrys")]
+transform = Transform3D(0.00630477, 0, 0.0445561, 0, 0.045, 0, -0.0445561, 0, 0.00630477, 14.6938, -0.257845, -10.4122)
+
+[node name="Leaves12" parent="Hideouts/Vegitation/Bench" instance=ExtResource("7_chrys")]
+transform = Transform3D(-0.0082427, 0, 0.0391415, -0.00706579, 0.0393429, -0.00148797, -0.0384985, -0.00722077, -0.00810728, 10.5088, -0.36257, -11.7931)
 
 [node name="Stones" type="Node3D" parent="Hideouts"]
 
