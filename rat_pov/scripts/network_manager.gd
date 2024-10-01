@@ -3,7 +3,7 @@ extends Node
 const PORT = 3353 #CH3353
 const MAX_CLIENTS = 1
 
-signal spot_position_changed
+signal spot_positions_changed
 signal rat_was_caught
 signal timer_out
 signal game_started
@@ -39,11 +39,10 @@ func _on_player_rat_moved(position : Vector3, rotation : Vector3):
 func set_rat_position(position : Vector3, rotation : Vector3):
 	#print("Rat position sent")
 	pass
-	
+
 @rpc("any_peer")
-func set_spot_position(is_on: bool, position : Vector3, angle: float):
-	#print("Spot position recieved")
-	spot_position_changed.emit(is_on, position, angle)
+func set_spot_positions(positions: PackedVector3Array, angles: PackedFloat32Array):
+	spot_positions_changed.emit(positions, angles)
 
 @rpc("any_peer")
 func catch_rat():

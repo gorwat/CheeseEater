@@ -1,12 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=16 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
+[ext_resource type="Script" path="res://scripts/light_manager.gd" id="1_ofn0t"]
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="2_fv4xt"]
 [ext_resource type="AudioStream" uid="uid://dulhdyomx2nvc" path="res://art/audio/footsteps-tap.wav" id="2_rj644"]
-[ext_resource type="Script" path="res://scripts/spot_light_3d.gd" id="2_uv8rb"]
 [ext_resource type="Script" path="res://scripts/CameraRig.gd" id="3_itbph"]
 [ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="4_qiups"]
-[ext_resource type="AudioStream" uid="uid://bv3r07rew3747" path="res://art/audio/humming_long.ogg" id="5_xxgte"]
 [ext_resource type="AudioStream" uid="uid://hp2x18qw2hh3" path="res://art/audio/mixkit-light-rain-atmosphere-2474.ogg" id="6_8wg4h"]
 [ext_resource type="PackedScene" uid="uid://cmohcowv2ef6d" path="res://scenes/small_objects/cheese.tscn" id="9_7sksj"]
 [ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="9_36pyg"]
@@ -34,6 +33,9 @@ size = Vector3(20, 1, 20)
 size = Vector3(20, 1, 20)
 
 [node name="Main" type="Node"]
+
+[node name="LightManager" type="Node" parent="."]
+script = ExtResource("1_ofn0t")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7us62")
@@ -76,32 +78,11 @@ shape = SubResource("BoxShape3D_ndlur")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 mesh = SubResource("BoxMesh_hna24")
 
-[node name="Light" type="Node" parent="."]
-
-[node name="Ambient" type="DirectionalLight3D" parent="Light"]
-transform = Transform3D(0.887412, -0.344747, -0.306023, 0.335517, 0.0277987, 0.941624, -0.316115, -0.938284, 0.140338, 0, 10, 0)
+[node name="Ambient" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.887412, -0.344747, -0.306023, 0.335517, 0.0277987, 0.941624, -0.316115, -0.938284, 0.140337, 0, 10, 0)
 light_color = Color(0.67451, 0.67451, 0.756863, 1)
 light_energy = 0.4
 light_angular_distance = 9.75
-
-[node name="SpotLight3D" type="SpotLight3D" parent="Light"]
-transform = Transform3D(1, 0, 0, 0, 0.0295092, 0.999565, 0, -0.999565, 0.0295092, -0.06, 10, 0.397)
-light_energy = 10.0
-light_volumetric_fog_energy = 2.0
-shadow_enabled = true
-spot_range = 650.0
-spot_angle = 13.0
-script = ExtResource("2_uv8rb")
-
-[node name="SpotlightHumming" type="AudioStreamPlayer3D" parent="Light/SpotLight3D"]
-transform = Transform3D(1, 0, 0, 0, 0.0295092, -0.999565, 0, 0.999565, 0.0295092, 0.06, 0.254107, -4.84609)
-stream = ExtResource("5_xxgte")
-attenuation_model = 2
-autoplay = true
-max_distance = 10.0
-panning_strength = 0.6
-doppler_tracking = 1
-parameters/looping = true
 
 [node name="NetworkManager" type="Node" parent="."]
 script = ExtResource("2_fv4xt")
@@ -252,6 +233,6 @@ text = "You escaped!
 [connection signal="game_started" from="NetworkManager" to="HUD" method="_on_network_manager_game_started"]
 [connection signal="rat_was_caught" from="NetworkManager" to="Player" method="_on_network_manager_rat_was_caught"]
 [connection signal="rat_was_caught" from="NetworkManager" to="HUD" method="_on_network_manager_rat_was_caught"]
-[connection signal="spot_position_changed" from="NetworkManager" to="Light/SpotLight3D" method="_on_network_manager_spot_position_changed"]
+[connection signal="spot_positions_changed" from="NetworkManager" to="LightManager" method="_on_network_manager_spot_positions_changed"]
 [connection signal="timer_out" from="NetworkManager" to="HUD" method="_on_network_manager_timer_out"]
 [connection signal="update_cheeses_eaten" from="CheeseManager" to="HUD" method="_on_cheese_manager_update_cheeses_eaten"]

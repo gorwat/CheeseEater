@@ -46,10 +46,10 @@ func _on_init_connection(ip: String) -> void:
 	peer.peer_connected.connect(_on_connected_to_server)
 	peer.peer_disconnected.connect(_on_server_disconnected)
 	multiplayer.multiplayer_peer = peer
-	
-func _on_spot_light_3d_spot_position_changed(is_on: bool, position : Vector3, angle: float):
+
+func _on_light_manager_spot_positions_changed(positions: PackedVector3Array, angles: PackedFloat32Array):
 	if connection_status == Status.CONNECTED:
-		set_spot_position.rpc(is_on, position, angle)
+		set_spot_positions.rpc(positions, angles)
 
 func _on_claw_rat_caught() -> void:
 	catch_rat.rpc()
@@ -66,7 +66,7 @@ func set_rat_position(position : Vector3, rotation : Vector3):
 	rat_pos_recieved.emit(position, rotation)
 
 @rpc
-func set_spot_position(is_on: bool, position : Vector3, angle: float):
+func set_spot_positions(positions: PackedVector3Array, angles: PackedFloat32Array):
 	pass
 
 @rpc	

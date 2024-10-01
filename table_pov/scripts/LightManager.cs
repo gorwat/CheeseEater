@@ -29,14 +29,17 @@ public static class Table
 public partial class LightManager : Node
 {
 	SpotLight3D[] spotLights;
+	
+	[Signal]
+	public delegate void SpotPositionsChangedEventHandler(Vector3[] positions, float[] angles);
 
 	public override void _Ready()
 	{
 		// Initialize table by sending over window handle
-		uint maxLights = Table.init(new IntPtr(DisplayServer.WindowGetNativeHandle(DisplayServer.HandleType.WindowHandle)));
+		Table.init(new IntPtr(DisplayServer.WindowGetNativeHandle(DisplayServer.HandleType.WindowHandle)));
 		
-		spotLights = new SpotLight3D[maxLights];
-		for(uint i = 0; i < maxLights; ++i) 
+		spotLights = new SpotLight3D[10];
+		for(uint i = 0; i < 10; ++i) 
 		{
 			spotLights[i] = new SpotLight3D();
 			spotLights[i].Visible = false;
@@ -49,6 +52,10 @@ public partial class LightManager : Node
 	public override void _Process(double delta)
 	{
 		uint count = Table.accuireAccess();
+		
+		Vector3[] positions = new Vector3[count];
+		float[] angles = new float[count];
+		
 		for(uint i = 0; i < count; ++i) 
 		{
 			float x = Table.getX(i);
@@ -62,11 +69,16 @@ public partial class LightManager : Node
 			spotLights[i].SpotAngle = ((float)Math.Atan((Math.Max(sizeX * 27.0f, sizeY * 16.0f)) / 10.0f)) * 2.0f * (180.0f / 3.14f);
 			
 			spotLights[i].Visible = true;
+			
+			positions[i] = p;
+			angles[i] = spotLights[i].SpotAngle;
 		}
 		Table.releaseAccess();
 		
 		for(uint i = count; i < spotLights.Length; ++i) {
 			spotLights[i].Visible = false;
 		}
+		
+		EmitSignal(SignalName.SpotPositionsChanged, positions, angles);
 	}
 }
