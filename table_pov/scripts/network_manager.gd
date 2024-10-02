@@ -8,6 +8,8 @@ enum Status{CONNECTED, DISCONNECTED, CONNECTING}
 var connection_status = Status.DISCONNECTED
 signal rat_pos_recieved
 signal connection_status_schanged
+signal cheese_spawned
+signal cheese_eaten
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -71,7 +73,8 @@ func set_spot_positions(positions: PackedVector3Array, angles: PackedFloat32Arra
 
 @rpc	
 func catch_rat(): # This function is called when the rat is caught
-	print("THE RAT HAS BEEN CAUGHT!");
+	#print("THE RAT HAS BEEN CAUGHT!");
+	pass
 	
 @rpc
 func time_out():
@@ -80,5 +83,16 @@ func time_out():
 @rpc
 func start_game():
 	pass
+
+@rpc
+func sync_cheese_spawn(cheese_name:String, position:Vector3, rotation:Vector3):
+	cheese_spawned.emit(cheese_name, position, rotation)
+	
+@rpc
+func sync_cheese_eaten(cheese_name:String):
+	print("cheese eaten")
+	cheese_eaten.emit(cheese_name)
+
+
 	
 	
