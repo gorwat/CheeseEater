@@ -34,6 +34,12 @@ func _on_client_connected(id: int):
 func _on_player_rat_moved(position : Vector3, rotation : Vector3):
 	#print("Attempt to send rat position")
 	set_rat_position.rpc(position, rotation)
+	
+func _on_cheese_manager_specific_cheese_eaten(cheese_name) -> void:
+	sync_cheese_eaten.rpc(cheese_name)
+	
+func _on_cheese_manager_specific_cheese_spawned(cheese_name, position, rotation) -> void:
+	sync_cheese_spawn.rpc(cheese_name, position, rotation)
 
 @rpc
 func set_rat_position(position : Vector3, rotation : Vector3):
@@ -55,3 +61,11 @@ func time_out():
 @rpc("any_peer")
 func start_game():
 	game_started.emit()
+	
+@rpc("any_peer")
+func sync_cheese_spawn(cheese_name:String, position:Vector3, rotation:Vector3):
+	pass
+	
+@rpc("any_peer")
+func sync_cheese_eaten(cheese_name:String):
+	pass
