@@ -9,7 +9,16 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	self.text = "%d" % game_timer.time_left
+	self.text = seconds2mmss(game_timer.time_left)#"%d" % game_timer.time_left
 
+
+func seconds2mmss(total_seconds: float) -> String:
+	#total_seconds = 12345
+	var seconds:float = fmod(total_seconds , 60.0)
+	var minutes:int   =  int(total_seconds / 60.0) % 60
+	var hhmmss_string:String = "%02d:%02d" % [minutes, seconds]
+	return hhmmss_string
+	
+	
 func _on_timeout() -> void:
 	pass
