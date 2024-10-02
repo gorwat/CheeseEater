@@ -299,6 +299,7 @@ shape = SubResource("BoxShape3D_dm842")
 
 [connection signal="cheese_eaten" from="NetworkManager" to="CheeseManager" method="_on_network_manager_cheese_eaten"]
 [connection signal="cheese_spawned" from="NetworkManager" to="CheeseManager" method="_on_network_manager_cheese_spawned"]
+[connection signal="connection_status_schanged" from="NetworkManager" to="CheeseManager" method="_on_network_manager_connection_status_schanged"]
 [connection signal="connection_status_schanged" from="NetworkManager" to="Server Menu" method="_on_network_manager_connection_status_schanged"]
 [connection signal="connection_status_schanged" from="NetworkManager" to="GameInfo" method="_on_network_manager_connection_status_schanged"]
 [connection signal="rat_pos_recieved" from="NetworkManager" to="Player" method="_on_network_manager_rat_pos_recieved"]

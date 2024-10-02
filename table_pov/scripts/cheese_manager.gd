@@ -1,6 +1,7 @@
 extends Node3D
 
 var cheese_asset
+enum Status{CONNECTED, DISCONNECTED, CONNECTING}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,3 +23,9 @@ func _on_network_manager_cheese_spawned(cheese_name:String, position:Vector3, ro
 
 func _on_network_manager_cheese_eaten(cheese_name:String) -> void:
 	despawn(cheese_name)
+
+
+func _on_network_manager_connection_status_schanged(status) -> void:
+	if Status.DISCONNECTED:
+		for child in get_children():
+			remove_child(child)
