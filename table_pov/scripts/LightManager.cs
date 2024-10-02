@@ -28,7 +28,6 @@ public static class Table
 
 public partial class LightManager : Node
 {
-	SpotLight3D[] spotLights;
 	
 	[Signal]
 	public delegate void SpotPositionsChangedEventHandler(Vector3[] positions, float[] angles);
@@ -38,21 +37,21 @@ public partial class LightManager : Node
 		// Initialize table by sending over window handle
 		Table.init(new IntPtr(DisplayServer.WindowGetNativeHandle(DisplayServer.HandleType.WindowHandle)));
 		
-		spotLights = new SpotLight3D[10];
-		for(uint i = 0; i < 10; ++i) 
+		for(int i = 0; i < 10; ++i) 
 		{
-			spotLights[i] = new SpotLight3D();
-			spotLights[i].Visible = false;
-			spotLights[i].LightEnergy = 10.0f;
-			spotLights[i].SpotRange = 15.0f;
-			AddChild(spotLights[i]);
+			SpotLight3D spotLight = new SpotLight3D();
+			AddChild(spotLight);
+			spotLight.RotationDegrees = new Vector3(-90.0f, 180.0f, 0.0f);
+			spotLight.Visible = false;
+			spotLight.LightEnergy = 10.0f;
+			spotLight.SpotRange = 20.0f;
 		}
 	}
 
 	public override void _Process(double delta)
 	{
 		uint count = Table.accuireAccess();
-		
+
 		Vector3[] positions = new Vector3[count];
 		float[] angles = new float[count];
 		
@@ -64,19 +63,19 @@ public partial class LightManager : Node
 			float sizeY = Table.getSizeY(i);
 			
 			Vector3 p = new Vector3(27.0f * (x - 0.5f) * 2.0f, 10.0f, 16.0f * (y - 0.5f) * 2.0f);
-			spotLights[i].SetPosition(p);
+			GetChild<SpotLight3D>((int)i).SetPosition(p);
 			
-			spotLights[i].SpotAngle = ((float)Math.Atan((Math.Max(sizeX * 27.0f, sizeY * 16.0f)) / 10.0f)) * 2.0f * (180.0f / 3.14f);
+			GetChild<SpotLight3D>((int)i).SpotAngle = ((float)Math.Atan((Math.Max(sizeX * 27.0f, sizeY * 16.0f)) / 10.0f)) * 2.0f * (180.0f / 3.14f);
 			
-			spotLights[i].Visible = true;
+			GetChild<SpotLight3D>((int)i).Visible = true;
 			
 			positions[i] = p;
-			angles[i] = spotLights[i].SpotAngle;
+			angles[i] = GetChild<SpotLight3D>((int)i).SpotAngle;
 		}
 		Table.releaseAccess();
 		
-		for(uint i = count; i < spotLights.Length; ++i) {
-			spotLights[i].Visible = false;
+		for(uint i = count; i < 10; ++i) {
+			GetChild<SpotLight3D>((int)i).Visible = false;
 		}
 		
 		EmitSignal(SignalName.SpotPositionsChanged, positions, angles);
