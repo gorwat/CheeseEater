@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmohcowv2ef6d"]
+
+[ext_resource type="PackedScene" uid="uid://unv4r7kx84c1" path="res://art/cheese/cheese.glb" id="2_hc4iv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jrr2w"]
+size = Vector3(0.7, 0.5, 0.7)
+
+[node name="Cheese" type="Node3D"]
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="cheese" parent="Area3D" instance=ExtResource("2_hc4iv")]
+transform = Transform3D(0.57, 0, 0, 0, 0.57, 0, 0, 0, 0.57, 0, 0.30698, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.365171, 0)
+shape = SubResource("BoxShape3D_jrr2w")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
