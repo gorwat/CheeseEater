@@ -26,7 +26,6 @@ func _process(delta):
 func _on_area_3d_body_entered(body):
 	if not is_spawned:
 		return
-	print("Ate cheese!")
 	despawn()
-	been_eaten.emit()
+	been_eaten.emit(name)
 	get_parent().current_cheese_count -= 1

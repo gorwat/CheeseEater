@@ -235,4 +235,6 @@ text = "You escaped!
 [connection signal="rat_was_caught" from="NetworkManager" to="HUD" method="_on_network_manager_rat_was_caught"]
 [connection signal="spot_positions_changed" from="NetworkManager" to="LightManager" method="_on_network_manager_spot_positions_changed"]
 [connection signal="timer_out" from="NetworkManager" to="HUD" method="_on_network_manager_timer_out"]
+[connection signal="specific_cheese_eaten" from="CheeseManager" to="NetworkManager" method="_on_cheese_manager_specific_cheese_eaten"]
+[connection signal="specific_cheese_spawned" from="CheeseManager" to="NetworkManager" method="_on_cheese_manager_specific_cheese_spawned"]
 [connection signal="update_cheeses_eaten" from="CheeseManager" to="HUD" method="_on_cheese_manager_update_cheeses_eaten"]

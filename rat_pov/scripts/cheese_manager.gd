@@ -1,9 +1,9 @@
 extends Node
 
 signal update_cheeses_eaten
+signal specific_cheese_eaten
+signal specific_cheese_spawned
 
-var cheese_positions = [Vector3(1,1,2),
-						Vector3(1,1,4)]
 var cheese_template
 
 var current_cheese_count = 0;
@@ -36,6 +36,7 @@ func spawn_random_cheese():
 	else:
 		cheese.spawn()
 		current_cheese_count += 1
+		specific_cheese_spawned.emit(cheese.name, cheese.position, cheese.rotation)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -46,10 +47,10 @@ func _process(delta):
 		
 
 
-func _on_cheese_been_eaten() -> void:
+func _on_cheese_been_eaten(cheese_name) -> void:
 	cheeses_eaten += 1;
 	update_cheeses_eaten.emit(cheeses_eaten)
-	pass # Replace with function body.
+	specific_cheese_eaten.emit(cheese_name)
 
 
 func _on_network_manager_game_started() -> void:
