@@ -13,14 +13,16 @@ var shake_timer = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# unlink plant instance from others by duplicating it 
-	$PlantMesh.set_surface_override_material(0, $PlantMesh.get_surface_override_material(0).duplicate());
-	$PlantMesh2.set_surface_override_material(0, $PlantMesh.get_surface_override_material(0).duplicate());
-	$PlantMesh3.set_surface_override_material(0, $PlantMesh.get_surface_override_material(0).duplicate());
+	$PlantMesh.set_surface_override_material(0, $PlantMesh.get_active_material(0).duplicate());
+	$PlantMesh2.set_surface_override_material(0, $PlantMesh2.get_active_material(0).duplicate());
+	$PlantMesh3.set_surface_override_material(0, $PlantMesh3.get_active_material(0).duplicate());
+	#$PlantMesh2.mesh.surface_set_material(0, $PlantMesh2.mesh.surface_get_material(0).duplicate());
+	#$PlantMesh3.mesh.surface_set_material(0, $PlantMesh3.mesh.surface_get_material(0).duplicate());
 	
 	# get spatial shader
-	material = $PlantMesh.get_surface_override_material(0)
-	material2 = $PlantMesh2.get_surface_override_material(0)
-	material3 = $PlantMesh3.get_surface_override_material(0)
+	material = $PlantMesh.get_active_material(0)
+	material2 = $PlantMesh2.get_active_material(0)
+	material3 = $PlantMesh3.get_active_material(0)
 	
 	# need to init false (apparently, but can't really find what makes default true)
 	material.set_shader_parameter("shaking_bush", shaking_bush) 
