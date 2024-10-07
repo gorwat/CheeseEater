@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=3 uid="uid://d2et7ws2ysi4k"]
+
+[ext_resource type="Script" path="res://cage.gd" id="1_m4fnq"]
+[ext_resource type="PackedScene" uid="uid://bm8iunx2y24gm" path="res://art/models/cage/net_cage.glb" id="2_ssmm4"]
+[ext_resource type="Texture2D" uid="uid://dmu6njho5ho6i" path="res://art/particles/blackSmoke19.png" id="3_5cjym"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xglv6"]
+height = 1.08433
+radius = 1.26752
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yoykj"]
+transparency = 1
+blend_mode = 1
+albedo_color = Color(0.185251, 0.144003, 0.0828869, 1)
+albedo_texture = ExtResource("3_5cjym")
+
+[sub_resource type="QuadMesh" id="QuadMesh_65bgt"]
+material = SubResource("StandardMaterial3D_yoykj")
+
+[sub_resource type="Curve" id="Curve_fp826"]
+max_value = 100.0
+_data = [Vector2(0, 7.89474), 0.0, 0.0, 0, 0, Vector2(0.215983, 88.4211), 143.344, 143.344, 0, 0, Vector2(0.516199, 100), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_xapbc"]
+_data = [Vector2(0, 0.0842105), 0.0, 0.0, 0, 0, Vector2(0.0799136, 0.989474), 0.0, 0.0, 0, 0, Vector2(0.37149, 0.789474), -2.43684, -2.43684, 0, 0, Vector2(0.805616, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[node name="Cage" type="Node3D"]
+script = ExtResource("1_m4fnq")
+
+[node name="CageMesh" parent="." instance=ExtResource("2_ssmm4")]
+transform = Transform3D(-10, 8.74228e-07, 0, -8.74228e-07, -10, 0, 0, 0, 10, 0, 1.00485, 0)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34836, 0)
+visible = false
+shape = SubResource("CylinderShape3D_xglv6")
+disabled = true
+
+[node name="DustParticles" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.0121298, 0.999926, 0, -0.999926, -0.0121298, 0, 0.234811, 0)
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 0.51
+mesh = SubResource("QuadMesh_65bgt")
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 1.0
+spread = 180.0
+gravity = Vector3(0, -2.8, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+damping_max = 6.224
+damping_curve = SubResource("Curve_fp826")
+scale_amount_min = 3.0
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_xapbc")
+color = Color(0.4, 0.278431, 0.184314, 1)
