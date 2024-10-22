@@ -10,7 +10,8 @@ enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT}
 
 # screens
 @onready var game_menu: Control = $StartMenu
-@onready var game_over_menu: Control = $GameOverMenu
+@onready var time_out_menu: Control = $GameOverMenu
+@onready var caught_rat_menu: Control = $CaughtRatMenu
 
 # UI elements
 @onready var timer_ui: Label = $Clock
@@ -19,7 +20,9 @@ var connected: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	game_over_menu.visible = false
+	game_menu.visible = true
+	time_out_menu.visible = false
+	caught_rat_menu.visible = false
 	timer_ui.visible = false
 
 func	 _process(delta: float) -> void:
@@ -32,7 +35,8 @@ func start_game() -> void:
 	
 	# hide screens
 	game_menu.visible = false
-	game_over_menu. visible = false
+	time_out_menu. visible = false
+	caught_rat_menu. visible = false
 	
 	# show ingame UI
 	timer_ui.visible = true
@@ -41,13 +45,11 @@ func start_game() -> void:
 
 func stop_game() -> void:
 	if (current_game_state == GameState.TIME_OUT):
-		game_over_menu.visible = true
+		time_out_menu.visible = true
 	elif (current_game_state == GameState.RAT_CAUGHT):
-		game_over_menu.visible = true
+		caught_rat_menu.visible = true
 	elif (current_game_state == GameState.FORCE_QUIT):
 		game_menu.visible = true
-	else:
-		game_over_menu.visible = true
 	
 	game_timer.stop()
 	timer_ui.visible = false
