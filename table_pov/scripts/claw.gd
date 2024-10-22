@@ -77,7 +77,7 @@ func _process(delta: float):
 		#$Crosshair/full.modulate = Color(0.5, 1, 0.5);
 		crosshair_frame.modulate = Color(0.5, 1, 0.5);
 		if Input.get_action_strength("scoop_drop"):
-			print("WE GOT THE RAT!");
+			#print("WE GOT THE RAT!");
 			rat_caught.emit()
 	
 	var s = lerp( crosshair_min_scale, 1.0, time_to_catch / max_time_to_catch)

@@ -24,7 +24,6 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_P):
-		print("Attempt to send rat position")
 		set_rat_position.rpc()
 
 func _on_client_disconnected(id: int):
@@ -38,7 +37,6 @@ func _on_client_connected(id: int):
 	print("Connected!")
 	
 func _on_player_rat_moved(position : Vector3, rotation : Vector3):
-	#print("Attempt to send rat position")
 	set_rat_position.rpc(position, rotation)
 	
 func _on_cheese_manager_specific_cheese_eaten(cheese_name) -> void:
@@ -48,7 +46,6 @@ func _on_cheese_manager_specific_cheese_spawned(cheese_name, position, rotation)
 	sync_cheese_spawn.rpc(cheese_name, position, rotation)
 
 func _on_game_info_game_started(session_duration : int) -> void:
-	print("start game with session_duration ", session_duration)
 	start_game.rpc(session_duration)
 	
 func _on_game_info_force_quit() -> void:
@@ -83,6 +80,5 @@ func set_spot_positions(positions: PackedVector3Array, angles: PackedFloat32Arra
 
 @rpc("any_peer")
 func catch_rat():
-	print("caught!")
 	rat_was_caught.emit()
 	

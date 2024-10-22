@@ -77,7 +77,6 @@ func _on_network_manager_rat_force_quit() -> void:
 	stop_game()
 
 func _on_claw_rat_caught() -> void:
-	print("gamestate ", current_game_state)
 	if (current_game_state == GameState.RUNNING):
 		self.current_game_state = GameState.RAT_CAUGHT
 		stop_game()
