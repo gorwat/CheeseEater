@@ -20,6 +20,9 @@ enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT}
 @onready var game_restart_caught_button: Button = $RatCaughtScreen/RestartButton
 @onready var game_restart_timer_out_button: Button = $TimerOutScreen/RestartButton
 
+# Session duration
+@onready var session_duration_ui: Control = $SessionDuration
+@onready var session_duration: Label = $SessionDuration/Seconds
 
 var connected: bool = true #false
 
@@ -33,12 +36,26 @@ func _ready() -> void:
 	#  init visibility of ingame UI
 	timer_ui.visible = false
 	cheese_counter.visible = false
+	session_duration_ui.visible = false
+	
+	session_duration.text = str(game_timer.wait_time)
 	
 
 func	 _process(delta: float) -> void:
-	if (Input.get_action_strength("stop_game") > 0.0) && current_game_state == GameState.RUNNING:
+	if (Input.is_action_just_pressed("stop_game")) && current_game_state == GameState.RUNNING:
 		current_game_state = GameState.FORCE_QUIT
 		stop_game()
+		
+	if (Input.is_action_just_pressed("increase_session_duration")):
+		game_timer.wait_time += 10
+		session_duration.text = str(game_timer.wait_time)
+		
+	if (Input.is_action_just_pressed("decrease_session_duration")):
+		game_timer.wait_time -= 10
+		session_duration.text = str(game_timer.wait_time)
+		
+	if (Input.is_action_just_pressed("toggle_session_duration_visible")):
+		session_duration_ui.visible = not session_duration_ui.visible
 
 func start_game() -> void:
 	game_timer.start()
