@@ -6,10 +6,13 @@ const SERVER_ADDRESS = 'localhost'
 var peer = ENetMultiplayerPeer.new()
 enum Status{CONNECTED, DISCONNECTED, CONNECTING}
 var connection_status = Status.DISCONNECTED
+
 signal rat_pos_recieved
 signal connection_status_schanged
 signal cheese_spawned
 signal cheese_eaten
+signal game_started
+signal rat_force_quit
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -55,33 +58,24 @@ func _on_light_manager_spot_positions_changed(positions: PackedVector3Array, ang
 
 func _on_claw_rat_caught() -> void:
 	catch_rat.rpc()
-	
-func _on_game_info_game_started() -> void:
-	start_game.rpc()
 
-func _on_timer_timeout() -> void:
-	time_out.rpc()
-
+# rpcs called from rat
 @rpc
 func set_rat_position(position : Vector3, rotation : Vector3):
-	#print("Rat position recieved: ", position, " ", rotation)
 	rat_pos_recieved.emit(position, rotation)
 
 @rpc
+func start_game(session_duration: int):
+	print("attempting to start game with session_duration ", session_duration)
+	game_started.emit(session_duration)
+	
+@rpc
+func force_quit():
+	rat_force_quit.emit()
+	
+# rps called from table
+@rpc
 func set_spot_positions(positions: PackedVector3Array, angles: PackedFloat32Array):
-	pass
-
-@rpc	
-func catch_rat(): # This function is called when the rat is caught
-	#print("THE RAT HAS BEEN CAUGHT!");
-	pass
-	
-@rpc
-func time_out():
-	pass
-	
-@rpc
-func start_game():
 	pass
 
 @rpc
@@ -93,6 +87,7 @@ func sync_cheese_eaten(cheese_name:String):
 	print("cheese eaten")
 	cheese_eaten.emit(cheese_name)
 
-
-	
+@rpc	
+func catch_rat(): # This function is called when the rat is caught
+	pass #print("THE RAT HAS BEEN CAUGHT!");
 	
