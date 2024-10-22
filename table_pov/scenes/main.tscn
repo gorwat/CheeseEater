@@ -111,33 +111,37 @@ wait_time = 10.0
 one_shot = true
 
 [node name="StartMenu" type="Control" parent="GameInfo"]
-visible = false
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 689.0
-offset_top = 840.0
-offset_right = -597.0
-offset_bottom = 246.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 0.5
+offset_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 4.71239
 
 [node name="TextureRect" type="TextureRect" parent="GameInfo/StartMenu"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -268.0
-offset_top = -60.0
-offset_right = 236.0
-offset_bottom = 67.0
+anchor_bottom = 0.5
+offset_left = -501.0
+offset_top = -780.0
+offset_right = -401.0
+offset_bottom = -630.0
 grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(10, 10)
 texture = ExtResource("13_fxb7x")
 expand_mode = 1
 
 [node name="GameOverMenu" type="Control" parent="GameInfo"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -357,8 +361,8 @@ shape = SubResource("BoxShape3D_dm842")
 [connection signal="cheese_eaten" from="NetworkManager" to="CheeseManager" method="_on_network_manager_cheese_eaten"]
 [connection signal="cheese_spawned" from="NetworkManager" to="CheeseManager" method="_on_network_manager_cheese_spawned"]
 [connection signal="connection_status_schanged" from="NetworkManager" to="CheeseManager" method="_on_network_manager_connection_status_schanged"]
-[connection signal="connection_status_schanged" from="NetworkManager" to="Server Menu" method="_on_network_manager_connection_status_schanged"]
 [connection signal="connection_status_schanged" from="NetworkManager" to="GameInfo" method="_on_network_manager_connection_status_schanged"]
+[connection signal="connection_status_schanged" from="NetworkManager" to="Server Menu" method="_on_network_manager_connection_status_schanged"]
 [connection signal="game_started" from="NetworkManager" to="GameInfo" method="_on_network_manager_game_started"]
 [connection signal="rat_force_quit" from="NetworkManager" to="GameInfo" method="_on_network_manager_rat_force_quit"]
 [connection signal="rat_pos_recieved" from="NetworkManager" to="Player" method="_on_network_manager_rat_pos_recieved"]
