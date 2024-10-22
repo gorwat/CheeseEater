@@ -66,7 +66,6 @@ func set_rat_position(position : Vector3, rotation : Vector3):
 
 @rpc
 func start_game(session_duration: int):
-	print("attempting to start game with session_duration ", session_duration)
 	game_started.emit(session_duration)
 	
 @rpc
