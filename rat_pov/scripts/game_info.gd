@@ -28,21 +28,10 @@ var connected: bool = true #false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# init visibility of screens
-	game_menu.visible = true
-	rat_caught_screen.visible = false
-	timer_out_screen.visible = false
-	
-	#  init visibility of ingame UI
-	timer_ui.visible = false
-	cheese_counter.visible = false
-	session_duration_ui.visible = false
-	
-	session_duration.text = str(game_timer.wait_time)
-	
+	reset_to_main_menu()
 
 func	 _process(delta: float) -> void:
-	if (Input.is_action_just_pressed("stop_game")) && current_game_state == GameState.RUNNING:
+	if (Input.is_action_just_pressed("stop_game")): #&& current_game_state == GameState.RUNNING:
 		current_game_state = GameState.FORCE_QUIT
 		stop_game()
 		
@@ -57,6 +46,21 @@ func	 _process(delta: float) -> void:
 	if (Input.is_action_just_pressed("toggle_session_duration_visible")):
 		session_duration_ui.visible = not session_duration_ui.visible
 
+func reset_to_main_menu() -> void:
+	# init visibility of screens
+	game_menu.visible = true
+	rat_caught_screen.visible = false
+	timer_out_screen.visible = false
+	
+	#  init visibility of ingame UI
+	timer_ui.visible = false
+	cheese_counter.visible = false
+	session_duration_ui.visible = false
+	
+	# set session duration to default value set in Timer
+	game_timer.wait_time = timer_ui.default_time
+	session_duration.text = str(game_timer.wait_time)
+	
 func start_game() -> void:
 	game_timer.start()
 	current_game_state = GameState.RUNNING 
@@ -78,7 +82,7 @@ func stop_game() -> void:
 	elif(current_game_state == GameState.RAT_CAUGHT):
 		rat_caught_screen.visible = true
 	elif(current_game_state == GameState.FORCE_QUIT):
-		game_menu.visible = true
+		reset_to_main_menu()
 		force_quit.emit()
 	
 	# hide ingame UI

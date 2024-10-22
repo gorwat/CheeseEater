@@ -20,14 +20,17 @@ var connected: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	game_menu.visible = true
-	time_out_menu.visible = false
-	caught_rat_menu.visible = false
-	timer_ui.visible = false
+	reset_to_main_menu()
 
 func	 _process(delta: float) -> void:
 	if (Input.get_action_strength("stop_game") > 0.0) && current_game_state == GameState.RUNNING:
 		stop_game()
+
+func reset_to_main_menu():
+	game_menu.visible = true
+	time_out_menu.visible = false
+	caught_rat_menu.visible = false
+	timer_ui.visible = false
 
 func start_game() -> void:
 	game_timer.start()
@@ -49,7 +52,7 @@ func stop_game() -> void:
 	elif (current_game_state == GameState.RAT_CAUGHT):
 		caught_rat_menu.visible = true
 	elif (current_game_state == GameState.FORCE_QUIT):
-		game_menu.visible = true
+		reset_to_main_menu()
 	
 	game_timer.stop()
 	timer_ui.visible = false
