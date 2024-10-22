@@ -227,7 +227,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="CheeseCounter" type="Label" parent="GameInfo"]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -417,6 +416,28 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 26
 text = "Restart!"
+
+[node name="SessionDuration" type="Control" parent="GameInfo"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Description" type="Label" parent="GameInfo/SessionDuration"]
+layout_mode = 1
+offset_left = 18.0
+offset_top = 20.0
+offset_right = 152.0
+offset_bottom = 43.0
+theme_override_font_sizes/font_size = 20
+text = "Session duration:"
+
+[node name="Seconds" type="Label" parent="GameInfo/SessionDuration"]
+offset_left = 18.0
+offset_top = 51.0
+offset_right = 152.0
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 20
+text = "60"
 
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
 [connection signal="connection_status_changed" from="NetworkManager" to="GameInfo" method="_on_network_manager_connection_status_changed"]
