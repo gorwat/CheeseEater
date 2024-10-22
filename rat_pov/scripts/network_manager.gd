@@ -6,9 +6,11 @@ const MAX_CLIENTS = 1
 signal spot_positions_changed
 signal rat_was_caught
 signal timer_out
-signal game_started
+signal connection_status_changed
 
 var peer = ENetMultiplayerPeer.new()
+enum Status{CONNECTED, DISCONNECTED, CONNECTING}
+var connection_status = Status.DISCONNECTED
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,9 +28,13 @@ func _process(delta: float) -> void:
 		set_rat_position.rpc()
 
 func _on_client_disconnected(id: int):
+	connection_status = Status.DISCONNECTED
+	connection_status_changed.emit(connection_status)
 	print("Disconnected :%(")
 
 func _on_client_connected(id: int):
+	connection_status = Status.CONNECTED
+	connection_status_changed.emit(connection_status)
 	print("Connected!")
 	
 func _on_player_rat_moved(position : Vector3, rotation : Vector3):
@@ -41,27 +47,27 @@ func _on_cheese_manager_specific_cheese_eaten(cheese_name) -> void:
 func _on_cheese_manager_specific_cheese_spawned(cheese_name, position, rotation) -> void:
 	sync_cheese_spawn.rpc(cheese_name, position, rotation)
 
+func _on_game_info_game_started(session_duration : int) -> void:
+	print("start game with session_duration ", session_duration)
+	start_game.rpc(session_duration)
+	
+func _on_game_info_force_quit() -> void:
+	force_quit.rpc()
+
+
+# rpcs called from rat
 @rpc
 func set_rat_position(position : Vector3, rotation : Vector3):
-	#print("Rat position sent")
+	pass
+	
+@rpc
+func start_game(session_duration: int):
+	pass
+	
+@rpc
+func force_quit():
 	pass
 
-@rpc("any_peer")
-func set_spot_positions(positions: PackedVector3Array, angles: PackedFloat32Array):
-	spot_positions_changed.emit(positions, angles)
-
-@rpc("any_peer")
-func catch_rat():
-	rat_was_caught.emit()
-
-@rpc("any_peer")
-func time_out():
-	timer_out.emit()
-
-@rpc("any_peer")
-func start_game():
-	game_started.emit()
-	
 @rpc("any_peer")
 func sync_cheese_spawn(cheese_name:String, position:Vector3, rotation:Vector3):
 	pass
@@ -69,3 +75,14 @@ func sync_cheese_spawn(cheese_name:String, position:Vector3, rotation:Vector3):
 @rpc("any_peer")
 func sync_cheese_eaten(cheese_name:String):
 	pass
+
+# rpcs called from table
+@rpc("any_peer")
+func set_spot_positions(positions: PackedVector3Array, angles: PackedFloat32Array):
+	spot_positions_changed.emit(positions, angles)
+
+@rpc("any_peer")
+func catch_rat():
+	print("caught!")
+	rat_was_caught.emit()
+	

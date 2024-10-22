@@ -44,15 +44,12 @@ func _process(delta):
 	if time_to_cheese <= 0:
 		spawn_random_cheese()
 		time_to_cheese = time_between_cheese
-		
-
 
 func _on_cheese_been_eaten(cheese_name) -> void:
 	cheeses_eaten += 1;
 	update_cheeses_eaten.emit(cheeses_eaten)
 	specific_cheese_eaten.emit(cheese_name)
 
-
-func _on_network_manager_game_started() -> void:
+func _on_game_info_game_started(session_duration: int) -> void:
 	cheeses_eaten = 0
 	update_cheeses_eaten.emit(cheeses_eaten)

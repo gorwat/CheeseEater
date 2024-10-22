@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=17 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/light_manager.gd" id="1_ofn0t"]
@@ -9,7 +9,8 @@
 [ext_resource type="AudioStream" uid="uid://hp2x18qw2hh3" path="res://art/audio/mixkit-light-rain-atmosphere-2474.ogg" id="6_8wg4h"]
 [ext_resource type="PackedScene" uid="uid://cmohcowv2ef6d" path="res://scenes/small_objects/cheese.tscn" id="9_7sksj"]
 [ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="9_36pyg"]
-[ext_resource type="Script" path="res://scripts/hud.gd" id="11_uvd6r"]
+[ext_resource type="Script" path="res://scripts/game_info.gd" id="11_dayo2"]
+[ext_resource type="Script" path="res://scripts/clock.gd" id="12_5qip8"]
 
 [sub_resource type="Environment" id="Environment_7us62"]
 background_energy_multiplier = 0.2
@@ -120,28 +121,97 @@ transform = Transform3D(0.662489, 0, -0.749071, 0, 1, 0, 0.749071, 0, 0.662489, 
 [node name="Cheese6" parent="CheeseManager" instance=ExtResource("9_7sksj")]
 transform = Transform3D(0.984192, 0, -0.177102, 0, 1, 0, 0.177102, 0, 0.984192, -3.15838, -0.5, 10.5411)
 
-[node name="HUD" type="Control" parent="."]
+[node name="GameInfo" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -99.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("11_uvd6r")
+script = ExtResource("11_dayo2")
 
-[node name="CheeseCounter" type="Label" parent="HUD"]
+[node name="Clock" type="Label" parent="GameInfo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.036
+anchor_right = 0.5
+anchor_bottom = 1.036
+offset_left = -73.0
+offset_top = -80.352
+offset_right = 81.0
+offset_bottom = 2.64801
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.392157)
+theme_override_font_sizes/font_size = 60
+text = "00:00"
+horizontal_alignment = 1
+script = ExtResource("12_5qip8")
+
+[node name="Timer" type="Timer" parent="GameInfo/Clock"]
+wait_time = 10.0
+one_shot = true
+
+[node name="StartMenu" type="Control" parent="GameInfo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 647.0
+offset_top = 132.0
+offset_right = -639.0
+offset_bottom = -440.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartButton" type="Button" parent="GameInfo/StartMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.0
+offset_top = 226.0
+offset_right = 19.0
+offset_bottom = 257.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+disabled = true
+text = "Start game!"
+
+[node name="TextureRect" type="TextureRect" parent="GameInfo/StartMenu"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 23.0
+offset_left = -252.0
+offset_right = 252.0
+offset_bottom = 127.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 50
-text = "0"
+expand_mode = 1
 
-[node name="RatCaughtScreen" type="Control" parent="HUD"]
+[node name="CheeseEater" type="Label" parent="GameInfo/StartMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -348.0
+offset_top = 4.0
+offset_right = 337.0
+offset_bottom = 141.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "CHEESE EATER"
+horizontal_alignment = 1
+
+[node name="GameOverMenu" type="Control" parent="GameInfo"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -149,42 +219,91 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -366.0
-offset_top = -106.5
-offset_right = 366.0
-offset_bottom = 106.5
+offset_left = -143.0
+offset_top = -112.5
+offset_right = 143.0
+offset_bottom = 112.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GameOverText" type="Label" parent="HUD/RatCaughtScreen"]
+[node name="CheeseCounter" type="Label" parent="GameInfo"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.039
+anchor_right = 0.5
+anchor_bottom = 0.039
+offset_left = -15.0
+offset_top = -19.298
+offset_right = 25.0
+offset_bottom = 49.702
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.537255)
+theme_override_font_sizes/font_size = 50
+text = "0"
+
+[node name="RatCaughtScreen" type="Control" parent="GameInfo"]
+visible = false
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.505
+anchor_bottom = 0.5
+offset_left = -371.0
+offset_top = -240.0
+offset_right = 351.4
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverText" type="Label" parent="GameInfo/RatCaughtScreen"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -285.0
+offset_top = 57.0
 offset_right = 285.0
-offset_bottom = 137.0
+offset_bottom = 194.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 100
 text = "Game Over!"
 
-[node name="CaughtText" type="Label" parent="HUD/RatCaughtScreen"]
+[node name="CaughtText" type="Label" parent="GameInfo/RatCaughtScreen"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -67.0
-offset_top = -23.0
-offset_right = 67.0
+offset_left = -125.0
+offset_top = 15.0
+offset_right = 125.0
+offset_bottom = 57.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 30
 text = "You were caught!
 "
 
-[node name="TimerOutScreen" type="Control" parent="HUD"]
+[node name="RestartButton" type="Button" parent="GameInfo/RatCaughtScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.362
+anchor_right = 0.5
+anchor_bottom = 1.362
+offset_left = -66.0
+offset_top = 120.894
+offset_right = 79.0
+offset_bottom = 167.894
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 26
+text = "Restart!"
+
+[node name="TimerOutScreen" type="Control" parent="GameInfo"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -193,48 +312,125 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -259.0
-offset_top = -110.0
+offset_top = -61.0
 offset_right = 259.0
-offset_bottom = 110.0
+offset_bottom = 159.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GameOverText" type="Label" parent="HUD/TimerOutScreen"]
+[node name="GameOverText" type="Label" parent="GameInfo/TimerOutScreen"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -285.0
-offset_right = 285.0
-offset_bottom = 137.0
+offset_left = -307.0
+offset_top = -242.0
+offset_right = 326.0
+offset_bottom = -105.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 100
-text = "Game Over!"
+text = "You escaped!"
 
-[node name="CaughtText" type="Label" parent="HUD/TimerOutScreen"]
+[node name="ScoreBoard" type="Control" parent="GameInfo/TimerOutScreen"]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -95.0
-offset_top = -42.0
-offset_right = 95.0
+anchor_bottom = 0.5
+offset_left = -366.0
+offset_top = -302.0
+offset_right = 366.0
+offset_bottom = -89.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScoreBoardText" type="Label" parent="GameInfo/TimerOutScreen/ScoreBoard"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -139.0
+offset_top = 151.5
+offset_right = 141.0
+offset_bottom = 364.5
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Score
+"
+horizontal_alignment = 1
+
+[node name="ScoreBoardText2" type="Label" parent="GameInfo/TimerOutScreen/ScoreBoard"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -135.0
+offset_top = 330.5
+offset_right = 145.0
+offset_bottom = 405.5
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Highscore"
+horizontal_alignment = 1
+
+[node name="YourScore" type="Label" parent="GameInfo/TimerOutScreen/ScoreBoard"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -136.0
+offset_top = 216.5
+offset_right = 144.0
+offset_bottom = 298.5
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+
+[node name="HighScore" type="Label" parent="GameInfo/TimerOutScreen/ScoreBoard"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -135.0
+offset_top = 405.5
+offset_right = 145.0
+offset_bottom = 478.5
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="GameInfo/TimerOutScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.339
+anchor_right = 0.501
+anchor_bottom = 1.339
+offset_left = -70.0
+offset_top = 69.42
+offset_right = 74.482
+offset_bottom = 116.42
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 30
-text = "You escaped!
-"
+theme_override_font_sizes/font_size = 26
+text = "Restart!"
 
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
-[connection signal="game_started" from="NetworkManager" to="Player" method="_on_network_manager_game_started"]
-[connection signal="game_started" from="NetworkManager" to="CheeseManager" method="_on_network_manager_game_started"]
-[connection signal="game_started" from="NetworkManager" to="HUD" method="_on_network_manager_game_started"]
+[connection signal="connection_status_changed" from="NetworkManager" to="GameInfo" method="_on_network_manager_connection_status_changed"]
 [connection signal="rat_was_caught" from="NetworkManager" to="Player" method="_on_network_manager_rat_was_caught"]
-[connection signal="rat_was_caught" from="NetworkManager" to="HUD" method="_on_network_manager_rat_was_caught"]
+[connection signal="rat_was_caught" from="NetworkManager" to="GameInfo" method="_on_network_manager_rat_was_caught"]
 [connection signal="spot_positions_changed" from="NetworkManager" to="LightManager" method="_on_network_manager_spot_positions_changed"]
-[connection signal="timer_out" from="NetworkManager" to="HUD" method="_on_network_manager_timer_out"]
 [connection signal="specific_cheese_eaten" from="CheeseManager" to="NetworkManager" method="_on_cheese_manager_specific_cheese_eaten"]
 [connection signal="specific_cheese_spawned" from="CheeseManager" to="NetworkManager" method="_on_cheese_manager_specific_cheese_spawned"]
-[connection signal="update_cheeses_eaten" from="CheeseManager" to="HUD" method="_on_cheese_manager_update_cheeses_eaten"]
+[connection signal="update_cheeses_eaten" from="CheeseManager" to="GameInfo" method="_on_cheese_manager_update_cheeses_eaten"]
+[connection signal="force_quit" from="GameInfo" to="NetworkManager" method="_on_game_info_force_quit"]
+[connection signal="game_started" from="GameInfo" to="Player" method="_on_game_info_game_started"]
+[connection signal="game_started" from="GameInfo" to="NetworkManager" method="_on_game_info_game_started"]
+[connection signal="game_started" from="GameInfo" to="CheeseManager" method="_on_game_info_game_started"]
+[connection signal="timeout" from="GameInfo/Clock/Timer" to="GameInfo" method="_on_timer_timeout"]
+[connection signal="pressed" from="GameInfo/StartMenu/StartButton" to="GameInfo" method="_on_start_button_pressed"]
+[connection signal="pressed" from="GameInfo/RatCaughtScreen/RestartButton" to="GameInfo" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="GameInfo/TimerOutScreen/RestartButton" to="GameInfo" method="_on_restart_button_pressed"]

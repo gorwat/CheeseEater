@@ -69,5 +69,7 @@ func _physics_process(delta: float) -> void:
 func _on_network_manager_rat_was_caught() -> void:
 	rat_caught = true
 
-func _on_network_manager_game_started() -> void:
+func _on_game_info_game_started(session_duration: int) -> void:
 	rat_caught = false
+	position = Vector3(0, position.y, 0)
+	rotation = Vector3(0, 0, 0)
