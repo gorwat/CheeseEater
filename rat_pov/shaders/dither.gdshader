@@ -1,17 +1,16 @@
 // NOTE: Shader automatically converted from Godot Engine 4.3.stable.mono's StandardMaterial3D.
 
 shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_burley, specular_schlick_ggx;
+render_mode blend_mix, depth_draw_always, cull_back, diffuse_burley, specular_schlick_ggx;
 
 uniform vec4 albedo : source_color;
 uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
-uniform float alpha_scissor_threshold : hint_range(0.0, 1.0, 0.001);
 uniform float point_size : hint_range(0.1, 128.0, 0.1);
 
 uniform float roughness : hint_range(0.0, 1.0);
 uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
 uniform vec4 metallic_texture_channel;
-uniform sampler2D texture_roughness : hint_roughness_g, filter_linear_mipmap, repeat_enable;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
 
 uniform float specular : hint_range(0.0, 1.0, 0.01);
 uniform float metallic : hint_range(0.0, 1.0, 0.01);
@@ -21,20 +20,10 @@ uniform vec3 uv1_offset;
 uniform vec3 uv2_scale;
 uniform vec3 uv2_offset;
 
-uniform bool shaking_bush;
-uniform float time_left;
-
 uniform sampler2D texture_dither : filter_nearest, repeat_enable;
 
 void vertex() {
 	UV = UV * uv1_scale.xy + uv1_offset.xy;
-
-	// Called for every vertex the material is visible on.
-	if (shaking_bush) {
-		VERTEX.y += (VERTEX.y*0.1 * sin(VERTEX.x * 0.1) *sin(VERTEX.z * 0.01) * sin(TIME * 20.0)) * time_left * 2.0;
-		VERTEX.x += sin(VERTEX.y) * sin(TIME * 10.0) * time_left * 2.0;
-		VERTEX.z += sin(VERTEX.y) * sin(TIME * 10.0) * time_left * 2.0;
-	}
 }
 
 void fragment() {
@@ -47,15 +36,12 @@ void fragment() {
 	METALLIC = metallic_tex * metallic;
 	SPECULAR = specular;
 
-	vec4 roughness_texture_channel = vec4(0.0, 1.0, 0.0, 0.0);
+	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
 	ROUGHNESS = roughness_tex * roughness;
-	ALPHA *= albedo.a * albedo_tex.a;
-	ALPHA_SCISSOR_THRESHOLD = alpha_scissor_threshold;
-
+	
 	float square_depth = dot(VERTEX, VERTEX);
-	float dist = 3.5;
-	if(square_depth <= dist * dist) {
+	if(square_depth <= 2.5 * 2.5) {
 		float dither_scaling = 75.0;
 		ALPHA = texture(texture_dither, vec2(SCREEN_UV.x * dither_scaling, SCREEN_UV.y * dither_scaling * (VIEWPORT_SIZE.y / VIEWPORT_SIZE.x))).r;
 	}

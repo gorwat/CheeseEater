@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=4 uid="uid://duq5bwje3l5bc"]
+[gd_scene load_steps=11 format=4 uid="uid://duq5bwje3l5bc"]
 
 [ext_resource type="Texture2D" uid="uid://ct61s4h8lhk8t" path="res://art/models/foliage_stylized/stylized_handpainted_foliage_0.png" id="1_5yq8j"]
 [ext_resource type="Texture2D" uid="uid://ox2d7d73ux2m" path="res://art/models/foliage_stylized/stylized_handpainted_foliage_1.png" id="2_c7io5"]
 [ext_resource type="Shader" path="res://shaders/plant.gdshader" id="2_p4k5j"]
 [ext_resource type="Script" path="res://scripts/plant.gd" id="4_5nmvt"]
+[ext_resource type="Texture2D" uid="uid://c8ub0kqvi6gyr" path="res://art/textures/dither.png" id="4_82b5f"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7w577"]
 resource_name = "aiStandardSurface1"
@@ -25,6 +26,7 @@ shader_parameter/time_left = 0.0
 shader_parameter/texture_albedo = ExtResource("1_5yq8j")
 shader_parameter/texture_metallic = ExtResource("2_c7io5")
 shader_parameter/texture_roughness = ExtResource("2_c7io5")
+shader_parameter/texture_dither = ExtResource("4_82b5f")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_4suho"]
 _surfaces = [{
