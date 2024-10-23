@@ -7,6 +7,7 @@ enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT}
 
 @export var current_game_state: GameState = GameState.INIT
 @onready var game_timer: Timer = $Clock/Timer
+@onready var cheese_manager: Node =  get_parent().get_node("CheeseManager")
 
 # screens
 @onready var game_menu: Control = $StartMenu
@@ -25,6 +26,7 @@ enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT}
 @onready var session_duration: Label = $Options/SessionDuration
 
 var connected: bool = true #false
+var high_score: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -89,7 +91,7 @@ func start_game() -> void:
 
 func stop_game() -> void:
 	if (current_game_state == GameState.TIME_OUT):
-		timer_out_screen.visible = true
+		update_and_show_scores(cheese_manager.cheeses_eaten)
 	elif(current_game_state == GameState.RAT_CAUGHT):
 		rat_caught_screen.visible = true
 	elif(current_game_state == GameState.FORCE_QUIT):
@@ -107,6 +109,13 @@ func _on_timer_timeout() -> void:
 	self.current_game_state = GameState.TIME_OUT
 	stop_game()
 
+func update_and_show_scores(cheese_score: int) -> void:
+	timer_out_screen.find_child("YourScore").text = str(cheese_score)
+	if (cheese_score > high_score):
+		high_score = cheese_score
+		timer_out_screen.find_child("HighScore").text = str(cheese_score)
+	timer_out_screen.visible = true
+	
 func _on_network_manager_connection_status_changed(status) -> void:
 	match status:
 		0: 

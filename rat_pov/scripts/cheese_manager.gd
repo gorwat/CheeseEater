@@ -12,7 +12,7 @@ var max_cheese_count = 0;
 var time_to_cheese = 0
 var time_between_cheese = 5
 
-var cheeses_eaten = 0
+@export var cheeses_eaten = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
