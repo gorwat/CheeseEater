@@ -90,3 +90,9 @@ func _process(delta: float) -> void:
 	# smooth interpolation / cam
 	current_spring_length = lerp(current_spring_length, desired_spring_length, smoothing_speed * delta)
 	spring_arm.spring_length = current_spring_length
+
+func _on_game_info_game_started(session_duration : int) -> void:
+	current_rotation_angle = 0.0
+	target_rotation_angle = 0.0
+	spring_arm.rotation.y = 0.0
+	probe_node.force_shapecast_update()
