@@ -529,6 +529,7 @@ text = "true"
 [connection signal="specific_cheese_spawned" from="CheeseManager" to="NetworkManager" method="_on_cheese_manager_specific_cheese_spawned"]
 [connection signal="update_cheeses_eaten" from="CheeseManager" to="GameInfo" method="_on_cheese_manager_update_cheeses_eaten"]
 [connection signal="force_quit" from="GameInfo" to="NetworkManager" method="_on_game_info_force_quit"]
+[connection signal="game_started" from="GameInfo" to="CameraRig" method="_on_game_info_game_started"]
 [connection signal="game_started" from="GameInfo" to="Player" method="_on_game_info_game_started"]
 [connection signal="game_started" from="GameInfo" to="NetworkManager" method="_on_game_info_game_started"]
 [connection signal="game_started" from="GameInfo" to="CheeseManager" method="_on_game_info_game_started"]
