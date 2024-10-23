@@ -7,9 +7,11 @@ enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT}
 @export var current_game_state: GameState = GameState.INIT
 
 @onready var game_timer: Timer = $Clock/Timer
+@onready var countdown: Control = $Countdown
 
 # screens
 @onready var game_menu: Control = $StartMenu
+@onready var countdown_screen: Control = $Countdown
 @onready var time_out_menu: Control = $GameOverMenu
 @onready var caught_rat_menu: Control = $CaughtRatMenu
 
@@ -28,11 +30,14 @@ func	 _process(delta: float) -> void:
 
 func reset_to_main_menu():
 	game_menu.visible = true
+	countdown_screen.visible = false
 	time_out_menu.visible = false
 	caught_rat_menu.visible = false
 	timer_ui.visible = false
 
 func start_game() -> void:
+	countdown.start_countdown()
+	
 	game_timer.start()
 	self.current_game_state = GameState.RUNNING
 	
