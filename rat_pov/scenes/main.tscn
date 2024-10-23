@@ -532,6 +532,7 @@ text = "true"
 [connection signal="game_started" from="GameInfo" to="Player" method="_on_game_info_game_started"]
 [connection signal="game_started" from="GameInfo" to="NetworkManager" method="_on_game_info_game_started"]
 [connection signal="game_started" from="GameInfo" to="CheeseManager" method="_on_game_info_game_started"]
+[connection signal="update_game_state" from="GameInfo" to="CheeseManager" method="_on_game_info_update_game_state"]
 [connection signal="timeout" from="GameInfo/Clock/Timer" to="GameInfo" method="_on_timer_timeout"]
 [connection signal="pressed" from="GameInfo/StartMenu/StartButton" to="GameInfo" method="_on_start_button_pressed"]
 [connection signal="pressed" from="GameInfo/RatCaughtScreen/RestartButton" to="GameInfo" method="_on_restart_button_pressed"]

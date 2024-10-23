@@ -2,6 +2,7 @@ extends Control
 signal game_started
 signal game_stopped
 signal force_quit
+signal update_game_state
 
 enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT}
 
@@ -33,8 +34,9 @@ func _ready() -> void:
 	reset_to_main_menu()
 
 func	 _process(delta: float) -> void:
-	if (Input.is_action_just_pressed("stop_game")): #&& current_game_state == GameState.RUNNING:
+	if (Input.is_action_just_pressed("stop_game")):
 		current_game_state = GameState.FORCE_QUIT
+		update_game_state.emit(current_game_state)
 		stop_game()
 		
 	if (Input.is_action_just_pressed("increase_session_duration")):
@@ -77,6 +79,7 @@ func reset_to_main_menu() -> void:
 func start_game() -> void:
 	game_timer.start()
 	current_game_state = GameState.RUNNING 
+	update_game_state.emit(current_game_state)
 	
 	# hide screens
 	game_menu.visible = false
@@ -107,6 +110,7 @@ func stop_game() -> void:
 	
 func _on_timer_timeout() -> void:
 	self.current_game_state = GameState.TIME_OUT
+	update_game_state.emit(current_game_state)
 	stop_game()
 
 func update_and_show_scores(cheese_score: int) -> void:
@@ -141,10 +145,12 @@ func disable_start_buttons() -> void:
 
 func _on_restart_button_pressed() -> void:
 	current_game_state = GameState.RUNNING
+	update_game_state.emit(current_game_state)
 	start_game()
 	
 func _on_start_button_pressed() -> void:
 	current_game_state = GameState.RUNNING
+	update_game_state.emit(current_game_state)
 	start_game()
 
 func _on_cheese_manager_update_cheeses_eaten(cheeses: int) -> void:
@@ -152,4 +158,5 @@ func _on_cheese_manager_update_cheeses_eaten(cheeses: int) -> void:
 
 func _on_network_manager_rat_was_caught() -> void:
 	current_game_state = GameState.RAT_CAUGHT
+	update_game_state.emit(current_game_state)
 	stop_game()
