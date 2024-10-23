@@ -167,6 +167,42 @@ offset_bottom = -440.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="CheeseEater" type="Label" parent="GameInfo/StartMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -688.0
+offset_top = -279.0
+offset_right = 682.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "CHEESE EATER"
+horizontal_alignment = 1
+
+[node name="Instructions" type="Label" parent="GameInfo/StartMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -411.0
+offset_top = 92.0
+offset_right = 412.0
+offset_bottom = 369.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "Eat cheese!
+Don't get caught!
+"
+horizontal_alignment = 1
+
 [node name="StartButton" type="Button" parent="GameInfo/StartMenu"]
 layout_mode = 1
 anchors_preset = 8
@@ -174,13 +210,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -78.0
-offset_top = 226.0
-offset_right = 19.0
-offset_bottom = 257.0
+offset_left = -148.0
+offset_top = 443.0
+offset_right = 27.0
+offset_bottom = 493.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.5, 1.5)
+theme_override_font_sizes/font_size = 30
 disabled = true
 text = "Start game!"
 
@@ -194,23 +231,6 @@ offset_right = 252.0
 offset_bottom = 127.0
 grow_horizontal = 2
 expand_mode = 1
-
-[node name="CheeseEater" type="Label" parent="GameInfo/StartMenu"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -348.0
-offset_top = 4.0
-offset_right = 337.0
-offset_bottom = 141.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 100
-text = "CHEESE EATER"
-horizontal_alignment = 1
 
 [node name="EscDummy" type="Button" parent="GameInfo/StartMenu"]
 layout_mode = 1
@@ -303,13 +323,14 @@ anchor_left = 0.5
 anchor_top = 1.362
 anchor_right = 0.5
 anchor_bottom = 1.362
-offset_left = -66.0
-offset_top = 120.894
-offset_right = 79.0
+offset_left = -106.0
+offset_top = 117.894
+offset_right = 39.0
 offset_bottom = 167.894
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 26
+scale = Vector2(1.5, 1.5)
+theme_override_font_sizes/font_size = 30
 text = "Restart!"
 
 [node name="TimerOutScreen" type="Control" parent="GameInfo"]
@@ -417,13 +438,14 @@ anchor_left = 0.5
 anchor_top = 1.339
 anchor_right = 0.501
 anchor_bottom = 1.339
-offset_left = -70.0
-offset_top = 69.42
-offset_right = 74.482
+offset_left = -110.0
+offset_top = 66.42
+offset_right = 34.482
 offset_bottom = 116.42
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/font_size = 26
+scale = Vector2(1.5, 1.5)
+theme_override_font_sizes/font_size = 30
 text = "Restart!"
 
 [node name="Options" type="Control" parent="GameInfo"]
