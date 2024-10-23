@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://8vq475iel8pb"]
+[gd_scene load_steps=25 format=3 uid="uid://8vq475iel8pb"]
 
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="1_vjgd7"]
 [ext_resource type="Script" path="res://scripts/LightManager.cs" id="2_ouwl4"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/server_menu.gd" id="3_3v8dj"]
 [ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="6_ii8w1"]
 [ext_resource type="Texture2D" uid="uid://ci62nrk80blvv" path="res://art/Sprites/grab-frame.png" id="7_02mxe"]
+[ext_resource type="Script" path="res://scripts/countdown.gd" id="7_w63tr"]
 [ext_resource type="Script" path="res://scripts/claw.gd" id="7_x6ysg"]
 [ext_resource type="Texture2D" uid="uid://dwuo68e35f5a7" path="res://art/Sprites/crosshair-frame.png" id="9_fms65"]
 [ext_resource type="Texture2D" uid="uid://c2kxohtafda8f" path="res://art/Sprites/crosshair-full.png" id="10_wdlnr"]
@@ -19,6 +20,12 @@ size = Vector3(20, 1, 20)
 
 [sub_resource type="BoxMesh" id="BoxMesh_8ae0n"]
 size = Vector3(48, 1, 27)
+
+[sub_resource type="Gradient" id="Gradient_etafv"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8ycln"]
+gradient = SubResource("Gradient_etafv")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_mu36m"]
 height = 0.463617
@@ -111,6 +118,7 @@ wait_time = 10.0
 one_shot = true
 
 [node name="StartMenu" type="Control" parent="GameInfo"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -195,7 +203,6 @@ horizontal_alignment = 1
 uppercase = true
 
 [node name="CaughtRatMenu" type="Control" parent="GameInfo"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -248,12 +255,88 @@ theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
 uppercase = true
 
+[node name="Countdown" type="Control" parent="GameInfo"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -143.0
+offset_top = -112.5
+offset_right = 143.0
+offset_bottom = 112.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_w63tr")
+
+[node name="Background" type="TextureRect" parent="GameInfo/Countdown"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -3206.0
+offset_top = -2113.5
+offset_right = -1576.0
+offset_bottom = -1083.5
+scale = Vector2(4.23, 4.23)
+texture = SubResource("GradientTexture1D_8ycln")
+
+[node name="Instruction" type="Label" parent="GameInfo/Countdown"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 19.008
+anchor_top = 13.794
+anchor_right = 19.008
+anchor_bottom = 13.794
+offset_left = -5562.29
+offset_top = -2623.65
+offset_right = -4899.29
+offset_bottom = -2537.65
+grow_horizontal = 0
+grow_vertical = 2
+rotation = 4.71239
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 60
+text = "Catch the rat!"
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="GameInfo/Countdown"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -116.0
+offset_top = 292.5
+offset_right = 429.0
+offset_bottom = 511.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 4.71239
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 160
+text = "Ready?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="GameInfo/Countdown"]
+
 [node name="Server Menu" type="Control" parent="."]
 z_index = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = -15.0
+offset_right = 9.0
+offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_3v8dj")
@@ -368,6 +451,7 @@ shape = SubResource("BoxShape3D_dm842")
 [connection signal="rat_pos_recieved" from="NetworkManager" to="Player" method="_on_network_manager_rat_pos_recieved"]
 [connection signal="SpotPositionsChanged" from="LightManager" to="NetworkManager" method="_on_light_manager_spot_positions_changed"]
 [connection signal="timeout" from="GameInfo/Clock/Timer" to="GameInfo" method="_on_timer_timeout"]
+[connection signal="timeout" from="GameInfo/Countdown/Timer" to="GameInfo/Countdown" method="_on_timeout"]
 [connection signal="init_connection" from="Server Menu" to="NetworkManager" method="_on_init_connection"]
 [connection signal="text_submitted" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Address Input" to="Server Menu" method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Button" to="Server Menu" method="_on_button_pressed"]
