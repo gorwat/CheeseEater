@@ -442,6 +442,7 @@ offset_bottom = 292.0
 color = Color(0, 0, 0, 0.521569)
 
 [node name="DescriptionOptions" type="Label" parent="GameInfo/Options"]
+layout_mode = 0
 offset_left = 24.0
 offset_top = 41.0
 offset_right = 219.0
@@ -450,6 +451,7 @@ theme_override_font_sizes/font_size = 20
 text = "Toggle options [ESC]"
 
 [node name="DescriptionReset" type="Label" parent="GameInfo/Options"]
+layout_mode = 0
 offset_left = 25.0
 offset_top = 90.0
 offset_right = 192.0
