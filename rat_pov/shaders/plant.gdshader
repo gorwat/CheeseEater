@@ -31,9 +31,9 @@ void vertex() {
 	
 	// Called for every vertex the material is visible on.
 	if (shaking_bush) {
-		VERTEX.y += (VERTEX.y*0.1 * sin(VERTEX.x*00.1) *sin(VERTEX.z*0.01) * sin(TIME*20.0)) * time_left *2.0;
-		VERTEX.x += sin(VERTEX.y) * sin(TIME*10.0) * time_left *2.0;
-		VERTEX.z += sin(VERTEX.y) * sin(TIME*10.0) * time_left *2.0;
+		VERTEX.y += (VERTEX.y*0.1 * sin(VERTEX.x * 0.1) *sin(VERTEX.z * 0.01) * sin(TIME * 20.0)) * time_left * 2.0;
+		VERTEX.x += sin(VERTEX.y) * sin(TIME * 10.0) * time_left * 2.0;
+		VERTEX.z += sin(VERTEX.y) * sin(TIME * 10.0) * time_left * 2.0;
 	}
 }
 

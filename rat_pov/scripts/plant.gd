@@ -16,8 +16,6 @@ func _ready() -> void:
 	$PlantMesh.set_surface_override_material(0, $PlantMesh.get_active_material(0).duplicate());
 	$PlantMesh2.set_surface_override_material(0, $PlantMesh2.get_active_material(0).duplicate());
 	$PlantMesh3.set_surface_override_material(0, $PlantMesh3.get_active_material(0).duplicate());
-	#$PlantMesh2.mesh.surface_set_material(0, $PlantMesh2.mesh.surface_get_material(0).duplicate());
-	#$PlantMesh3.mesh.surface_set_material(0, $PlantMesh3.mesh.surface_get_material(0).duplicate());
 	
 	# get spatial shader
 	material = $PlantMesh.get_active_material(0)
