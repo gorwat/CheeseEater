@@ -20,9 +20,9 @@ enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT}
 @onready var game_restart_caught_button: Button = $RatCaughtScreen/RestartButton
 @onready var game_restart_timer_out_button: Button = $TimerOutScreen/RestartButton
 
-# Session duration
-@onready var session_duration_ui: Control = $SessionDuration
-@onready var session_duration: Label = $SessionDuration/Seconds
+# Options
+@onready var options: Control = $Options
+@onready var session_duration: Label = $Options/SessionDuration
 
 var connected: bool = true #false
 
@@ -40,11 +40,21 @@ func	 _process(delta: float) -> void:
 		session_duration.text = str(game_timer.wait_time)
 		
 	if (Input.is_action_just_pressed("decrease_session_duration")):
-		game_timer.wait_time -= 10
-		session_duration.text = str(game_timer.wait_time)
+		if (game_timer.wait_time > 10):
+			game_timer.wait_time -= 10
+			session_duration.text = str(game_timer.wait_time)
 		
-	if (Input.is_action_just_pressed("toggle_session_duration_visible")):
-		session_duration_ui.visible = not session_duration_ui.visible
+	if (Input.is_action_just_pressed("toggle_need_table")):
+		if (options.find_child("NeedTable").text == "false"):
+			options.find_child("NeedTable").text = "true"
+			disable_start_buttons()
+		else:
+			options.find_child("NeedTable").text = "false"
+			enable_start_buttons() 
+		
+	if (Input.is_action_just_pressed("toggle_options_visible")):
+		options.visible = not options.visible
+		game_menu.find_child("EscDummy").visible = not game_menu.find_child("EscDummy").visible
 
 func reset_to_main_menu() -> void:
 	# init visibility of screens
@@ -55,11 +65,12 @@ func reset_to_main_menu() -> void:
 	#  init visibility of ingame UI
 	timer_ui.visible = false
 	cheese_counter.visible = false
-	session_duration_ui.visible = false
+	options.visible = false
 	
 	# set session duration to default value set in Timer
 	game_timer.wait_time = timer_ui.default_time
 	session_duration.text = str(game_timer.wait_time)
+	
 	
 func start_game() -> void:
 	game_timer.start()
@@ -100,17 +111,24 @@ func _on_network_manager_connection_status_changed(status) -> void:
 	match status:
 		0: 
 			connected = true # Connected
-			game_start_button.disabled = false
-			game_restart_caught_button.disabled = false
-			game_restart_timer_out_button.disabled = false
+			enable_start_buttons()
 		1: 
 			connected = false # Disconnected
-			game_start_button.disabled = true
-			game_restart_caught_button.disabled = true
-			game_restart_timer_out_button.disabled = true
+			disable_start_buttons()
 			
 		2: pass # Connecting
 		_: pass
+
+# allow player to start game even when table is not connected
+func enable_start_buttons() -> void:
+	game_start_button.disabled = false
+	game_restart_caught_button.disabled = false
+	game_restart_timer_out_button.disabled = false
+	
+func disable_start_buttons() -> void:
+	game_start_button.disabled = true
+	game_restart_caught_button.disabled = true
+	game_restart_timer_out_button.disabled = true
 
 func _on_restart_button_pressed() -> void:
 	current_game_state = GameState.RUNNING
