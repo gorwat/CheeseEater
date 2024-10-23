@@ -211,6 +211,15 @@ theme_override_font_sizes/font_size = 100
 text = "CHEESE EATER"
 horizontal_alignment = 1
 
+[node name="EscDummy" type="Button" parent="GameInfo/StartMenu"]
+layout_mode = 1
+offset_left = -626.0
+offset_top = -114.0
+offset_right = -590.0
+offset_bottom = -83.0
+tooltip_text = "Press ESC to toggle options menu"
+text = "ESC"
+
 [node name="GameOverMenu" type="Control" parent="GameInfo"]
 visible = false
 layout_mode = 1
@@ -417,27 +426,73 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 26
 text = "Restart!"
 
-[node name="SessionDuration" type="Control" parent="GameInfo"]
+[node name="Options" type="Control" parent="GameInfo"]
 anchors_preset = 0
+offset_top = -23.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 17.0
 
-[node name="Description" type="Label" parent="GameInfo/SessionDuration"]
+[node name="ColorRect" type="ColorRect" parent="GameInfo/Options"]
 layout_mode = 1
-offset_left = 18.0
-offset_top = 20.0
-offset_right = 152.0
-offset_bottom = 43.0
-theme_override_font_sizes/font_size = 20
-text = "Session duration:"
+offset_left = -2.0
+offset_top = 2.0
+offset_right = 268.0
+offset_bottom = 292.0
+color = Color(0, 0, 0, 0.521569)
 
-[node name="Seconds" type="Label" parent="GameInfo/SessionDuration"]
-offset_left = 18.0
-offset_top = 51.0
-offset_right = 152.0
-offset_bottom = 79.0
+[node name="DescriptionOptions" type="Label" parent="GameInfo/Options"]
+offset_left = 24.0
+offset_top = 41.0
+offset_right = 219.0
+offset_bottom = 69.0
+theme_override_font_sizes/font_size = 20
+text = "Toggle options [ESC]"
+
+[node name="DescriptionReset" type="Label" parent="GameInfo/Options"]
+offset_left = 25.0
+offset_top = 90.0
+offset_right = 192.0
+offset_bottom = 118.0
+theme_override_font_sizes/font_size = 20
+text = "Reset [R]"
+
+[node name="DescriptionSession" type="Label" parent="GameInfo/Options"]
+layout_mode = 1
+offset_left = 25.0
+offset_top = 140.0
+offset_right = 241.0
+offset_bottom = 168.0
+theme_override_font_sizes/font_size = 20
+text = "Session duration [+/-] "
+
+[node name="SessionDuration" type="Label" parent="GameInfo/Options"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 172.0
+offset_right = 160.0
+offset_bottom = 200.0
+theme_override_colors/font_color = Color(0.69, 0.69, 0.69, 1)
 theme_override_font_sizes/font_size = 20
 text = "60"
+
+[node name="DescriptionConnectionReq" type="Label" parent="GameInfo/Options"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 215.0
+offset_right = 234.0
+offset_bottom = 243.0
+theme_override_font_sizes/font_size = 20
+text = "Need table [T]"
+
+[node name="NeedTable" type="Label" parent="GameInfo/Options"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 247.0
+offset_right = 160.0
+offset_bottom = 275.0
+theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
+theme_override_font_sizes/font_size = 18
+text = "true"
 
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
 [connection signal="connection_status_changed" from="NetworkManager" to="GameInfo" method="_on_network_manager_connection_status_changed"]
