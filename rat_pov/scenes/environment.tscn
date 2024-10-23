@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b054yrndyyhyx"]
+[gd_scene load_steps=32 format=3 uid="uid://b054yrndyyhyx"]
 
 [ext_resource type="Texture2D" uid="uid://cgdkg8jwy45nv" path="res://art/textures/dirt_ground/Ground_Dirt_007_basecolor.jpg" id="1_fovi5"]
 [ext_resource type="Texture2D" uid="uid://dqtukar8wsied" path="res://art/textures/dirt_ground/Ground_Dirt_007_ambientOcclusion.jpg" id="2_mgtth"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bloah3x6ygdr0" path="res://art/models/wooden_cart/wooden_cart.glb" id="12_r6t15"]
 [ext_resource type="PackedScene" uid="uid://cvsny5mldfj18" path="res://scenes/large_objects/complete_fence.tscn" id="17_5klwt"]
 [ext_resource type="PackedScene" uid="uid://dbsudbg6pjt5d" path="res://scenes/large_objects/walls.tscn" id="18_m4h5s"]
+[ext_resource type="Script" path="res://scripts/puddle_2.gd" id="18_tjpu2"]
 [ext_resource type="PackedScene" uid="uid://ba2e8aa08oi43" path="res://art/models/poster/poster_basic__low_poly.glb" id="19_wmaa5"]
 [ext_resource type="PackedScene" uid="uid://6bhv25swfflg" path="res://scenes/small_objects/stones/stone_2.tscn" id="20_1hy7r"]
 [ext_resource type="PackedScene" uid="uid://b6ljwync4n4el" path="res://scenes/small_objects/grass.tscn" id="22_h2836"]
@@ -50,12 +51,128 @@ albedo_color = Color(0.019, 0.0277833, 0.05, 1)
 [sub_resource type="CylinderMesh" id="CylinderMesh_xgtpc"]
 material = SubResource("StandardMaterial3D_nunbd")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1p2cs"]
-transparency = 1
-albedo_color = Color(0.0705882, 0.0392157, 0.282353, 0.639216)
+[sub_resource type="QuadMesh" id="QuadMesh_sfx2u"]
+lightmap_size_hint = Vector2i(52, 52)
+size = Vector2(10, 10)
+subdivide_width = 500
+subdivide_depth = 500
+orientation = 1
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_en6ww"]
-material = SubResource("StandardMaterial3D_1p2cs")
+[sub_resource type="Shader" id="Shader_xyblt"]
+code = "shader_type spatial;
+
+uniform vec3 albedo: source_color;
+uniform float metallic: hint_range(0, 1.0) = 0;
+uniform float roughness: hint_range(0, 1.0) = 0.02;
+
+uniform sampler2D texture_normal;
+// Controls 'size' and depth of puddle
+uniform float floor_min_y: hint_range(-1.0, 0) = -0.1;
+uniform float min_wave_height = -0.01;
+uniform float radius = 5;
+
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+uniform vec2[10] wave_sources;
+uniform float[10] wave_amplitudes;
+uniform int wave_sources_size;
+uniform vec2 wave_source;
+uniform float wave_speed;
+uniform float wave_radius;
+uniform float amplitude = 1.0;
+uniform float frequency: hint_range(0, 300.0) = 1.0;
+
+void vertex() {
+
+	float dist_from_center = sqrt(VERTEX.x*VERTEX.x + VERTEX.z*VERTEX.z);
+	if (dist_from_center >= radius){
+		float diff = dist_from_center-radius;
+		VERTEX.y = max(-(diff), floor_min_y);
+	} else
+	{
+		float vertex_height = 0.0;
+		for (int i=0; i < wave_sources_size; i++){
+			// Increase distance over time
+			float current_radius = wave_radius*(1.0-wave_amplitudes[i]);
+
+			// Called for every vertex the material is visible on.
+			float dist_x = (VERTEX.x-wave_sources[i].x)*(VERTEX.x-wave_sources[i].x);
+			float dist_z = (VERTEX.z-wave_sources[i].y)*(VERTEX.z-wave_sources[i].y);
+			float dist_from_source = dist_x + dist_z;
+			float sombrero = 0.0;
+			if (sqrt(dist_from_source) > current_radius){
+				sombrero = 0.0;
+			} else {
+				sombrero = sin(dist_from_source*frequency - TIME*wave_speed)*amplitude*wave_amplitudes[i];
+			}
+
+			vertex_height += sombrero;
+		}
+		VERTEX.y = max(vertex_height, -0.02);
+
+
+	}
+
+	COLOR.xyz = vec3(VERTEX.y);
+
+}
+
+void fragment() {
+	// Called for every pixel the material is visible on.
+	if (COLOR.y >= 1.0){
+		ALBEDO = mix(albedo, vec3(1), 0.01);
+	} else {
+		ALBEDO = albedo;
+	}
+	METALLIC = metallic;
+	ROUGHNESS = roughness;
+
+	vec3 normal1 = texture(texture_normal, vec2(UV.x, UV.y) +TIME*vec2(0.01)).rgb;
+	vec3 normal2 = texture(texture_normal, vec2(UV.x, UV.y) +TIME*vec2(-0.01, 0.01)).rgb;
+	NORMAL_MAP = mix(normal1, normal2, 0.5);
+
+
+}
+
+//void light() {
+	// Called for every pixel for every light affecting the material.
+	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_j4oga"]
+noise_type = 0
+frequency = 0.004
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_trd80"]
+seamless = true
+as_normal_map = true
+bump_strength = 5.0
+noise = SubResource("FastNoiseLite_j4oga")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fr8r0"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_xyblt")
+shader_parameter/albedo = Color(0.1482, 0.15656, 0.19, 1)
+shader_parameter/metallic = 0.0
+shader_parameter/roughness = 0.1
+shader_parameter/floor_min_y = -0.5
+shader_parameter/min_wave_height = -0.04
+shader_parameter/radius = 5.0
+shader_parameter/wave_sources = PackedVector2Array(-2, -2, 1, 2)
+shader_parameter/wave_amplitudes = PackedFloat32Array(1, 1)
+shader_parameter/wave_sources_size = 2
+shader_parameter/wave_source = Vector2(0, 0)
+shader_parameter/wave_speed = 5.0
+shader_parameter/wave_radius = 3.0
+shader_parameter/amplitude = 0.04
+shader_parameter/frequency = 4.75
+shader_parameter/texture_normal = SubResource("NoiseTexture2D_trd80")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_m2r36"]
+height = 1.0
+radius = 5.0
 
 [node name="Environment" type="Node3D"]
 
@@ -144,21 +261,6 @@ transform = Transform3D(0.577102, 0, 0.816672, 0, 1, 0, -0.816672, 0, 0.577102, 
 [node name="UnderDrain" type="MeshInstance3D" parent="Hideouts/DrainCorner/Drain"]
 transform = Transform3D(1.35, 0, 0, 0, 0.025, 0, 0, 0, 1.35, -0.00596809, -0.0416543, -0.00844479)
 mesh = SubResource("CylinderMesh_xgtpc")
-skeleton = NodePath("")
-
-[node name="Puddle" type="MeshInstance3D" parent="Hideouts/DrainCorner"]
-transform = Transform3D(1.40642, 0, 2.05866, 0, 0.0254109, 0, -1.99027, 0, 1.45475, -9.9312, -0.495936, 6.59304)
-mesh = SubResource("CylinderMesh_en6ww")
-skeleton = NodePath("")
-
-[node name="Puddle2" type="MeshInstance3D" parent="Hideouts/DrainCorner"]
-transform = Transform3D(2.44698, 0, 3.59001, 0, 0.0254109, 0, -3.46278, 0, 2.53689, -13.8232, -0.495937, 1.26755)
-mesh = SubResource("CylinderMesh_en6ww")
-skeleton = NodePath("")
-
-[node name="Puddle3" type="MeshInstance3D" parent="Hideouts/DrainCorner"]
-transform = Transform3D(3.45035, 0, 5.23804, 0, 0.0252638, 0, -4.88267, 0, 3.70147, -18.4057, -0.495937, 6.57013)
-mesh = SubResource("CylinderMesh_en6ww")
 skeleton = NodePath("")
 
 [node name="Vegitation" type="Node3D" parent="Hideouts"]
@@ -342,6 +444,32 @@ transform = Transform3D(0.785, 0, 0, 0, 0.785, 0, 0, 0, 0.785, -2.67669, 2.49741
 
 [node name="Poster4" parent="Decoration/Posters" instance=ExtResource("19_wmaa5")]
 transform = Transform3D(-0.78499, 0, -0.00389105, 0, 0.785, 0, 0.00389105, 0, -0.78499, 9.85152, 2.49741, 13.3368)
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.513015, 7.37572, 4.22112)
+size = Vector3(70, 22, 48.5483)
+origin_offset = Vector3(-16.5879, -7.67969, -0.059082)
+interior = true
+reflection_mask = 1048064
+
+[node name="Puddle2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.2459, -0.463083, 3.60549)
+script = ExtResource("18_tjpu2")
+
+[node name="Puddle" type="MeshInstance3D" parent="Puddle2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0112576, 0)
+layers = 513
+transparency = 0.2
+cast_shadow = 0
+mesh = SubResource("QuadMesh_sfx2u")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_fr8r0")
+
+[node name="Area3D" type="Area3D" parent="Puddle2"]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Puddle2/Area3D"]
+shape = SubResource("CylinderShape3D_m2r36")
 
 [editable path="Hideouts/Wagon"]
 [editable path="Decoration/Grass/Grass"]
