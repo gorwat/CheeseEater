@@ -14,6 +14,8 @@
 [sub_resource type="Environment" id="Environment_7us62"]
 background_energy_multiplier = 0.2
 tonemap_mode = 3
+ssil_radius = 16.0
+ssil_intensity = 13.17
 glow_enabled = true
 glow_intensity = 1.71
 glow_strength = 0.56
@@ -106,25 +108,25 @@ parameters/looping = true
 script = ExtResource("9_36pyg")
 
 [node name="Cheese7" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.929789, 0, 0.368092, 0, 1, 0, -0.368092, 0, 0.929789, 3.92672, -0.5, -3.16118)
+transform = Transform3D(0.929789, 0, 0.368092, 0, 1, 0, -0.368092, 0, 0.929789, 3.92672, -0.314223, -3.16118)
 
 [node name="Cheese" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.626236, 0, 0.779633, 0, 1, 0, -0.779633, 0, 0.626236, -11.3396, -0.5, -9.87414)
+transform = Transform3D(0.626236, 0, 0.779633, 0, 1, 0, -0.779633, 0, 0.626236, -11.3396, -0.314223, -9.87414)
 
 [node name="Cheese2" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.510723, 0, 0.859745, 0, 1, 0, -0.859745, 0, 0.510723, -12.9147, -0.5, 5.88585)
+transform = Transform3D(0.510723, 0, 0.859745, 0, 1, 0, -0.859745, 0, 0.510723, -12.9147, -0.314223, 5.88585)
 
 [node name="Cheese3" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.878267, 0, 0.478171, 0, 1, 0, -0.478171, 0, 0.878267, 20.5156, -0.5, -7.85761)
+transform = Transform3D(0.878267, 0, 0.478171, 0, 1, 0, -0.478171, 0, 0.878267, 20.5156, -0.314223, -7.85761)
 
 [node name="Cheese4" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.907712, 0, -0.419595, 0, 1, 0, 0.419595, 0, 0.907712, 15.6658, -0.5, 4.82063)
+transform = Transform3D(0.907712, 0, -0.419595, 0, 1, 0, 0.419595, 0, 0.907712, 15.6658, -0.314223, 4.82063)
 
 [node name="Cheese5" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.662489, 0, -0.749071, 0, 1, 0, 0.749071, 0, 0.662489, -18.1699, -0.5, -4.56431)
+transform = Transform3D(0.662489, 0, -0.749071, 0, 1, 0, 0.749071, 0, 0.662489, -18.1699, -0.314223, -4.56431)
 
 [node name="Cheese6" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.984192, 0, -0.177102, 0, 1, 0, 0.177102, 0, 0.984192, -3.15838, -0.5, 10.5411)
+transform = Transform3D(0.984192, 0, -0.177102, 0, 1, 0, 0.177102, 0, 0.984192, -3.15838, -0.314223, 10.5411)
 
 [node name="HUD" type="Control" parent="."]
 layout_mode = 3
