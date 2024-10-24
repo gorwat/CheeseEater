@@ -15,6 +15,7 @@ script = ExtResource("1_n62wk")
 
 [node name="frame" type="Sprite3D" parent="Aim"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 5, 0)
+visible = false
 pixel_size = 0.02
 axis = 1
 texture = ExtResource("2_i552s")
