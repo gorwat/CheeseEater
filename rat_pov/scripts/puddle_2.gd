@@ -5,8 +5,8 @@ extends Node3D
 
 var rat: CharacterBody3D = null
 const TIME_BETWEEN_RIPPLES = 0.2
-const RIPPLE_DECREASE_SPEED = 0.1
-const MAX_RIPPLES = 10 
+const RIPPLE_DECREASE_SPEED = 0.2
+var MAX_RIPPLES = 20;
 var time_since_last_ripple = TIME_BETWEEN_RIPPLES
 
 # Called when the node enters the scene tree for the first time.
@@ -33,7 +33,7 @@ func create_ripple(rat_pos: Vector3):
 	var ripple_count = puddle_material.get_shader_parameter("wave_sources_size")
 	var ripples = puddle_material.get_shader_parameter("wave_sources") as PackedVector2Array
 	var ripple_amplitudes =  puddle_material.get_shader_parameter("wave_amplitudes") as PackedFloat32Array
-	if ripples.size() == 10:
+	if ripples.size() == MAX_RIPPLES:
 		pass
 	else:
 		ripples.append(Vector2(ripple_position.x, ripple_position.z));
