@@ -13,6 +13,8 @@ var next_cage_idx = 0;
 @onready var cages = $Cages;
 @onready var cage = $Cage;
 
+enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT}
+var current_game_state: GameState = GameState.INIT
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -62,3 +64,7 @@ func _on_cage_piller_entered(area: Area3D) -> void:
 
 func _on_cage_pillar_exited(area: Area3D) -> void:
 	over_obsticle = false
+
+
+func _on_game_info_update_game_state(new_game_state: GameState) -> void:
+	current_game_state = new_game_state

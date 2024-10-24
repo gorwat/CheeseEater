@@ -426,6 +426,7 @@ shape = SubResource("BoxShape3D_dm842")
 [connection signal="rat_force_quit" from="NetworkManager" to="GameInfo" method="_on_network_manager_rat_force_quit"]
 [connection signal="rat_pos_recieved" from="NetworkManager" to="Player" method="_on_network_manager_rat_pos_recieved"]
 [connection signal="SpotPositionsChanged" from="LightManager" to="NetworkManager" method="_on_light_manager_spot_positions_changed"]
+[connection signal="update_game_state" from="GameInfo" to="CageController" method="_on_game_info_update_game_state"]
 [connection signal="timeout" from="GameInfo/Clock/Timer" to="GameInfo" method="_on_timer_timeout"]
 [connection signal="timeout" from="GameInfo/Countdown/Timer" to="GameInfo/Countdown" method="_on_timeout"]
 [connection signal="init_connection" from="Server Menu" to="NetworkManager" method="_on_init_connection"]
