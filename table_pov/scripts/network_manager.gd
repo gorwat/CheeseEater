@@ -56,8 +56,6 @@ func _on_light_manager_spot_positions_changed(positions: PackedVector3Array, ang
 	if connection_status == Status.CONNECTED:
 		set_spot_positions.rpc(positions, angles)
 
-func _on_claw_rat_caught() -> void:
-	catch_rat.rpc()
 
 # rpcs called from rat
 @rpc

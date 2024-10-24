@@ -88,4 +88,3 @@ func update_cage(position:Vector3, rotation:Vector3, enable: bool):
 	else:
 		%Cage.set_process(false)
 		%Cage.hide()
-
