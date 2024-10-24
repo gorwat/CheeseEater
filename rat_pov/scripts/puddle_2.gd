@@ -3,7 +3,7 @@ extends Node3D
 @onready var puddle = $Puddle
 @onready var puddle_material = puddle.get_active_material(0) as ShaderMaterial
 
-var rat = null
+var rat: CharacterBody3D = null
 const TIME_BETWEEN_RIPPLES = 0.5
 const RIPPLE_DECREASE_SPEED = 0.1
 const MAX_RIPPLES = 10 
@@ -21,8 +21,9 @@ func _process(delta: float) -> void:
 	# If rat is inside puddle
 	if rat != null:
 		if time_since_last_ripple >= TIME_BETWEEN_RIPPLES:
-			create_ripple(rat.position)
-			time_since_last_ripple = 0
+			if rat.velocity.length_squared() > 0.0:
+				create_ripple(rat.position)
+				time_since_last_ripple = 0
 		time_since_last_ripple += delta
 	update_ripples(delta)
 		
