@@ -10,10 +10,9 @@ var next_cage_idx = 0;
 
 @onready var aim = $Aim;
 @onready var aim_frame = $Aim/frame;
-@onready var cages = $Cages;
 @onready var cage = $Cage;
 
-enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT}
+enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT, COUNTDOWN}
 var current_game_state: GameState = GameState.INIT
 
 # Called when the node enters the scene tree for the first time.
@@ -24,6 +23,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	current_cage_cooldown = clamp(current_cage_cooldown - delta, 0, CAGE_COOLDOWN);
+	
+	
 	
 	
 	var direction = Vector3(
@@ -42,7 +43,7 @@ func _process(delta: float) -> void:
 		aim_frame.modulate = Color(1.0,1.0,1.0)
 	
 	
-	if Input.get_action_strength("scoop_drop") and current_cage_cooldown == 0 and not over_obsticle:
+	if Input.get_action_strength("scoop_drop") and current_cage_cooldown == 0 and not over_obsticle and %GameInfo.current_game_state == GameState.RUNNING:
 		self.new_cage();
 		current_cage_cooldown = CAGE_COOLDOWN;
 		
@@ -55,7 +56,7 @@ func new_cage():
 
 func _on_rat_caught():
 	print("rat caught")
-	%NetworkManager._on_claw_rat_caught()
+	%GameInfo.set_game_state(GameState.RAT_CAUGHT)
 	
 
 func _on_cage_piller_entered(area: Area3D) -> void:
@@ -68,3 +69,9 @@ func _on_cage_pillar_exited(area: Area3D) -> void:
 
 func _on_game_info_update_game_state(new_game_state: GameState) -> void:
 	current_game_state = new_game_state
+	if current_game_state == GameState.COUNTDOWN:
+		#print("COUNTDOWN TIME!")
+		cage.position.y = -100
+		cage.set_process(false)
+		cage.hide()
+		%NetworkManager.update_cage.rpc(cage.position, cage.rotation, false)

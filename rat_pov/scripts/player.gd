@@ -25,7 +25,9 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= gravity * delta
 	else:
 		velocity.y = 0  # Reset vertical velocity when on the ground
-
+	
+	if %GameInfo.current_game_state != 1: # 1 is Gamestate running :)) 
+		return
 	# Handle movement input
 	var movement_input = Vector2.ZERO
 	if Input.is_action_pressed("move_forward"):

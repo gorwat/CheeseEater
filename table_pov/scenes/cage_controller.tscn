@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://od1b8cisj5n"]
+[gd_scene load_steps=5 format=3 uid="uid://cwjfd6sqdcy31"]
 
 [ext_resource type="Script" path="res://cage_controller.gd" id="1_n62wk"]
 [ext_resource type="Texture2D" uid="uid://dwuo68e35f5a7" path="res://art/Sprites/crosshair-frame.png" id="2_i552s"]
-[ext_resource type="PackedScene" uid="uid://d2et7ws2ysi4k" path="res://scenes/Cage.tscn" id="3_l4t4x"]
+[ext_resource type="PackedScene" path="res://scenes/Cage.tscn" id="3_l4t4x"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_5dewn"]
 height = 10.0332

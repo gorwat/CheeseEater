@@ -24,6 +24,7 @@ const ROTATION_SPEED_SLOWDOWN = 0.025;
 func _ready() -> void:
 	self.set_process(false)
 	self.hide()
+	self.position.y = -100
 	
 func reset():
 	self.fall_vel = START_FALL_VEL;
@@ -51,6 +52,7 @@ func _process(delta: float) -> void:
 			self.update_cage.emit(self.position, self.rotation, false)
 			self.set_process(false)
 			self.hide()
+			self.position.y = -100
 			return
 			
 	else:
@@ -66,4 +68,4 @@ func _process(delta: float) -> void:
 func _on_rat_in_cage(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
 	print("rat gotten! body")
 	caught_rat.emit()
-	time_to_live = 10; # so that the player has time to watch the rat in a cage 
+	time_to_live = 1000; # so that the player has time to watch the rat in a cage 

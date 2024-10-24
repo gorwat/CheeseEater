@@ -5,6 +5,7 @@ signal force_quit
 signal update_game_state
 
 enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT}
+@export var state : GameState
 
 @export var current_game_state: GameState = GameState.INIT
 @onready var game_timer: Timer = $Clock/Timer
@@ -107,6 +108,10 @@ func stop_game() -> void:
 	
 	game_timer.stop()
 	game_stopped.emit()
+	
+func set_game_state(state: GameState) -> void:
+	self.current_game_state = state
+	update_game_state.emit(self.current_game_state)
 	
 func _on_timer_timeout() -> void:
 	self.current_game_state = GameState.TIME_OUT

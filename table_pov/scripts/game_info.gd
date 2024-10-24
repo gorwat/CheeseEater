@@ -3,7 +3,7 @@ signal game_started
 signal game_stopped
 signal update_game_state
 
-enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT}
+enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT, COUNTDOWN}
 
 @export var current_game_state: GameState = GameState.INIT
 
@@ -39,7 +39,7 @@ func start_game() -> void:
 	countdown.start_countdown()
 	
 	game_timer.start()
-	self.current_game_state = GameState.RUNNING
+	self.current_game_state = GameState.COUNTDOWN
 	update_game_state.emit(current_game_state)
 	
 	# hide screens
@@ -62,6 +62,12 @@ func stop_game() -> void:
 	
 	game_timer.stop()
 	timer_ui.visible = false
+	
+func set_game_state(state: GameState):
+	self.current_game_state = state
+	update_game_state.emit(self.current_game_state)
+	if state == GameState.RAT_CAUGHT:
+		stop_game()
 	
 func _on_timer_timeout() -> void:
 	self.current_game_state = GameState.TIME_OUT
@@ -86,9 +92,3 @@ func _on_network_manager_rat_force_quit() -> void:
 	self.current_game_state = GameState.FORCE_QUIT
 	update_game_state.emit(current_game_state)
 	stop_game()
-
-func _on_claw_rat_caught() -> void:
-	if (current_game_state == GameState.RUNNING):
-		self.current_game_state = GameState.RAT_CAUGHT
-		update_game_state.emit(current_game_state)
-		stop_game()
