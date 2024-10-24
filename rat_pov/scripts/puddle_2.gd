@@ -4,7 +4,7 @@ extends Node3D
 @onready var puddle_material = puddle.get_active_material(0) as ShaderMaterial
 
 var rat: CharacterBody3D = null
-const TIME_BETWEEN_RIPPLES = 0.5
+const TIME_BETWEEN_RIPPLES = 0.2
 const RIPPLE_DECREASE_SPEED = 0.1
 const MAX_RIPPLES = 10 
 var time_since_last_ripple = TIME_BETWEEN_RIPPLES
