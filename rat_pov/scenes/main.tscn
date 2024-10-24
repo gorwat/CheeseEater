@@ -15,6 +15,12 @@
 [sub_resource type="Environment" id="Environment_7us62"]
 background_energy_multiplier = 0.2
 tonemap_mode = 3
+glow_enabled = true
+glow_intensity = 1.71
+glow_strength = 0.56
+glow_blend_mode = 0
+glow_hdr_threshold = 0.0
+glow_hdr_luminance_cap = 6.58
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.1
 
