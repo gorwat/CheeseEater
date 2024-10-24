@@ -69,7 +69,7 @@ func _on_cage_pillar_exited(area: Area3D) -> void:
 
 func _on_game_info_update_game_state(new_game_state: GameState) -> void:
 	current_game_state = new_game_state
-	if current_game_state == GameState.COUNTDOWN:
+	if current_game_state == GameState.COUNTDOWN or current_game_state == GameState.TIME_OUT:
 		#print("COUNTDOWN TIME!")
 		cage.position.y = -100
 		cage.set_process(false)
