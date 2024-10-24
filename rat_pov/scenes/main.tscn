@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://hp2x18qw2hh3" path="res://art/audio/mixkit-light-rain-atmosphere-2474.ogg" id="6_8wg4h"]
 [ext_resource type="PackedScene" uid="uid://cmohcowv2ef6d" path="res://scenes/small_objects/cheese.tscn" id="9_7sksj"]
 [ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="9_36pyg"]
-[ext_resource type="PackedScene" uid="uid://cqct1mes3vemm" path="res://scenes/cage.tscn" id="11_0d2vl"]
+[ext_resource type="PackedScene" uid="uid://bvn8p1xhe2bwk" path="res://scenes/cage.tscn" id="11_0d2vl"]
 [ext_resource type="Script" path="res://scripts/game_info.gd" id="11_dayo2"]
 [ext_resource type="Script" path="res://scripts/clock.gd" id="12_5qip8"]
 
@@ -132,6 +132,7 @@ transform = Transform3D(0.662489, 0, -0.749071, 0, 1, 0, 0.749071, 0, 0.662489, 
 transform = Transform3D(0.984192, 0, -0.177102, 0, 1, 0, 0.177102, 0, 0.984192, -3.15838, -0.314223, 10.5411)
 
 [node name="GameInfo" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://scripts/game_info.gd" id="12_feh1c"]
 [ext_resource type="Texture2D" uid="uid://bko11hpbsvmlw" path="res://art/title.png" id="13_fxb7x"]
 [ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="13_t51sp"]
-[ext_resource type="PackedScene" uid="uid://od1b8cisj5n" path="res://scenes/cage_controller.tscn" id="14_drefk"]
+[ext_resource type="PackedScene" uid="uid://cwjfd6sqdcy31" path="res://scenes/cage_controller.tscn" id="14_drefk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_peehw"]
 size = Vector3(20, 1, 20)
@@ -83,6 +83,7 @@ light_energy = 0.5
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
 [node name="GameInfo" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -426,6 +427,7 @@ shape = SubResource("BoxShape3D_dm842")
 [connection signal="rat_force_quit" from="NetworkManager" to="GameInfo" method="_on_network_manager_rat_force_quit"]
 [connection signal="rat_pos_recieved" from="NetworkManager" to="Player" method="_on_network_manager_rat_pos_recieved"]
 [connection signal="SpotPositionsChanged" from="LightManager" to="NetworkManager" method="_on_light_manager_spot_positions_changed"]
+[connection signal="update_game_state" from="GameInfo" to="NetworkManager" method="_on_game_info_update_game_state"]
 [connection signal="update_game_state" from="GameInfo" to="CageController" method="_on_game_info_update_game_state"]
 [connection signal="timeout" from="GameInfo/Clock/Timer" to="GameInfo" method="_on_timer_timeout"]
 [connection signal="timeout" from="GameInfo/Countdown/Timer" to="GameInfo/Countdown" method="_on_timeout"]

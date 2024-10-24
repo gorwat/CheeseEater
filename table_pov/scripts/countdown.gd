@@ -29,3 +29,4 @@ func _on_timeout() -> void:
 	else:
 		visible = false
 		countdown_timer.stop()
+		%GameInfo.set_game_state(1) # 1 is running :))
