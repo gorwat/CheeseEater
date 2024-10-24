@@ -80,6 +80,7 @@ func set_spot_positions(positions: PackedVector3Array, angles: PackedFloat32Arra
 
 @rpc("any_peer")
 func update_cage(position:Vector3, rotation:Vector3, enable: bool):
+	print("we update the cage now")
 	%Cage.position = position
 	%Cage.rotation = rotation
 	if enable:

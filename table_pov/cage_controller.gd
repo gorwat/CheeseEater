@@ -69,6 +69,7 @@ func _on_cage_pillar_exited(area: Area3D) -> void:
 
 func _on_game_info_update_game_state(new_game_state: GameState) -> void:
 	current_game_state = new_game_state
+
 	if current_game_state == GameState.RUNNING:
 		aim_frame.show()
 	else:
