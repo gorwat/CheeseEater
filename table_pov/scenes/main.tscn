@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://8vq475iel8pb"]
+[gd_scene load_steps=22 format=3 uid="uid://8vq475iel8pb"]
 
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="1_vjgd7"]
 [ext_resource type="Script" path="res://scripts/LightManager.cs" id="2_ouwl4"]

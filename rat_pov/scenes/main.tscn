@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=18 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/light_manager.gd" id="1_ofn0t"]
@@ -9,10 +9,9 @@
 [ext_resource type="AudioStream" uid="uid://hp2x18qw2hh3" path="res://art/audio/mixkit-light-rain-atmosphere-2474.ogg" id="6_8wg4h"]
 [ext_resource type="PackedScene" uid="uid://cmohcowv2ef6d" path="res://scenes/small_objects/cheese.tscn" id="9_7sksj"]
 [ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="9_36pyg"]
+[ext_resource type="PackedScene" uid="uid://cqct1mes3vemm" path="res://scenes/cage.tscn" id="11_0d2vl"]
 [ext_resource type="Script" path="res://scripts/game_info.gd" id="11_dayo2"]
 [ext_resource type="Script" path="res://scripts/clock.gd" id="12_5qip8"]
-[ext_resource type="PackedScene" uid="uid://cqct1mes3vemm" path="res://scenes/cage.tscn" id="11_0d2vl"]
-
 
 [sub_resource type="Environment" id="Environment_7us62"]
 background_energy_multiplier = 0.2
