@@ -1,0 +1,38 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://cjw844khbdh4d"
+path.s3tc="res://.godot/imported/cage_3k_Image_0.jpg-205531242d9425077e5f6d6ad01776e8.s3tc.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "dab3db398654ad5a62f3a4a7a6ee519e"
+}
+
+[deps]
+
+source_file="res://art/models/cage/cage_3k_Image_0.jpg"
+dest_files=["res://.godot/imported/cage_3k_Image_0.jpg-205531242d9425077e5f6d6ad01776e8.s3tc.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0
