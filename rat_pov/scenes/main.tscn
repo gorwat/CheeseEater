@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="9_36pyg"]
 [ext_resource type="Script" path="res://scripts/game_info.gd" id="11_dayo2"]
 [ext_resource type="Script" path="res://scripts/clock.gd" id="12_5qip8"]
+[ext_resource type="PackedScene" uid="uid://cqct1mes3vemm" path="res://scenes/cage.tscn" id="11_0d2vl"]
+
 
 [sub_resource type="Environment" id="Environment_7us62"]
 background_energy_multiplier = 0.2
@@ -519,6 +521,9 @@ offset_bottom = 275.0
 theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
 theme_override_font_sizes/font_size = 18
 text = "true"
+
+[node name="Cage" parent="." instance=ExtResource("11_0d2vl")]
+unique_name_in_owner = true
 
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
 [connection signal="connection_status_changed" from="NetworkManager" to="GameInfo" method="_on_network_manager_connection_status_changed"]

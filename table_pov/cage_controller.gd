@@ -11,9 +11,12 @@ var next_cage_idx = 0;
 @onready var aim = $Aim;
 @onready var aim_frame = $Aim/frame;
 @onready var cages = $Cages;
+@onready var cage = $Cage;
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	cage.connect("update_cage", %NetworkManager.update_cage)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -42,14 +45,10 @@ func _process(delta: float) -> void:
 		current_cage_cooldown = CAGE_COOLDOWN;
 		
 func new_cage():
-	var new_cage = CAGE.instantiate();
-	new_cage.position = aim.position;
-	new_cage.position.y = CAGE_DROP_HEIGHT;
-	new_cage.connect("caught_rat", _on_rat_caught);
-	new_cage.connect("update_cage", %NetworkManager._on_cage_controller_update_specific_cage);
-	cages.add_child(new_cage);
-	new_cage.name = "cage" + str(self.next_cage_idx)
-	self.next_cage_idx += 1
+	cage.position = aim.position;
+	cage.position.y = CAGE_DROP_HEIGHT;
+	cage.connect("caught_rat", _on_rat_caught);
+	cage.reset()
 	
 
 func _on_rat_caught():
