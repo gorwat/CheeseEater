@@ -86,7 +86,6 @@ func sync_cheese_eaten(cheese_name:String):
 	print("cheese eaten")
 	cheese_eaten.emit(cheese_name)
 
-@rpc	
-func catch_rat(): # This function is called when the rat is caught
-	pass #print("THE RAT HAS BEEN CAUGHT!");
-	
+@rpc
+func update_cage(position: Vector3, rotation: Vector3, enable: bool):
+	update_cage.rpc(position, rotation, enable)
