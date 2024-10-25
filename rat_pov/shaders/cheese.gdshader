@@ -21,8 +21,7 @@ uniform vec3 uv1_offset;
 uniform vec3 uv2_scale;
 uniform vec3 uv2_offset;
 
-
-const vec3 emission_color = vec3(1, 1, 1);
+const vec3 emission_color = vec3(0.8, 0.4, 1);
 const float emission_intensity = 2.5;
 
 
@@ -40,7 +39,7 @@ void fragment() {
 	// Vertex Color Use as Albedo: Enabled
 	albedo_tex *= COLOR;
 
-	ALBEDO = albedo.rgb * albedo_tex.rgb * emission; // done in fragment shader? how turn off falloff?
+	ALBEDO = albedo.rgb * albedo_tex.rgb * emission; 
 
 	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
 	METALLIC = metallic_tex * metallic;
@@ -49,11 +48,9 @@ void fragment() {
 	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
 	ROUGHNESS = roughness_tex * roughness;
-	
-	
-	//EMISSION = emission;
 }
 
 void light() {
     //DIFFUSE_LIGHT += clamp(dot(NORMAL, LIGHT), 0.0, 1.0) * ATTENUATION * LIGHT_COLOR * vec3(4,4,4);
+	//DIFFUSE_LIGHT += clamp(dot(NORMAL, LIGHT), 0.0, 1.0) * LIGHT_COLOR * vec3(4,4,4);
 }
