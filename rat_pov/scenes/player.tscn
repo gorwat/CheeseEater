@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cer020f54fwnj"]
+[gd_scene load_steps=5 format=3 uid="uid://cer020f54fwnj"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_em317"]
 [ext_resource type="PackedScene" uid="uid://b3avr63otef4a" path="res://art/models/rat/SoftToyRat_IKEAstyle.glb" id="1_oaams"]
+[ext_resource type="PackedScene" uid="uid://gnp6v82yxvay" path="res://art/models/animated_rat/rat.glb" id="3_rb0rx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x26fk"]
 radius = 0.225319
@@ -13,8 +14,63 @@ script = ExtResource("1_em317")
 [node name="Pivot" type="Node3D" parent="."]
 
 [node name="SoftToyRat_IKEAstyle" parent="Pivot" instance=ExtResource("1_oaams")]
-transform = Transform3D(-2.18557e-07, 0, 5, 0, 5, 0, -5, 0, -2.18557e-07, 0, 0, 0)
+transform = Transform3D(-2.18557e-07, 0, 5, 0, 5, 0, -5, 0, -2.18557e-07, 0, 0.0200586, 0)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-0.0355449, 4.52375e-08, 0.999368, 0.999368, -4.21301e-08, 0.0355449, 4.37114e-08, 1, -4.37114e-08, 0, 0, -0.251312)
 shape = SubResource("CapsuleShape3D_x26fk")
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("3_rb0rx")]
+transform = Transform3D(-0.462812, 0, -0.045053, 0, 0.465, 0, 0.045053, 0, -0.462812, 0, -0.208147, -0.0115945)
+
+[node name="Skeleton3D" parent="Sketchfab_Scene/Sketchfab_model/f262bdf26cd947e787c2192750f3a099_fbx/Object_2/RootNode/Armature/Object_6" index="0"]
+bones/1/position = Vector3(0.000832021, -0.0370729, 0.05966)
+bones/1/rotation = Quaternion(-0.00527903, -2.64193e-17, -3.22478e-17, 0.999986)
+bones/2/position = Vector3(-0.0169745, 0.0794749, -0.0214034)
+bones/2/rotation = Quaternion(-0.67898, -0.0457108, 0.060518, 0.730229)
+bones/3/rotation = Quaternion(-0.576912, -0.0403103, 0.060592, 0.813558)
+bones/5/rotation = Quaternion(1.97075e-07, 0.043639, 0.999047, 6.69615e-08)
+bones/6/rotation = Quaternion(-0.31824, -2.68221e-07, -5.68107e-08, 0.94801)
+bones/8/rotation = Quaternion(-0.192406, -0.068762, -0.0384704, 0.978147)
+bones/9/rotation = Quaternion(-0.1176, -0.0675188, -0.0137471, 0.990668)
+bones/10/rotation = Quaternion(-0.0320971, -0.0655659, 0.0161115, 0.997202)
+bones/11/rotation = Quaternion(0.0709494, -0.0625402, 0.0489156, 0.994315)
+bones/12/rotation = Quaternion(0.113122, -0.0557001, 0.0771377, 0.989015)
+bones/13/rotation = Quaternion(0.140013, -0.045887, 0.0968662, 0.984331)
+bones/14/rotation = Quaternion(0.17655, -0.0331104, 0.103354, 0.97829)
+bones/14/scale = Vector3(1, 0.99997, 1.00003)
+bones/15/rotation = Quaternion(0.181911, -0.0188081, 0.0958522, 0.978451)
+bones/15/scale = Vector3(0.999992, 0.999923, 1.00007)
+bones/16/rotation = Quaternion(0.145503, -0.00828522, 0.0752385, 0.986458)
+bones/16/scale = Vector3(0.99999, 0.999877, 1.00013)
+bones/17/rotation = Quaternion(0.0991757, -0.00305517, 0.0464454, 0.993981)
+bones/17/scale = Vector3(0.999991, 0.999869, 1.00014)
+bones/18/rotation = Quaternion(0.0791965, -0.000743167, 0.012702, 0.996778)
+bones/18/scale = Vector3(0.999996, 0.999866, 1.00013)
+bones/20/position = Vector3(-0.00713353, -0.00654755, -0.0131237)
+bones/20/rotation = Quaternion(-0.615844, 0.124135, 0.21258, 0.748422)
+bones/21/rotation = Quaternion(-0.623296, 0.0341163, -0.117918, 0.772291)
+bones/22/rotation = Quaternion(0.0469453, -0.00623002, -0.0177954, 0.99872)
+bones/23/rotation = Quaternion(0.0373082, 0.0816717, 0.0775446, 0.992937)
+bones/25/position = Vector3(0.0122742, 0.0954601, -0.0302724)
+bones/25/rotation = Quaternion(-0.68184, 0.011648, 0.00630847, 0.731381)
+bones/26/rotation = Quaternion(-0.68952, 0.00150737, -0.128165, 0.712835)
+bones/28/position = Vector3(0.00713353, -0.00803067, -0.0135111)
+bones/28/rotation = Quaternion(-0.695123, -0.0287609, -0.182724, 0.694686)
+bones/29/rotation = Quaternion(-0.223851, -0.0182436, 0.0637683, 0.972364)
+bones/30/rotation = Quaternion(0.191725, -0.00715883, 0.0526758, 0.980008)
+bones/31/rotation = Quaternion(-0.628494, -0.0832427, -0.186338, 0.750563)
+bones/33/position = Vector3(-0.014193, -0.0744358, 0.0100564)
+bones/35/position = Vector3(-0.0148807, 0.0219036, 0.00404093)
+bones/37/position = Vector3(0.0179081, -0.068724, 0.00236992)
+bones/39/position = Vector3(0.0165581, 0.0363011, 0.00223422)
+
+[node name="Object_9" parent="Sketchfab_Scene/Sketchfab_model/f262bdf26cd947e787c2192750f3a099_fbx/Object_2/RootNode/Armature/Object_6/Skeleton3D" index="0"]
+transform = Transform3D(1, -7.45058e-09, -8.88178e-16, 7.45058e-09, 1, 1.42109e-14, -8.88178e-16, 7.10543e-15, 1, 0, -4.65661e-10, 0.00382381)
+
+[node name="AnimationPlayer" parent="Sketchfab_Scene" index="1"]
+speed_scale = 0.207
+movie_quit_on_finish = true
+
+[editable path="Sketchfab_Scene"]

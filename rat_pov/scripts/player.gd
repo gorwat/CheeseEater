@@ -6,18 +6,23 @@ extends CharacterBody3D
 @export var camera_node: Camera3D  # Assign the Camera3D node in the editor
 
 @onready var step_sound: AudioStreamPlayer = $RatTippyTaps
+@onready var animation_player: AnimationPlayer = $Sketchfab_Scene/AnimationPlayer
 
 var rat_caught = false
 
 signal rat_moved(position: Vector3, rotation: Vector3)
 
+func _ready() -> void:
+	animation_player.movie_quit_on_finish = true
+
 func _process(delta: float) -> void:
 	# Play footstep sounds only when the rat is moving and on the ground
-	if is_on_floor() and velocity.length_squared() > 0:
+	if is_on_floor() and velocity.length_squared() > 0.0:
 		if not step_sound.playing:
 			step_sound.play()
 	else:
 		step_sound.playing = false
+		
 
 func _physics_process(delta: float) -> void:
 	# Handle gravity and jumping
@@ -65,6 +70,13 @@ func _physics_process(delta: float) -> void:
 	# Emit signal if moving
 	if velocity.length_squared() > 0.0:
 		rat_moved.emit(self.position, self.rotation)
+		if not animation_player.current_animation == "Armature|Walk":
+			animation_player.speed_scale = 3
+			animation_player.play("Armature|Walk")
+	else:
+		if not animation_player.current_animation == "Armature|Idle":
+			animation_player.speed_scale = 1.0
+			animation_player.play("Armature|Idle")
 
 func _on_network_manager_rat_was_caught() -> void:
 	rat_caught = true
