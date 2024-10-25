@@ -66,7 +66,7 @@ margin = 0.25
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.102446, 0)
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera_node") instance=ExtResource("1_i7pi5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.28513, 0)
 collision_layer = 3
 camera_node = NodePath("../CameraRig/SpringArm3D/Camera3D")
 

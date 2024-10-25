@@ -83,5 +83,5 @@ func _on_network_manager_rat_was_caught() -> void:
 
 func _on_game_info_game_started(session_duration: int) -> void:
 	rat_caught = false
-	position = Vector3(0, position.y, 0)
+	position = Vector3(0, -0.285, 0)
 	rotation = Vector3(0, 0, 0)
