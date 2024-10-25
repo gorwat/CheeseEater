@@ -39,8 +39,7 @@ func start_game() -> void:
 	countdown.start_countdown()
 	
 	game_timer.start()
-	self.current_game_state = GameState.COUNTDOWN
-	update_game_state.emit(current_game_state)
+	set_game_state(GameState.COUNTDOWN)
 	
 	# hide screens
 	game_menu.visible = false
@@ -70,8 +69,7 @@ func set_game_state(state: GameState):
 		stop_game()
 	
 func _on_timer_timeout() -> void:
-	self.current_game_state = GameState.TIME_OUT
-	update_game_state.emit(current_game_state)
+	set_game_state(GameState.TIME_OUT)
 	stop_game()
 
 func _on_network_manager_connection_status_schanged(status) -> void:
@@ -89,6 +87,5 @@ func _on_network_manager_game_started(session_duration: int) -> void:
 	start_game()
 
 func _on_network_manager_rat_force_quit() -> void:
-	self.current_game_state = GameState.FORCE_QUIT
-	update_game_state.emit(current_game_state)
+	set_game_state(GameState.FORCE_QUIT)
 	stop_game()
