@@ -69,6 +69,7 @@ func _physics_process(delta: float) -> void:
 
 	# Emit signal if moving
 	if velocity.length_squared() > 0.0:
+		print(velocity.length_squared())
 		rat_moved.emit(self.position, self.rotation)
 		if not animation_player.current_animation == "Armature|Walk":
 			animation_player.speed_scale = 3
