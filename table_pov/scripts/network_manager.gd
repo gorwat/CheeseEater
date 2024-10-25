@@ -55,7 +55,10 @@ func _on_init_connection(ip: String) -> void:
 
 func _on_light_manager_spot_positions_changed(positions: PackedVector3Array, angles: PackedFloat32Array):
 	if connection_status == Status.CONNECTED:
-		set_spot_positions.rpc(positions, angles)
+		if %GameInfo.current_game_state != GameState.COUNTDOWN:
+			set_spot_positions.rpc(positions, angles)
+		else:
+			set_spot_positions.rpc([], [])
 
 
 func _on_game_info_update_game_state(state: GameState) -> void:
