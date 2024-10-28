@@ -6,6 +6,7 @@ extends Node3D
 @export var rotation_smoothing: float = 0.2  # Adjust for smoother rotation (0 = instant, higher = smoother)
 @export var smoothing_speed: float = 15.0  # higher value will smoothen but introduce delay
 @export var min_camera_distance: float = 1.5
+@export var recenter_speed: float = 5.0  # Recentering aggressiveness
 
 var max_camera_distance: float  # Maximum camera distance, set based on camera_offset.z
 var target_rotation_angle: float = 0.0
@@ -57,12 +58,25 @@ func _process(delta: float) -> void:
 
 	# Handle camera rotation input
 	var rotation_delta = 0.0
+	var camera_input = false
 	if Input.is_action_pressed("camera_left"):
 		rotation_delta += deg_to_rad(rotation_speed_deg) * delta
+		camera_input = true
 	if Input.is_action_pressed("camera_right"):
 		rotation_delta -= deg_to_rad(rotation_speed_deg) * delta
+		camera_input = true
 
 	target_rotation_angle += rotation_delta
+
+	if not camera_input:
+		# Check if player is moving
+		var player_velocity = follow_target.velocity
+		if player_velocity.length_squared() > 0.01:
+			# Smoothly adjust target_rotation_angle towards player's rotation.y
+			var player_rotation_y = follow_target.rotation.y
+			var recenter_smoothing = delta * recenter_speed  # Adjust for more aggressive re-centering
+			target_rotation_angle = lerp_angle(target_rotation_angle, player_rotation_y, recenter_smoothing)
+
 	current_rotation_angle = lerp_angle(current_rotation_angle, target_rotation_angle, rotation_smoothing)
 	spring_arm.rotation.y = current_rotation_angle
 	global_position = follow_target.global_position
@@ -79,7 +93,7 @@ func _process(delta: float) -> void:
 	else:
 		desired_spring_length = max_camera_distance
 
-	# anti-jagging / wall phasing
+	# Anti-jagging / wall phasing
 	var max_change = 1.0 * delta  # Maximum change per frame
 	desired_spring_length = clamp(
 		desired_spring_length,
@@ -87,11 +101,11 @@ func _process(delta: float) -> void:
 		current_spring_length + max_change
 	)
 
-	# smooth interpolation / cam
+	# Smooth interpolation for camera
 	current_spring_length = lerp(current_spring_length, desired_spring_length, smoothing_speed * delta)
 	spring_arm.spring_length = current_spring_length
 
-func _on_game_info_game_started(session_duration : int) -> void:
+func _on_game_info_game_started(session_duration: int) -> void:
 	current_rotation_angle = 0.0
 	target_rotation_angle = 0.0
 	spring_arm.rotation.y = 0.0
