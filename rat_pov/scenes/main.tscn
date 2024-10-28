@@ -532,6 +532,7 @@ text = "true"
 
 [node name="Cage" parent="." instance=ExtResource("11_0d2vl")]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.9695, 0)
 
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
 [connection signal="connection_status_changed" from="NetworkManager" to="GameInfo" method="_on_network_manager_connection_status_changed"]
