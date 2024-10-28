@@ -25,8 +25,19 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_P):
 		set_rat_position.rpc()
+		
+		
+	
+	var table_relay_direction = Vector3(
+		Input.get_action_strength("scoop_right") - Input.get_action_strength("scoop_left"),
+		0.0,
+		Input.get_action_strength("scoop_back") - Input.get_action_strength("scoop_forward"),
+	).limit_length(1.0);
+	
+	var table_relay_drop_cage = Input.is_action_just_pressed("table_cage_drop");
 	# Control relay to table
-	self.relay_table_controls.rpc(Vector3.ZERO, Input.is_action_just_pressed("table_cage_drop"));
+	self.relay_table_controls.rpc(table_relay_direction, table_relay_drop_cage);
+	
 		
 
 func _on_client_disconnected(id: int):

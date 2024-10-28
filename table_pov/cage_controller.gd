@@ -29,13 +29,15 @@ func _process(delta: float) -> void:
 	current_cage_cooldown = clamp(current_cage_cooldown - delta, 0, CAGE_COOLDOWN);
 	
 	
-	
-	
-	var direction = Vector3(
-		Input.get_action_strength("scoop_right") - Input.get_action_strength("scoop_left"),
-		0.0,
-		Input.get_action_strength("scoop_back") - Input.get_action_strength("scoop_forward"),
-	).limit_length(1.0);
+	# relay plugin
+	var direction = relay_direction;
+	var cage_drop: bool = relay_cage_drop;
+	# old
+	#var direction = Vector3(
+	#Input.get_action_strength("scoop_right") - Input.get_action_strength("scoop_left"),
+	#0.0,
+	#Input.get_action_strength("scoop_back") - Input.get_action_strength("scoop_forward"),
+	#).limit_length(1.0);
 	var delta_pos = direction * (delta * AIM_SPEED);
 	aim.position += delta_pos;
 	
@@ -48,7 +50,7 @@ func _process(delta: float) -> void:
 	
 	#if Input.get_action_strength("scoop_drop") and current_cage_cooldown == 0 and not over_obsticle and %GameInfo.current_game_state == GameState.RUNNING:
 		
-	if relay_cage_drop and current_cage_cooldown == 0 and not over_obsticle and %GameInfo.current_game_state == GameState.RUNNING:
+	if cage_drop and current_cage_cooldown == 0 and not over_obsticle and %GameInfo.current_game_state == GameState.RUNNING:
 		self.new_cage();
 		current_cage_cooldown = CAGE_COOLDOWN;
 		
