@@ -28,6 +28,14 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	current_cage_cooldown = clamp(current_cage_cooldown - delta, 0, CAGE_COOLDOWN);
 	
+	if current_game_state == GameState.COUNTDOWN:
+		aim.position.x = 0;
+		aim.position.z = 0;
+	
+	aim.position.x = clamp(aim.position.x, -28, 28);
+	aim.position.z = clamp(aim.position.z, -16, 16);
+	
+	
 	
 	# relay plugin
 	var direction = relay_direction;
@@ -53,6 +61,7 @@ func _process(delta: float) -> void:
 	if cage_drop and current_cage_cooldown == 0 and not over_obsticle and %GameInfo.current_game_state == GameState.RUNNING:
 		self.new_cage();
 		current_cage_cooldown = CAGE_COOLDOWN;
+	
 		
 func new_cage():
 	cage.position = aim.position;
