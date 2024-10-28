@@ -71,5 +71,6 @@ public partial class WiimoteManager : Node
 			GD.Print(nunchuk_x, " ", nunchuk_y, " ", nunchuk_z, " ", nunchuk_c);
 			}
 		}
+
 	}
 }
