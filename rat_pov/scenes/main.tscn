@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=18 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/light_manager.gd" id="1_ofn0t"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="9_36pyg"]
 [ext_resource type="Script" path="res://scripts/game_info.gd" id="11_dayo2"]
 [ext_resource type="Script" path="res://scripts/clock.gd" id="12_5qip8"]
+[ext_resource type="Script" path="res://scripts/WiimoteManager.cs" id="12_j0oq2"]
 
 [sub_resource type="Environment" id="Environment_7us62"]
 background_energy_multiplier = 0.2
@@ -527,6 +528,9 @@ offset_bottom = 275.0
 theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
 theme_override_font_sizes/font_size = 18
 text = "true"
+
+[node name="WiimoteManager" type="Node" parent="."]
+script = ExtResource("12_j0oq2")
 
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
 [connection signal="connection_status_changed" from="NetworkManager" to="GameInfo" method="_on_network_manager_connection_status_changed"]
