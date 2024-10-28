@@ -556,6 +556,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.9695, 0)
 
 [node name="WiimoteManager" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("12_j0oq2")
 
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]

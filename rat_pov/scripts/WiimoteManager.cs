@@ -13,45 +13,63 @@ public static class WiimoteDLL
 
 public partial class WiimoteManager : Node
 {
-	private Wiimote wiiDevice;
+	private WiimoteCollection deviceCollection;
+
+	// Balance Board - input
+	private float rwWeight;
+	private float rwTopLeft;
+	private float rwTopRight;
+	private float rwBottomLeft;
+	private float rwBottomRight;
+	
+	// Balance Board - calculated (TODO)
+	public float x_axis;
+	public float y_axis;
+	
+	// Nunchuk
+	public float nunchuk_x; // should be converted to better values
+	public float nunchuk_y; // should be converted to better values
+	public bool nunchuk_z;
+	public bool nunchuk_c;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
-	{
-		//WiimoteDLL.Connect();
-		GD.Print("attempt");
-		
-		wiiDevice = new Wiimote();
-		wiiDevice.Connect(); // Call methods as needed
-		var deviceCollection = new WiimoteCollection();
+	{		
+		deviceCollection = new WiimoteCollection();
 		deviceCollection.FindAllWiimotes();
-		GD.Print("testa");
-		GD.Print(wiiDevice.WiimoteState.ExtensionType);
-		if (wiiDevice.WiimoteState.ExtensionType != ExtensionType.BalanceBoard)
-			{
-				GD.Print("DEVICE IS NOT A BALANCE BOARD...");
-		 }
 		
-		 var rwWeight      = wiiDevice.WiimoteState.BalanceBoardState.WeightKg;
-		 var rwTopLeft     = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.TopLeft;
-		 var rwTopRight    = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.TopRight;
-		 var rwBottomLeft  = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomLeft;
-		 var rwBottomRight = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomRight;
-		 var aButton       = wiiDevice.WiimoteState.ButtonState.A;
-		
-		GD.Print(rwTopLeft, " ", rwTopRight);
+		foreach (Wiimote wiiDevice in deviceCollection) {
+			wiiDevice.Connect();
+			if (wiiDevice.WiimoteState.ExtensionType != null) {
+				GD.Print(wiiDevice.WiimoteState.ExtensionType, " connected");
+			} else {
+				GD.Print("Device type not compatible");
+			}
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		 var rwWeight      = wiiDevice.WiimoteState.BalanceBoardState.WeightKg;
-		 var rwTopLeft     = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.TopLeft;
-		 var rwTopRight    = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.TopRight;
-		 var rwBottomLeft  = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomLeft;
-		 var rwBottomRight = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomRight;
-		 var aButton       = wiiDevice.WiimoteState.ButtonState.A;
-		
-		GD.Print(rwTopLeft, " ", rwTopRight);
+		foreach (Wiimote wiiDevice in deviceCollection) {
+			if (wiiDevice.WiimoteState.ExtensionType == ExtensionType.BalanceBoard) {    
+			rwWeight      = wiiDevice.WiimoteState.BalanceBoardState.WeightKg;
+			rwTopLeft     = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.TopLeft;
+			rwTopRight    = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.TopRight;
+			rwBottomLeft  = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomLeft;
+			rwBottomRight = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomRight;
+			
+			GD.Print(rwTopLeft, rwTopRight, rwBottomLeft, rwBottomRight);
+			}
+			
+			if (wiiDevice.WiimoteState.ExtensionType == ExtensionType.Nunchuk) {    
+			nunchuk_x      = wiiDevice.WiimoteState.NunchukState.RawJoystick.X;
+			nunchuk_y      = wiiDevice.WiimoteState.NunchukState.RawJoystick.Y;
+			nunchuk_z      = wiiDevice.WiimoteState.NunchukState.Z;
+			nunchuk_c      = wiiDevice.WiimoteState.NunchukState.C;
+			
+			GD.Print(nunchuk_x, " ", nunchuk_y, " ", nunchuk_z, " ", nunchuk_c);
+			}
+		}
 	}
 }
