@@ -25,6 +25,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_P):
 		set_rat_position.rpc()
+	# Control relay to table
+	self.relay_table_controls.rpc(Vector3.ZERO, Input.is_action_just_pressed("table_cage_drop"));
+		
 
 func _on_client_disconnected(id: int):
 	connection_status = Status.DISCONNECTED
@@ -95,3 +98,7 @@ func update_cage(position:Vector3, rotation:Vector3, enable: bool):
 @rpc("any_peer")
 func rat_caught():
 	rat_was_caught.emit()
+	
+@rpc("any_peer")
+func relay_table_controls(direction: Vector3, cage_drop: bool):
+	pass

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://8vq475iel8pb"]
+[gd_scene load_steps=29 format=3 uid="uid://8vq475iel8pb"]
 
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="1_vjgd7"]
 [ext_resource type="Script" path="res://scripts/LightManager.cs" id="2_ouwl4"]
@@ -42,7 +42,29 @@ size = Vector3(6.31946, 0.153809, 2.15198)
 size = Vector3(3.32837, 0.482422, 3.83569)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dm842"]
-size = Vector3(3.42291, 1, 2.3103)
+size = Vector3(2.84329, 1, 2.3103)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3ts2t"]
+size = Vector3(1.92163, 0.24707, 3.23849)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a8vij"]
+size = Vector3(3.62573, 0.256348, 2.13701)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5byub"]
+size = Vector3(7.14472, 1, 2.13867)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ayg68"]
+size = Vector3(2.67358, 1, 1.8335)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_433iu"]
+size = Vector3(1.92273, 1, 0.381836)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_gse6b"]
+height = 0.443498
+radius = 1.10398
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_phl0g"]
+size = Vector3(1.12158, 0.510742, 1)
 
 [node name="Main" type="Node"]
 
@@ -59,7 +81,6 @@ script = ExtResource("13_t51sp")
 
 [node name="Player" parent="." instance=ExtResource("2_xa4f0")]
 unique_name_in_owner = true
-collision_layer = 32773
 
 [node name="Floor" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -78,7 +99,6 @@ size = 30.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.999974, 8.77334e-08, -0.00715579, -0.00171772, 0.970758, 0.240053, 0.00694657, 0.240059, -0.970734, 0.226, 11.4781, 0)
-visible = false
 light_energy = 0.5
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -414,10 +434,61 @@ shape = SubResource("BoxShape3D_f4a0x")
 collision_layer = 65
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D6"]
-transform = Transform3D(0.986412, 0, -0.16429, 0, 1, 0, 0.16429, 0, 0.986412, 21.4675, 1.87431, -13.1015)
+transform = Transform3D(0.986412, 0, -0.16429, 0, 1, 0, 0.16429, 0, 0.986412, 21.7534, 1.87431, -13.0539)
 shape = SubResource("BoxShape3D_dm842")
 
+[node name="Area3D7" type="Area3D" parent="TEMP-clawblockers"]
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D7"]
+transform = Transform3D(0.729434, 0, 0.684051, 0, 1, 0, -0.684051, 0, 0.729434, 4.16695, 1.88163, 6.02812)
+shape = SubResource("BoxShape3D_3ts2t")
+
+[node name="Area3D8" type="Area3D" parent="TEMP-clawblockers"]
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D8"]
+transform = Transform3D(0.987422, 0, 0.158107, 0, 1, 0, -0.158107, 0, 0.987422, -26.0786, 3.23203, 11.6571)
+shape = SubResource("BoxShape3D_a8vij")
+
+[node name="Area3D9" type="Area3D" parent="TEMP-clawblockers"]
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D9"]
+transform = Transform3D(0.996639, 0, 0.0819216, 0, 1, 0, -0.0819216, 0, 0.996639, -11.086, 3.23203, -15.6256)
+shape = SubResource("BoxShape3D_5byub")
+
+[node name="Area3D10" type="Area3D" parent="TEMP-clawblockers"]
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D10"]
+transform = Transform3D(0.879183, 0, -0.476483, 0, 1, 0, 0.476483, 0, 0.879183, 1.90321, 3.23203, 14.7993)
+shape = SubResource("BoxShape3D_ayg68")
+
+[node name="Area3D11" type="Area3D" parent="TEMP-clawblockers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10.5903)
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D11"]
+transform = Transform3D(0.988706, 0.149024, 0.0158907, -0.053667, 0.253053, 0.965962, 0.13993, -0.955906, 0.258193, 6.88549, 2.9087, 3.39535)
+shape = SubResource("BoxShape3D_433iu")
+
+[node name="Area3D12" type="Area3D" parent="TEMP-clawblockers"]
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D12"]
+transform = Transform3D(0.88545, 0, -0.464734, 0, 1, 0, 0.464734, 0, 0.88545, 21.2882, 2.08854, 9.60333)
+shape = SubResource("CylinderShape3D_gse6b")
+
+[node name="Area3D13" type="Area3D" parent="TEMP-clawblockers"]
+collision_layer = 65
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D13"]
+transform = Transform3D(0.986412, 0, -0.16429, 0, 1, 0, 0.16429, 0, 0.986412, 18.1373, 2.11894, -13.0439)
+shape = SubResource("BoxShape3D_phl0g")
+
 [node name="CageController" parent="." instance=ExtResource("14_drefk")]
+unique_name_in_owner = true
 
 [connection signal="cheese_eaten" from="NetworkManager" to="CheeseManager" method="_on_network_manager_cheese_eaten"]
 [connection signal="cheese_spawned" from="NetworkManager" to="CheeseManager" method="_on_network_manager_cheese_spawned"]

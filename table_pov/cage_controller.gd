@@ -12,6 +12,10 @@ var next_cage_idx = 0;
 @onready var aim_frame = $Aim/frame;
 @onready var cage = $Cage;
 
+
+var relay_cage_drop : bool = false;
+var relay_direction : Vector3 = Vector3.ZERO;
+
 enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT, COUNTDOWN}
 var current_game_state: GameState = GameState.INIT
 
@@ -42,8 +46,9 @@ func _process(delta: float) -> void:
 	else:
 		aim_frame.modulate = Color(1.0,1.0,1.0)
 	
-	
-	if Input.get_action_strength("scoop_drop") and current_cage_cooldown == 0 and not over_obsticle and %GameInfo.current_game_state == GameState.RUNNING:
+	#if Input.get_action_strength("scoop_drop") and current_cage_cooldown == 0 and not over_obsticle and %GameInfo.current_game_state == GameState.RUNNING:
+		
+	if relay_cage_drop and current_cage_cooldown == 0 and not over_obsticle and %GameInfo.current_game_state == GameState.RUNNING:
 		self.new_cage();
 		current_cage_cooldown = CAGE_COOLDOWN;
 		

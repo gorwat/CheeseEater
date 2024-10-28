@@ -23,6 +23,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+
+	
+	
 	if Input.is_action_just_pressed("fullscreen"):
 		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
@@ -96,7 +99,14 @@ func sync_cheese_eaten(cheese_name:String):
 @rpc
 func update_cage(position: Vector3, rotation: Vector3, enable: bool):
 	update_cage.rpc(position, rotation, enable)
-	
+
 @rpc
 func rat_caught():
 	pass
+
+@rpc
+func relay_table_controls(direction: Vector3, cage_drop: bool):
+	%CageController.relay_cage_drop = cage_drop;
+	%CageController.relay_direction = direction;
+	if cage_drop:
+		print("recived cage drop from relay")

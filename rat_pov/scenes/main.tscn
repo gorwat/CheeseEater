@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://1rr1qvlqv7xb"]
+[gd_scene load_steps=18 format=3 uid="uid://1rr1qvlqv7xb"]
 
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="1_i7pi5"]
 [ext_resource type="Script" path="res://scripts/light_manager.gd" id="1_ofn0t"]
@@ -12,19 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://bvn8p1xhe2bwk" path="res://scenes/cage.tscn" id="11_0d2vl"]
 [ext_resource type="Script" path="res://scripts/game_info.gd" id="11_dayo2"]
 [ext_resource type="Script" path="res://scripts/clock.gd" id="12_5qip8"]
-[ext_resource type="Script" path="res://scripts/WiimoteManager.cs" id="12_j0oq2"]
 
 [sub_resource type="Environment" id="Environment_7us62"]
 background_energy_multiplier = 0.2
 tonemap_mode = 3
-ssil_radius = 16.0
-ssil_intensity = 13.17
-glow_enabled = true
-glow_intensity = 1.71
-glow_strength = 0.56
-glow_blend_mode = 0
-glow_hdr_threshold = 0.0
-glow_hdr_luminance_cap = 6.58
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.1
 
@@ -52,10 +43,8 @@ script = ExtResource("1_ofn0t")
 environment = SubResource("Environment_7us62")
 
 [node name="CameraRig" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
-unique_name_in_owner = true
 script = ExtResource("3_itbph")
 follow_target = NodePath("../Player")
-recenter_enable = true
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
@@ -70,7 +59,7 @@ margin = 0.25
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.102446, 0)
 
 [node name="Player" parent="." node_paths=PackedStringArray("camera_node") instance=ExtResource("1_i7pi5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.28513, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
 collision_layer = 3
 camera_node = NodePath("../CameraRig/SpringArm3D/Camera3D")
 
@@ -114,25 +103,25 @@ parameters/looping = true
 script = ExtResource("9_36pyg")
 
 [node name="Cheese7" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.929789, 0, 0.368092, 0, 1, 0, -0.368092, 0, 0.929789, 3.92672, -0.314223, -3.16118)
+transform = Transform3D(0.929789, 0, 0.368092, 0, 1, 0, -0.368092, 0, 0.929789, 3.92672, -0.5, -3.16118)
 
 [node name="Cheese" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.626236, 0, 0.779633, 0, 1, 0, -0.779633, 0, 0.626236, -11.3396, -0.314223, -9.87414)
+transform = Transform3D(0.626236, 0, 0.779633, 0, 1, 0, -0.779633, 0, 0.626236, -11.3396, -0.5, -9.87414)
 
 [node name="Cheese2" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.510723, 0, 0.859745, 0, 1, 0, -0.859745, 0, 0.510723, -12.9147, -0.314223, 5.88585)
+transform = Transform3D(0.510723, 0, 0.859745, 0, 1, 0, -0.859745, 0, 0.510723, -12.9147, -0.5, 5.88585)
 
 [node name="Cheese3" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.878267, 0, 0.478171, 0, 1, 0, -0.478171, 0, 0.878267, 20.5156, -0.314223, -7.85761)
+transform = Transform3D(0.878267, 0, 0.478171, 0, 1, 0, -0.478171, 0, 0.878267, 20.5156, -0.5, -7.85761)
 
 [node name="Cheese4" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.907712, 0, -0.419595, 0, 1, 0, 0.419595, 0, 0.907712, 15.6658, -0.314223, 4.82063)
+transform = Transform3D(0.907712, 0, -0.419595, 0, 1, 0, 0.419595, 0, 0.907712, 15.6658, -0.5, 4.82063)
 
 [node name="Cheese5" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.662489, 0, -0.749071, 0, 1, 0, 0.749071, 0, 0.662489, -18.1699, -0.314223, -4.56431)
+transform = Transform3D(0.662489, 0, -0.749071, 0, 1, 0, 0.749071, 0, 0.662489, -18.1699, -0.5, -4.56431)
 
 [node name="Cheese6" parent="CheeseManager" instance=ExtResource("9_7sksj")]
-transform = Transform3D(0.984192, 0, -0.177102, 0, 1, 0, 0.177102, 0, 0.984192, -3.15838, -0.314223, 10.5411)
+transform = Transform3D(0.984192, 0, -0.177102, 0, 1, 0, 0.177102, 0, 0.984192, -3.15838, -0.5, 10.5411)
 
 [node name="GameInfo" type="Control" parent="."]
 unique_name_in_owner = true
@@ -463,6 +452,7 @@ theme_override_font_sizes/font_size = 30
 text = "Restart!"
 
 [node name="Options" type="Control" parent="GameInfo"]
+visible = false
 anchors_preset = 0
 offset_top = -23.0
 offset_right = 40.0
@@ -473,7 +463,7 @@ layout_mode = 1
 offset_left = -2.0
 offset_top = 2.0
 offset_right = 268.0
-offset_bottom = 356.0
+offset_bottom = 292.0
 color = Color(0, 0, 0, 0.521569)
 
 [node name="DescriptionOptions" type="Label" parent="GameInfo/Options"]
@@ -532,32 +522,8 @@ theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
 theme_override_font_sizes/font_size = 18
 text = "true"
 
-[node name="DescriptionRecenter" type="Label" parent="GameInfo/Options"]
-layout_mode = 0
-offset_left = 21.0
-offset_top = 284.0
-offset_right = 229.0
-offset_bottom = 312.0
-theme_override_font_sizes/font_size = 20
-text = "Camera recenter [Z]"
-
-[node name="Recenter" type="Label" parent="GameInfo/Options"]
-layout_mode = 0
-offset_left = 23.0
-offset_top = 316.0
-offset_right = 157.0
-offset_bottom = 344.0
-theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
-theme_override_font_sizes/font_size = 18
-text = "false"
-
 [node name="Cage" parent="." instance=ExtResource("11_0d2vl")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.9695, 0)
-
-[node name="WiimoteManager" type="Node" parent="."]
-unique_name_in_owner = true
-script = ExtResource("12_j0oq2")
 
 [connection signal="rat_moved" from="Player" to="NetworkManager" method="_on_player_rat_moved"]
 [connection signal="connection_status_changed" from="NetworkManager" to="GameInfo" method="_on_network_manager_connection_status_changed"]
