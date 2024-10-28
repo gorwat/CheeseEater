@@ -28,7 +28,7 @@ point_count = 4
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ext86"]
 height = 1.3102
-radius = 1.22338
+radius = 1.05483
 
 [node name="Cage" type="Node3D"]
 script = ExtResource("1_m4fnq")
