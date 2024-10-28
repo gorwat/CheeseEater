@@ -9,6 +9,7 @@ light_volumetric_fog_energy = 2.0
 shadow_enabled = true
 spot_range = 650.0
 spot_angle = 13.0
+spot_angle_attenuation = 0.03983
 
 [node name="SpotlightHumming" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.0295092, -0.999565, 0, 0.999565, 0.0295092, 0.06, 0.254107, -4.84609)

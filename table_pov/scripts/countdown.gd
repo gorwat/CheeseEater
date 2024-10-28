@@ -5,7 +5,7 @@ extends Control
 
 var counter_speed = 1
 var current_index = 0
-var messages = ["Ready?", "Ready?", "Ready?", "3", "2", "1", "Go!"]
+var messages = ["Ready?", "3", "2", "1", "Go!"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,3 +29,4 @@ func _on_timeout() -> void:
 	else:
 		visible = false
 		countdown_timer.stop()
+		%GameInfo.set_game_state(1) # 1 is running :))

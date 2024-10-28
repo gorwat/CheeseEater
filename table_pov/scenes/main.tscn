@@ -1,19 +1,16 @@
-[gd_scene load_steps=25 format=3 uid="uid://8vq475iel8pb"]
+[gd_scene load_steps=22 format=3 uid="uid://8vq475iel8pb"]
 
 [ext_resource type="Script" path="res://scripts/network_manager.gd" id="1_vjgd7"]
 [ext_resource type="Script" path="res://scripts/LightManager.cs" id="2_ouwl4"]
 [ext_resource type="PackedScene" uid="uid://cer020f54fwnj" path="res://scenes/player.tscn" id="2_xa4f0"]
 [ext_resource type="Script" path="res://scripts/server_menu.gd" id="3_3v8dj"]
 [ext_resource type="PackedScene" uid="uid://b054yrndyyhyx" path="res://scenes/environment.tscn" id="6_ii8w1"]
-[ext_resource type="Texture2D" uid="uid://ci62nrk80blvv" path="res://art/Sprites/grab-frame.png" id="7_02mxe"]
 [ext_resource type="Script" path="res://scripts/countdown.gd" id="7_w63tr"]
-[ext_resource type="Script" path="res://scripts/claw.gd" id="7_x6ysg"]
-[ext_resource type="Texture2D" uid="uid://dwuo68e35f5a7" path="res://art/Sprites/crosshair-frame.png" id="9_fms65"]
-[ext_resource type="Texture2D" uid="uid://c2kxohtafda8f" path="res://art/Sprites/crosshair-full.png" id="10_wdlnr"]
 [ext_resource type="Script" path="res://scripts/clock.gd" id="11_v4x7t"]
 [ext_resource type="Script" path="res://scripts/game_info.gd" id="12_feh1c"]
 [ext_resource type="Texture2D" uid="uid://bko11hpbsvmlw" path="res://art/title.png" id="13_fxb7x"]
 [ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="13_t51sp"]
+[ext_resource type="PackedScene" uid="uid://cwjfd6sqdcy31" path="res://scenes/cage_controller.tscn" id="14_drefk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_peehw"]
 size = Vector3(20, 1, 20)
@@ -62,7 +59,7 @@ script = ExtResource("13_t51sp")
 
 [node name="Player" parent="." instance=ExtResource("2_xa4f0")]
 unique_name_in_owner = true
-collision_layer = 32769
+collision_layer = 32773
 
 [node name="Floor" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -87,6 +84,7 @@ light_energy = 0.5
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
 [node name="GameInfo" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -375,72 +373,51 @@ text = "Connect"
 [node name="Environment" parent="." instance=ExtResource("6_ii8w1")]
 transform = Transform3D(1.00562, 0, 0, 0, 1.00562, 0, 0, 0, 1.00562, -0.118774, 0.195028, -0.418333)
 
-[node name="Claw" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.03, 0)
-script = ExtResource("7_x6ysg")
-
-[node name="outline" type="Sprite3D" parent="Claw"]
-transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, -0.1, 0)
-axis = 1
-texture = ExtResource("7_02mxe")
-
-[node name="Label" type="Label3D" parent="Claw"]
-transform = Transform3D(2.8161, 0, 0, 0, -2.62116e-07, 2.95427, 0, -5.99653, -1.29135e-07, 0.999999, 0, 0.999999)
-visible = false
-text = "TEST"
-
-[node name="Crosshair" type="Node3D" parent="Claw"]
-
-[node name="frame" type="Sprite3D" parent="Claw/Crosshair"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-pixel_size = 0.02
-axis = 1
-texture = ExtResource("9_fms65")
-
-[node name="full" type="Sprite3D" parent="Claw/Crosshair"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.1, 0)
-visible = false
-pixel_size = 0.02
-axis = 1
-texture = ExtResource("10_wdlnr")
-
 [node name="TEMP-clawblockers" type="Node" parent="."]
 
 [node name="Area3D5" type="Area3D" parent="TEMP-clawblockers"]
+collision_layer = 65
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D5"]
 transform = Transform3D(0.958362, 0, 0.285555, 0, 1, 0, -0.285555, 0, 0.958362, 21.2856, 1.87431, 7.24368)
 shape = SubResource("CylinderShape3D_mu36m")
 
 [node name="Area3D3" type="Area3D" parent="TEMP-clawblockers"]
+collision_layer = 65
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D3"]
 transform = Transform3D(0.88545, 0, -0.464734, 0, 1, 0, 0.464734, 0, 0.88545, 10.5577, 2.08854, 10.908)
 shape = SubResource("CylinderShape3D_5oljj")
 
 [node name="Area3D2" type="Area3D" parent="TEMP-clawblockers"]
+collision_layer = 65
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D2"]
 transform = Transform3D(0.88545, 0, -0.464734, 0, 1, 0, 0.464734, 0, 0.88545, 16.0173, 2.08854, 9.50628)
 shape = SubResource("BoxShape3D_wuayu")
 
 [node name="Area3D" type="Area3D" parent="TEMP-clawblockers"]
+collision_layer = 65
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.61177, 1.50517, -9.16158)
 shape = SubResource("BoxShape3D_rmx0v")
 
 [node name="Area3D4" type="Area3D" parent="TEMP-clawblockers"]
+collision_layer = 65
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D4"]
 transform = Transform3D(0.958362, 0, 0.285555, 0, 1, 0, -0.285555, 0, 0.958362, -5.72843, 1.87431, 4.40301)
 shape = SubResource("BoxShape3D_f4a0x")
 
 [node name="Area3D6" type="Area3D" parent="TEMP-clawblockers"]
+collision_layer = 65
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TEMP-clawblockers/Area3D6"]
 transform = Transform3D(0.986412, 0, -0.16429, 0, 1, 0, 0.16429, 0, 0.986412, 21.4675, 1.87431, -13.1015)
 shape = SubResource("BoxShape3D_dm842")
+
+[node name="CageController" parent="." instance=ExtResource("14_drefk")]
 
 [connection signal="cheese_eaten" from="NetworkManager" to="CheeseManager" method="_on_network_manager_cheese_eaten"]
 [connection signal="cheese_spawned" from="NetworkManager" to="CheeseManager" method="_on_network_manager_cheese_spawned"]
@@ -451,10 +428,10 @@ shape = SubResource("BoxShape3D_dm842")
 [connection signal="rat_force_quit" from="NetworkManager" to="GameInfo" method="_on_network_manager_rat_force_quit"]
 [connection signal="rat_pos_recieved" from="NetworkManager" to="Player" method="_on_network_manager_rat_pos_recieved"]
 [connection signal="SpotPositionsChanged" from="LightManager" to="NetworkManager" method="_on_light_manager_spot_positions_changed"]
+[connection signal="update_game_state" from="GameInfo" to="NetworkManager" method="_on_game_info_update_game_state"]
+[connection signal="update_game_state" from="GameInfo" to="CageController" method="_on_game_info_update_game_state"]
 [connection signal="timeout" from="GameInfo/Clock/Timer" to="GameInfo" method="_on_timer_timeout"]
 [connection signal="timeout" from="GameInfo/Countdown/Timer" to="GameInfo/Countdown" method="_on_timeout"]
 [connection signal="init_connection" from="Server Menu" to="NetworkManager" method="_on_init_connection"]
 [connection signal="text_submitted" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Address Input" to="Server Menu" method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Button" to="Server Menu" method="_on_button_pressed"]
-[connection signal="rat_caught" from="Claw" to="NetworkManager" method="_on_claw_rat_caught"]
-[connection signal="rat_caught" from="Claw" to="GameInfo" method="_on_claw_rat_caught"]

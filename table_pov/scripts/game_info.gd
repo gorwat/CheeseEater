@@ -1,8 +1,9 @@
 extends Control
 signal game_started
 signal game_stopped
+signal update_game_state
 
-enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT}
+enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT, COUNTDOWN}
 
 @export var current_game_state: GameState = GameState.INIT
 
@@ -25,8 +26,7 @@ func _ready() -> void:
 	reset_to_main_menu()
 
 func	 _process(delta: float) -> void:
-	if (Input.get_action_strength("stop_game") > 0.0) && current_game_state == GameState.RUNNING:
-		stop_game()
+	pass
 
 func reset_to_main_menu():
 	game_menu.visible = true
@@ -39,7 +39,7 @@ func start_game() -> void:
 	countdown.start_countdown()
 	
 	game_timer.start()
-	self.current_game_state = GameState.RUNNING
+	set_game_state(GameState.COUNTDOWN)
 	
 	# hide screens
 	game_menu.visible = false
@@ -62,8 +62,14 @@ func stop_game() -> void:
 	game_timer.stop()
 	timer_ui.visible = false
 	
+func set_game_state(state: GameState):
+	self.current_game_state = state
+	update_game_state.emit(self.current_game_state)
+	if state == GameState.RAT_CAUGHT:
+		stop_game()
+	
 func _on_timer_timeout() -> void:
-	self.current_game_state = GameState.TIME_OUT
+	set_game_state(GameState.TIME_OUT)
 	stop_game()
 
 func _on_network_manager_connection_status_schanged(status) -> void:
@@ -81,10 +87,5 @@ func _on_network_manager_game_started(session_duration: int) -> void:
 	start_game()
 
 func _on_network_manager_rat_force_quit() -> void:
-	self.current_game_state = GameState.FORCE_QUIT
+	set_game_state(GameState.FORCE_QUIT)
 	stop_game()
-
-func _on_claw_rat_caught() -> void:
-	if (current_game_state == GameState.RUNNING):
-		self.current_game_state = GameState.RAT_CAUGHT
-		stop_game()

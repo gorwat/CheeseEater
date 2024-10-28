@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvn8p1xhe2bwk"]
+
+[ext_resource type="PackedScene" uid="uid://bijkobk5dp25k" path="res://art/models/cage/net_cage.glb" id="1_ot8t8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sxpel"]
+size = Vector3(0.0438232, 1, 1.22119)
+
+[node name="Cage" type="Node3D"]
+
+[node name="net_cage" parent="." instance=ExtResource("1_ot8t8")]
+transform = Transform3D(-10, 1.50996e-06, 0, -1.50996e-06, -10, 0, 0, 0, 10, 0, 0.55, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0, 0)
+shape = SubResource("BoxShape3D_sxpel")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.272, 0, 0)
+shape = SubResource("BoxShape3D_sxpel")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 1.25)
+shape = SubResource("BoxShape3D_sxpel")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -1.25)
+shape = SubResource("BoxShape3D_sxpel")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -0.9, 0, 0.9)
+shape = SubResource("BoxShape3D_sxpel")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0.9, 0, -0.9)
+shape = SubResource("BoxShape3D_sxpel")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -0.9, 0, -0.9)
+shape = SubResource("BoxShape3D_sxpel")
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 0.9, 0, 0.9)
+shape = SubResource("BoxShape3D_sxpel")

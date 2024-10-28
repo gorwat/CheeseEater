@@ -79,6 +79,18 @@ func set_spot_positions(positions: PackedVector3Array, angles: PackedFloat32Arra
 	spot_positions_changed.emit(positions, angles)
 
 @rpc("any_peer")
-func catch_rat():
+func update_cage(position:Vector3, rotation:Vector3, enable: bool):
+	%Cage.position = position
+	%Cage.rotation = rotation
+	if enable:
+		%Cage.set_process(true)
+		%Cage.show()
+	else:
+		%Cage.position.y = -100
+		%Cage.set_process(false)
+		%Cage.hide()
+		
+
+@rpc("any_peer")
+func rat_caught():
 	rat_was_caught.emit()
-	

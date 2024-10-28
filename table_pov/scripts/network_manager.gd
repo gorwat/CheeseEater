@@ -14,11 +14,12 @@ signal cheese_eaten
 signal game_started
 signal rat_force_quit
 
+enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT, COUNTDOWN}
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#print(IP.get_local_interfaces())
 	pass
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -54,10 +55,16 @@ func _on_init_connection(ip: String) -> void:
 
 func _on_light_manager_spot_positions_changed(positions: PackedVector3Array, angles: PackedFloat32Array):
 	if connection_status == Status.CONNECTED:
-		set_spot_positions.rpc(positions, angles)
+		if %GameInfo.current_game_state != GameState.COUNTDOWN:
+			set_spot_positions.rpc(positions, angles)
+		else:
+			set_spot_positions.rpc([], [])
 
-func _on_claw_rat_caught() -> void:
-	catch_rat.rpc()
+
+func _on_game_info_update_game_state(state: GameState) -> void:
+	if state == GameState.RAT_CAUGHT:
+		rat_caught.rpc()
+		
 
 # rpcs called from rat
 @rpc
@@ -86,7 +93,10 @@ func sync_cheese_eaten(cheese_name:String):
 	print("cheese eaten")
 	cheese_eaten.emit(cheese_name)
 
-@rpc	
-func catch_rat(): # This function is called when the rat is caught
-	pass #print("THE RAT HAS BEEN CAUGHT!");
+@rpc
+func update_cage(position: Vector3, rotation: Vector3, enable: bool):
+	update_cage.rpc(position, rotation, enable)
 	
+@rpc
+func rat_caught():
+	pass
