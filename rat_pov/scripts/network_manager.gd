@@ -29,16 +29,15 @@ func _process(delta: float) -> void:
 		
 	if connection_status == Status.CONNECTED:
 		var table_relay_direction = Vector3(
-			Input.get_action_strength("scoop_right") - Input.get_action_strength("scoop_left"),
+			Input.get_action_strength("table_right") - Input.get_action_strength("table_left"),
 			0.0,
-			Input.get_action_strength("scoop_back") - Input.get_action_strength("scoop_forward"),
+			Input.get_action_strength("table_down") - Input.get_action_strength("table_up"),
 		).limit_length(1.0);
-		
+
 		var table_relay_drop_cage = Input.is_action_just_pressed("table_cage_drop");
 		# Control relay to table
 		self.relay_table_controls.rpc(table_relay_direction, table_relay_drop_cage);
-		
-		
+
 
 func _on_client_disconnected(id: int):
 	connection_status = Status.DISCONNECTED
