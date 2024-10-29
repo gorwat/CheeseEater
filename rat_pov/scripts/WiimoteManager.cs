@@ -31,21 +31,25 @@ public partial class WiimoteManager : Node
 	// Nunchuk - input
 	private float inputNunchuckX; // should be converted to better values
 	private float inputNunchuckY; // should be converted to better values
-	public bool nunchuk_z;
-	public bool nunchuk_c;
+	public bool nunchuk_z = false;
+	public bool nunchuk_c = false;
 	
 	// Nunchuk - calculated
 	private int nunchukMidVal = 122;
 	private int nunchukThresh = 50;
 	
-	public float nunchuk_x_axis;
-	public float nunchuk_y_axis;
+	public float nunchuk_x_axis = 0.0f;
+	public float nunchuk_y_axis = 0.0f;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
-	{		
-		deviceCollection = new WiimoteCollection();
-		deviceCollection.FindAllWiimotes();
+	{	
+		try {
+			deviceCollection = new WiimoteCollection();
+			deviceCollection.FindAllWiimotes();
+		} catch {
+			GD.Print("NO WIIMOTE FOUND");
+		}
 		
 		foreach (Wiimote wiiDevice in deviceCollection) {
 			wiiDevice.Connect();
@@ -102,7 +106,7 @@ public partial class WiimoteManager : Node
 				nunchuk_y_axis = 0;
 			}
 			
-			GD.Print("Input: ", inputNunchuckX, " ", inputNunchuckY, " Calculated: ", nunchuk_x_axis, " ", nunchuk_y_axis);
+			//GD.Print("Input: ", inputNunchuckX, " ", inputNunchuckY, " Calculated: ", nunchuk_x_axis, " ", nunchuk_y_axis);
 			}
 		}
 	}
