@@ -82,6 +82,9 @@ script = ExtResource("13_t51sp")
 [node name="Player" parent="." instance=ExtResource("2_xa4f0")]
 unique_name_in_owner = true
 
+[node name="Sketchfab_Scene" parent="Player" index="2"]
+transform = Transform3D(-0.462812, 0, -0.045053, 0, 0.465, 0, 0.045053, 0, -0.462812, 0, -0.14459, -0.0115945)
+
 [node name="Floor" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
@@ -507,3 +510,6 @@ unique_name_in_owner = true
 [connection signal="init_connection" from="Server Menu" to="NetworkManager" method="_on_init_connection"]
 [connection signal="text_submitted" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Address Input" to="Server Menu" method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer/Button" to="Server Menu" method="_on_button_pressed"]
+
+[editable path="Player"]
+[editable path="Player/Sketchfab_Scene"]

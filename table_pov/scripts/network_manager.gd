@@ -79,7 +79,12 @@ func start_game(session_duration: int):
 	
 @rpc
 func set_rat_anim(anim: String):
-	pass #%Player.ANIMPLAYER.play(anim)
+	if (anim == "Armature|Idle"):
+		%Player/Sketchfab_Scene/AnimationPlayer.speed_scale = 1
+	if (anim == "Armature|Walk"):
+		%Player/Sketchfab_Scene/AnimationPlayer.speed_scale = 3
+		
+	%Player/Sketchfab_Scene/AnimationPlayer.play(anim)
 	
 @rpc
 func force_quit():

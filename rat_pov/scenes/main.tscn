@@ -525,6 +525,7 @@ text = "true"
 
 [node name="Cage" parent="." instance=ExtResource("11_0d2vl")]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.34157, 0)
 
 [node name="WiimoteManager" type="Node" parent="."]
 unique_name_in_owner = true
