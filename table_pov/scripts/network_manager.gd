@@ -22,8 +22,7 @@ func _ready() -> void:
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-
+func _process(_delta: float) -> void:
 	
 	
 	if Input.is_action_just_pressed("fullscreen"):
@@ -108,5 +107,3 @@ func rat_caught():
 func relay_table_controls(direction: Vector3, cage_drop: bool):
 	%CageController.relay_cage_drop = cage_drop;
 	%CageController.relay_direction = direction;
-	if cage_drop:
-		print("recived cage drop from relay")
