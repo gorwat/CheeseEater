@@ -40,12 +40,18 @@ func _process(delta: float) -> void:
 	# relay plugin
 	var direction = relay_direction;
 	var cage_drop: bool = relay_cage_drop;
-	# old
-	#var direction = Vector3(
-	#Input.get_action_strength("scoop_right") - Input.get_action_strength("scoop_left"),
-	#0.0,
-	#Input.get_action_strength("scoop_back") - Input.get_action_strength("scoop_forward"),
-	#).limit_length(1.0);
+	
+	
+	if cage_drop == false and direction == Vector3.ZERO:
+		# check keyboard as backup 
+		direction = Vector3(
+			Input.get_action_strength("scoop_right") - Input.get_action_strength("scoop_left"),
+			0.0,
+			Input.get_action_strength("scoop_back") - Input.get_action_strength("scoop_forward"),
+		).limit_length(1.0);
+		cage_drop = Input.get_action_strength("scoop_drop") > 0;
+	
+	
 	var delta_pos = direction * (delta * AIM_SPEED);
 	aim.position += delta_pos;
 	
