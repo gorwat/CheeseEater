@@ -9,6 +9,7 @@ var in_bush = false
 var shaking_bush = false
 var max_shake_time = 1
 var shake_timer = 0
+@onready var rustle_sound: AudioStreamPlayer3D = $RustleSound
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -28,6 +29,11 @@ func _ready() -> void:
 	# connect player moved signal
 	player = get_node("/root/Main/Player")
 	player.rat_moved.connect(_on_rat_moved)
+	if self.scale.length() > 1.5:
+		rustle_sound.pitch_scale = clamp(1/self.scale.length(), 0.2, 1.0)
+	else:
+		rustle_sound.pitch_scale = (2-self.scale.length())/2
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -53,6 +59,8 @@ func _on_rat_moved(position:Vector3, rotation:Vector3):
 		material.set_shader_parameter("time_left", shake_timer)
 		material2.set_shader_parameter("time_left", shake_timer)
 		material3.set_shader_parameter("time_left", shake_timer)
+		
+		rustle_sound.play()
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body == player:

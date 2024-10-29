@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=4 uid="uid://duq5bwje3l5bc"]
+[gd_scene load_steps=12 format=4 uid="uid://duq5bwje3l5bc"]
 
 [ext_resource type="Texture2D" uid="uid://ct61s4h8lhk8t" path="res://art/models/foliage_stylized/stylized_handpainted_foliage_0.png" id="1_5yq8j"]
 [ext_resource type="Texture2D" uid="uid://ox2d7d73ux2m" path="res://art/models/foliage_stylized/stylized_handpainted_foliage_1.png" id="2_c7io5"]
 [ext_resource type="Shader" path="res://shaders/plant.gdshader" id="2_p4k5j"]
 [ext_resource type="Script" path="res://scripts/plant.gd" id="4_5nmvt"]
 [ext_resource type="Texture2D" uid="uid://c8ub0kqvi6gyr" path="res://art/textures/dither.png" id="4_82b5f"]
+[ext_resource type="AudioStream" uid="uid://c3oqdlosoywn5" path="res://art/audio/1150486.audio-Haunted_House_-Bushes_Crackling_01.ogg" id="6_almwn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7w577"]
 resource_name = "aiStandardSurface1"
@@ -95,6 +96,9 @@ skeleton = NodePath("")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.308511, 9.00384, 0)
 shape = SubResource("CylinderShape3D_qv3gq")
+
+[node name="RustleSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("6_almwn")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
