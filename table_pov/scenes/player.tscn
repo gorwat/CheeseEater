@@ -9,7 +9,7 @@ radius = 0.225319
 height = 1.16786
 
 [node name="Player" type="CharacterBody3D"]
-collision_layer = 5
+collision_layer = 32773
 script = ExtResource("1_em317")
 
 [node name="Pivot" type="Node3D" parent="."]
