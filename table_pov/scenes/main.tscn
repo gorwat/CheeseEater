@@ -102,6 +102,7 @@ size = 30.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.999974, 8.77334e-08, -0.00715579, -0.00171772, 0.970758, 0.240053, 0.00694657, 0.240059, -0.970734, 0.226, 11.4781, 0)
+visible = false
 light_energy = 0.5
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -502,6 +503,7 @@ unique_name_in_owner = true
 [connection signal="game_started" from="NetworkManager" to="GameInfo" method="_on_network_manager_game_started"]
 [connection signal="rat_force_quit" from="NetworkManager" to="GameInfo" method="_on_network_manager_rat_force_quit"]
 [connection signal="rat_pos_recieved" from="NetworkManager" to="Player" method="_on_network_manager_rat_pos_recieved"]
+[connection signal="SpotPositionsChanged" from="LightManager" to="NetworkManager" method="_on_light_manager_spot_positions_changed"]
 [connection signal="update_game_state" from="GameInfo" to="NetworkManager" method="_on_game_info_update_game_state"]
 [connection signal="update_game_state" from="GameInfo" to="CageController" method="_on_game_info_update_game_state"]
 [connection signal="timeout" from="GameInfo/Clock/Timer" to="GameInfo" method="_on_timer_timeout"]

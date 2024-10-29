@@ -525,6 +525,7 @@ theme_override_font_sizes/font_size = 18
 text = "true"
 
 [node name="DescriptionRecenter" type="Label" parent="GameInfo/Options"]
+layout_mode = 0
 offset_left = 24.0
 offset_top = 289.0
 offset_right = 232.0
@@ -533,6 +534,7 @@ theme_override_font_sizes/font_size = 20
 text = "Recenter [Z]"
 
 [node name="Recenter" type="Label" parent="GameInfo/Options"]
+layout_mode = 0
 offset_left = 24.0
 offset_top = 321.0
 offset_right = 158.0
