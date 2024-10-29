@@ -388,6 +388,7 @@ layout_mode = 2
 [node name="Address Input" type="LineEdit" parent="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+text = "169.254.209.213"
 placeholder_text = "IPv4 Address"
 
 [node name="Button" type="Button" parent="Server Menu/AspectRatioContainer/VBoxContainer/HBoxContainer"]
