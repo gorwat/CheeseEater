@@ -23,7 +23,6 @@ func _process(delta: float) -> void:
 			step_sound.play()
 	else:
 		step_sound.playing = false
-		
 
 func _physics_process(delta: float) -> void:
 	# Handle gravity and jumping
@@ -31,9 +30,10 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= gravity * delta
 	else:
 		velocity.y = 0  # Reset vertical velocity when on the ground
-	
-	if %GameInfo.current_game_state != 1: # 1 is Gamestate running :)) 
+
+	if %GameInfo.current_game_state != 1: # 1 is GameState running :))
 		return
+
 	# Handle movement input
 	var movement_input = Vector2.ZERO
 	if Input.is_action_pressed("move_forward"):

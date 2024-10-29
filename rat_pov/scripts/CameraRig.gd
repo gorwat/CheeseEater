@@ -1,13 +1,13 @@
 extends Node3D
 
-@export var follow_target: Node3D  # interface override
-@export var rotation_speed_deg: float = 180.0  # Rotation speed in deg/sec
-@export var camera_offset: Vector3 = Vector3(0, 1, 2)  # offset
+@export var follow_target: CharacterBody3D  # The player character to follow
+@export var rotation_speed_deg: float = 180.0  # Rotation speed in degrees per second
+@export var camera_offset: Vector3 = Vector3(0, 1, 2)  # Camera offset from the player
 @export var rotation_smoothing: float = 0.2  # Adjust for smoother rotation (0 = instant, higher = smoother)
-@export var smoothing_speed: float = 15.0  # higher value will smoothen but introduce delay
+@export var smoothing_speed: float = 15.0  # higher value smoothens but introduces delay
 @export var min_camera_distance: float = 1.5
 @export var recenter_speed: float = 3.0  # Recentering aggressiveness
-@export var recenter_enable: bool = false
+@export var recenter_enable: bool = true  # Enable automatic recentering (default)
 
 var max_camera_distance: float  # Maximum camera distance, set based on camera_offset.z
 var target_rotation_angle: float = 0.0
@@ -17,7 +17,7 @@ var desired_spring_length: float
 var current_spring_length: float
 
 var rotation_input_time: float = 0.0
-
+var backward_movement_time: float = 0.0  # backwards movement timer (s key)
 
 @onready var spring_arm: SpringArm3D = $SpringArm3D
 @onready var camera_node: Camera3D = $SpringArm3D/Camera3D
@@ -59,7 +59,7 @@ func _ready():
 func _process(delta: float) -> void:
 	if not follow_target:
 		return
-		
+
 	if rotation_input_time > 0.0:
 		rotation_input_time -= delta
 
@@ -74,17 +74,28 @@ func _process(delta: float) -> void:
 
 	target_rotation_angle += rotation_delta
 
+	# Determine if player is moving backward
+	var moving_backward = Input.is_action_pressed("move_back")
+
+	# Update backward movement timer
+	if moving_backward:
+		backward_movement_time += delta
+	else:
+		backward_movement_time = 0.0
+
+	# Recenter logic
 	if rotation_input_time <= 0.0 and recenter_enable:
-		# Check if player is moving
-		var player_velocity = follow_target.velocity
-		if player_velocity.length_squared() > 0.01:
-			# Smoothly adjust target_rotation_angle towards player's rotation.y
+		if moving_backward and backward_movement_time < 2.0:
+			# Do not recenter when moving backward for less than 2 seconds
+			pass
+		else:
+			# Recenter when not moving backward or after 2 seconds of backward movement
 			var player_rotation_y = follow_target.rotation.y
-			var recenter_smoothing = delta * recenter_speed  # Adjust for more aggressive re-centering
+			var recenter_smoothing = delta * recenter_speed
 			target_rotation_angle = lerp_angle(target_rotation_angle, player_rotation_y, recenter_smoothing)
 
 	current_rotation_angle = lerp_angle(current_rotation_angle, target_rotation_angle, rotation_smoothing)
-		
+
 	spring_arm.rotation.y = current_rotation_angle
 	global_position = follow_target.global_position
 	probe_node.force_shapecast_update()
@@ -95,7 +106,7 @@ func _process(delta: float) -> void:
 		var collision_point = probe_node.get_collision_point(0)
 		var collision_distance = collision_point.distance_to(spring_arm.global_transform.origin)
 		# Increase the buffer to prevent sudden jumps
-		var collision_buffer = 0.5  # change via interface if needed
+		var collision_buffer = 0.5  # Change via interface if needed
 		desired_spring_length = clamp(collision_distance - collision_buffer, min_camera_distance, max_camera_distance)
 	else:
 		desired_spring_length = max_camera_distance
