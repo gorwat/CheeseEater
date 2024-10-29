@@ -102,7 +102,6 @@ size = 30.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.999974, 8.77334e-08, -0.00715579, -0.00171772, 0.970758, 0.240053, 0.00694657, 0.240059, -0.970734, 0.226, 11.4781, 0)
-visible = false
 light_energy = 0.5
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

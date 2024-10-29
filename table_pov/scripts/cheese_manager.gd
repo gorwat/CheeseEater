@@ -13,7 +13,6 @@ func spawn(cheese_name:String, position:Vector3, rotation:Vector3):
 	new_cheese.rotation = rotation
 	new_cheese.name = cheese_name
 	add_child(new_cheese)
-	print(get_child(0), " ", get_child(0).name)
 
 func despawn(cheese_name:String):
 	remove_child(get_node(cheese_name))
@@ -29,7 +28,7 @@ func _on_network_manager_connection_status_schanged(status) -> void:
 		for child in get_children():
 			remove_child(child)
 
-func _on_network_manager_game_started():
+func _on_network_manager_game_started(_session_durration):
 	var children = get_children()
 	for child in children:
-		remove_child(child)
+		child.queue_free()
