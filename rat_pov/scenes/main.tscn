@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://hp2x18qw2hh3" path="res://art/audio/mixkit-light-rain-atmosphere-2474.ogg" id="6_8wg4h"]
 [ext_resource type="PackedScene" uid="uid://cmohcowv2ef6d" path="res://scenes/small_objects/cheese.tscn" id="9_7sksj"]
 [ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="9_36pyg"]
-[ext_resource type="PackedScene" uid="uid://bvn8p1xhe2bwk" path="res://scenes/cage.tscn" id="11_0d2vl"]
+[ext_resource type="PackedScene" path="res://scenes/cage.tscn" id="11_0d2vl"]
 [ext_resource type="Script" path="res://scripts/game_info.gd" id="11_dayo2"]
 [ext_resource type="Script" path="res://scripts/clock.gd" id="12_5qip8"]
 
@@ -54,7 +54,6 @@ environment = SubResource("Environment_7us62")
 unique_name_in_owner = true
 script = ExtResource("3_itbph")
 follow_target = NodePath("../Player")
-recenter_enable = true
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
