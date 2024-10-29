@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cijas4glhfwlm"
-path.s3tc="res://.godot/imported/trashcan_open_1.png-04aa3d242a1413553c71420550bb2482.s3tc.ctex"
+uid="uid://b0tfikhsvuqtq"
+path.s3tc="res://.godot/imported/rat_1.png-bc1cc31869b34cf722f529c4ca24899c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "7b3f24c93961499734675f3ea4547cb7"
+"md5": "80e9c2bfd97a5664fc6f278c178b0886"
 }
 
 [deps]
 
-source_file="res://art/models/trashcan_open/trashcan_open_1.png"
-dest_files=["res://.godot/imported/trashcan_open_1.png-04aa3d242a1413553c71420550bb2482.s3tc.ctex"]
+source_file="res://art/models/animated_rat/rat_1.png"
+dest_files=["res://.godot/imported/rat_1.png-bc1cc31869b34cf722f529c4ca24899c.s3tc.ctex"]
 
 [params]
 
@@ -23,12 +23,12 @@ compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=1
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=8
-roughness/src_normal="res://Maybe/trashcan_open_2.png"
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

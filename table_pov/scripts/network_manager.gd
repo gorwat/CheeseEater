@@ -22,7 +22,9 @@ func _ready() -> void:
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
+	
+	
 	if Input.is_action_just_pressed("fullscreen"):
 		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
@@ -76,6 +78,15 @@ func start_game(session_duration: int):
 	game_started.emit(session_duration)
 	
 @rpc
+func set_rat_anim(anim: String):
+	if (anim == "Armature|Idle"):
+		%Player/Sketchfab_Scene/AnimationPlayer.speed_scale = 1
+	if (anim == "Armature|Walk"):
+		%Player/Sketchfab_Scene/AnimationPlayer.speed_scale = 3
+		
+	%Player/Sketchfab_Scene/AnimationPlayer.play(anim)
+	
+@rpc
 func force_quit():
 	rat_force_quit.emit()
 	
@@ -96,7 +107,12 @@ func sync_cheese_eaten(cheese_name:String):
 @rpc
 func update_cage(position: Vector3, rotation: Vector3, enable: bool):
 	update_cage.rpc(position, rotation, enable)
-	
+
 @rpc
 func rat_caught():
 	pass
+
+@rpc
+func relay_table_controls(direction: Vector3, cage_drop: bool):
+	%CageController.relay_cage_drop = cage_drop;
+	%CageController.relay_direction = direction;

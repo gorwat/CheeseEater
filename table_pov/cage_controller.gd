@@ -12,6 +12,10 @@ var next_cage_idx = 0;
 @onready var aim_frame = $Aim/frame;
 @onready var cage = $Cage;
 
+
+var relay_cage_drop : bool = false;
+var relay_direction : Vector3 = Vector3.ZERO;
+
 enum GameState {INIT, RUNNING, TIME_OUT, RAT_CAUGHT, FORCE_QUIT, COUNTDOWN}
 var current_game_state: GameState = GameState.INIT
 
@@ -24,14 +28,24 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	current_cage_cooldown = clamp(current_cage_cooldown - delta, 0, CAGE_COOLDOWN);
 	
+	if current_game_state == GameState.COUNTDOWN:
+		aim.position.x = 0;
+		aim.position.z = 0;
+	
+	aim.position.x = clamp(aim.position.x, -28, 28);
+	aim.position.z = clamp(aim.position.z, -16, 16);
 	
 	
 	
-	var direction = Vector3(
-		Input.get_action_strength("scoop_right") - Input.get_action_strength("scoop_left"),
-		0.0,
-		Input.get_action_strength("scoop_back") - Input.get_action_strength("scoop_forward"),
-	).limit_length(1.0);
+	# relay plugin
+	var direction = relay_direction;
+	var cage_drop: bool = relay_cage_drop;
+	# old
+	#var direction = Vector3(
+	#Input.get_action_strength("scoop_right") - Input.get_action_strength("scoop_left"),
+	#0.0,
+	#Input.get_action_strength("scoop_back") - Input.get_action_strength("scoop_forward"),
+	#).limit_length(1.0);
 	var delta_pos = direction * (delta * AIM_SPEED);
 	aim.position += delta_pos;
 	
@@ -42,10 +56,12 @@ func _process(delta: float) -> void:
 	else:
 		aim_frame.modulate = Color(1.0,1.0,1.0)
 	
-	
-	if Input.get_action_strength("scoop_drop") and current_cage_cooldown == 0 and not over_obsticle and %GameInfo.current_game_state == GameState.RUNNING:
+	#if Input.get_action_strength("scoop_drop") and current_cage_cooldown == 0 and not over_obsticle and %GameInfo.current_game_state == GameState.RUNNING:
+		
+	if cage_drop and current_cage_cooldown == 0 and not over_obsticle and %GameInfo.current_game_state == GameState.RUNNING:
 		self.new_cage();
 		current_cage_cooldown = CAGE_COOLDOWN;
+	
 		
 func new_cage():
 	cage.position = aim.position;
@@ -69,6 +85,7 @@ func _on_cage_pillar_exited(area: Area3D) -> void:
 
 func _on_game_info_update_game_state(new_game_state: GameState) -> void:
 	current_game_state = new_game_state
+
 	if current_game_state == GameState.RUNNING:
 		aim_frame.show()
 	else:

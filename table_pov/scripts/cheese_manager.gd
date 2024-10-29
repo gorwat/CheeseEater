@@ -24,8 +24,12 @@ func _on_network_manager_cheese_spawned(cheese_name:String, position:Vector3, ro
 func _on_network_manager_cheese_eaten(cheese_name:String) -> void:
 	despawn(cheese_name)
 
-
 func _on_network_manager_connection_status_schanged(status) -> void:
 	if Status.DISCONNECTED:
 		for child in get_children():
 			remove_child(child)
+
+func _on_network_manager_game_started():
+	var children = get_children()
+	for child in children:
+		remove_child(child)

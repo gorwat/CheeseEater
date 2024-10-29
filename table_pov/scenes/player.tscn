@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cer020f54fwnj"]
+[gd_scene load_steps=5 format=3 uid="uid://cer020f54fwnj"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_em317"]
 [ext_resource type="PackedScene" uid="uid://b3avr63otef4a" path="res://art/models/rat/SoftToyRat_IKEAstyle.glb" id="1_oaams"]
+[ext_resource type="PackedScene" uid="uid://gnp6v82yxvay" path="res://art/models/animated_rat/rat.glb" id="3_rb0rx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x26fk"]
 radius = 0.225319
@@ -14,8 +15,56 @@ script = ExtResource("1_em317")
 [node name="Pivot" type="Node3D" parent="."]
 
 [node name="SoftToyRat_IKEAstyle" parent="Pivot" instance=ExtResource("1_oaams")]
-transform = Transform3D(-2.18557e-07, 0, 5, 0, 5, 0, -5, 0, -2.18557e-07, 0, 0, 0)
+transform = Transform3D(-2.18557e-07, 0, 5, 0, 5, 0, -5, 0, -2.18557e-07, 0, 0.0200586, 0)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-0.0355449, 4.52375e-08, 0.999368, 0.999368, -4.21301e-08, 0.0355449, 4.37114e-08, 1, -4.37114e-08, 0, 0, -0.251312)
 shape = SubResource("CapsuleShape3D_x26fk")
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("3_rb0rx")]
+transform = Transform3D(-0.462812, 0, -0.045053, 0, 0.465, 0, 0.045053, 0, -0.462812, 0, -0.208147, -0.0115945)
+
+[node name="Skeleton3D" parent="Sketchfab_Scene/Sketchfab_model/f262bdf26cd947e787c2192750f3a099_fbx/Object_2/RootNode/Armature/Object_6" index="0"]
+bones/1/rotation = Quaternion(-0.0896154, 3.11956e-25, -3.06785e-17, 0.995976)
+bones/2/rotation = Quaternion(-0.711692, 5.35646e-08, -1.0167e-07, 0.702492)
+bones/3/rotation = Quaternion(-0.594226, 0.000927713, 0.113103, 0.796305)
+bones/5/rotation = Quaternion(1.99592e-07, 0.043639, 0.999047, 1.24567e-07)
+bones/6/rotation = Quaternion(-0.192878, -2.30968e-07, 1.20606e-07, 0.981223)
+bones/8/rotation = Quaternion(-0.154164, -0.0599271, -0.106932, 0.980412)
+bones/9/rotation = Quaternion(-0.0800623, -0.0529463, -0.0412556, 0.994527)
+bones/10/rotation = Quaternion(-0.00171723, -0.0490287, 0.019349, 0.998608)
+bones/11/rotation = Quaternion(0.0932931, -0.0468434, 0.074505, 0.991742)
+bones/12/rotation = Quaternion(0.131839, -0.0433585, 0.116399, 0.983458)
+bones/13/rotation = Quaternion(0.156965, -0.0392479, 0.147325, 0.975765)
+bones/14/rotation = Quaternion(0.191011, -0.0316594, 0.159378, 0.968045)
+bones/14/scale = Vector3(0.999992, 0.999969, 1.00004)
+bones/15/rotation = Quaternion(0.193063, -0.0194658, 0.149765, 0.969494)
+bones/15/scale = Vector3(0.999964, 0.999929, 1.0001)
+bones/16/rotation = Quaternion(0.152772, -0.00920965, 0.118862, 0.981044)
+bones/16/scale = Vector3(0.999944, 0.999852, 1.00021)
+bones/17/rotation = Quaternion(0.102369, -0.00389734, 0.0737643, 0.992)
+bones/17/scale = Vector3(0.99996, 0.999749, 1.00031)
+bones/18/rotation = Quaternion(0.0790202, -0.00110917, 0.0201923, 0.996668)
+bones/18/scale = Vector3(0.99999, 0.999601, 1.00043)
+bones/20/rotation = Quaternion(-0.525863, 0.00799979, 0.148892, 0.837398)
+bones/21/rotation = Quaternion(-0.202058, -9.81048e-09, -0.0943296, 0.97482)
+bones/22/rotation = Quaternion(0.112314, -1.60111e-08, -0.0225237, 0.993418)
+bones/23/rotation = Quaternion(-0.714495, 0.0700902, 0.207367, 0.664518)
+bones/25/rotation = Quaternion(-0.711692, -5.35646e-08, 1.0167e-07, 0.702492)
+bones/26/rotation = Quaternion(-0.594226, -0.000927713, -0.113103, 0.796305)
+bones/28/rotation = Quaternion(-0.525863, -0.0079998, -0.148892, 0.837398)
+bones/29/rotation = Quaternion(-0.202058, 9.81048e-09, 0.0943296, 0.97482)
+bones/30/rotation = Quaternion(0.112314, 1.60332e-08, 0.0225237, 0.993418)
+bones/31/rotation = Quaternion(-0.714494, -0.0700902, -0.207367, 0.664518)
+bones/35/rotation = Quaternion(0.997436, -2.20906e-16, -0.0715618, -3.54424e-15)
+bones/39/rotation = Quaternion(0.997436, 2.20906e-16, 0.0715618, -3.54424e-15)
+
+[node name="Object_9" parent="Sketchfab_Scene/Sketchfab_model/f262bdf26cd947e787c2192750f3a099_fbx/Object_2/RootNode/Armature/Object_6/Skeleton3D" index="0"]
+transform = Transform3D(1, -7.45058e-09, -8.88178e-16, 7.45058e-09, 1, 1.42109e-14, -8.88178e-16, 7.10543e-15, 1, 0, -4.65661e-10, 0.00382381)
+
+[node name="AnimationPlayer" parent="Sketchfab_Scene" index="1"]
+speed_scale = 0.207
+movie_quit_on_finish = true
+
+[editable path="Sketchfab_Scene"]

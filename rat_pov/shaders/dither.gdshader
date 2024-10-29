@@ -15,6 +15,9 @@ uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, re
 uniform float specular : hint_range(0.0, 1.0, 0.01);
 uniform float metallic : hint_range(0.0, 1.0, 0.01);
 
+uniform sampler2D texture_normal : hint_roughness_normal, filter_linear_mipmap, repeat_enable;
+uniform float normal_scale : hint_range(-16.0, 16.0);
+
 uniform vec3 uv1_scale;
 uniform vec3 uv1_offset;
 uniform vec3 uv2_scale;
@@ -40,8 +43,12 @@ void fragment() {
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
 	ROUGHNESS = roughness_tex * roughness;
 	
+	NORMAL_MAP = texture(texture_normal, base_uv).rgb;
+	NORMAL_MAP_DEPTH = normal_scale;
+	
 	float square_depth = dot(VERTEX, VERTEX);
-	if(square_depth <= 2.5 * 2.5) {
+	float dist = 3.5;
+	if(square_depth <= dist * dist) {
 		float dither_scaling = 75.0;
 		ALPHA = texture(texture_dither, vec2(SCREEN_UV.x * dither_scaling, SCREEN_UV.y * dither_scaling * (VIEWPORT_SIZE.y / VIEWPORT_SIZE.x))).r;
 	}
