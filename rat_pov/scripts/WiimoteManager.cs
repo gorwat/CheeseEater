@@ -27,6 +27,10 @@ public partial class WiimoteManager : Node
 	
 	public float balance_x_axis;
 	public float balance_y_axis;
+	public bool balance_go_left = false;
+	public bool balance_go_right = false;
+	public bool balance_go_forward = false;
+	public bool balance_go_back = false;
 	
 	// Nunchuk - input
 	private float inputNunchuckX; // should be converted to better values
@@ -73,11 +77,19 @@ public partial class WiimoteManager : Node
 			inputBalanceBottomLeft  = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomLeft;
 			inputBalanceBottomRight = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomRight;
 			
-			// x axis calculations
-			// TODO
+			// reset inputs
+			balance_go_left = false;
+			balance_go_right = false;
+			balance_go_forward = false;
+			balance_go_back = false;
+
+			// x axis calculations	
+			if (inputBalanceBottomLeft + inputBalanceTopLeft > balanceThresh) balance_go_left = true;
+			if (inputBalanceBottomRight + inputBalanceTopRight < balanceThresh) balance_go_right = true;
 			
 			// y_axis_calculations
-			// TODO
+			if (inputBalanceBottomLeft + inputBalanceBottomRight > balanceThresh) balance_go_back = true;
+			if (inputBalanceTopLeft + inputBalanceTopRight < balanceThresh) balance_go_forward = true;
 			
 			GD.Print(inputBalanceTopLeft, inputBalanceTopRight, inputBalanceBottomLeft, inputBalanceBottomRight);
 			}
