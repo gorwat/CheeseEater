@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://hp2x18qw2hh3" path="res://art/audio/mixkit-light-rain-atmosphere-2474.ogg" id="6_8wg4h"]
 [ext_resource type="PackedScene" uid="uid://cmohcowv2ef6d" path="res://scenes/small_objects/cheese.tscn" id="9_7sksj"]
 [ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="9_36pyg"]
-[ext_resource type="PackedScene" path="res://scenes/cage.tscn" id="11_0d2vl"]
+[ext_resource type="PackedScene" uid="uid://bvn8p1xhe2bwk" path="res://scenes/cage.tscn" id="11_0d2vl"]
 [ext_resource type="Script" path="res://scripts/game_info.gd" id="11_dayo2"]
 [ext_resource type="Script" path="res://scripts/clock.gd" id="12_5qip8"]
 [ext_resource type="Script" path="res://scripts/WiimoteManager.cs" id="13_u50lo"]
@@ -44,8 +44,10 @@ script = ExtResource("1_ofn0t")
 environment = SubResource("Environment_7us62")
 
 [node name="CameraRig" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
+unique_name_in_owner = true
 script = ExtResource("3_itbph")
 follow_target = NodePath("../Player")
+metadata/recenter_enable = false
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
@@ -453,7 +455,6 @@ theme_override_font_sizes/font_size = 30
 text = "Restart!"
 
 [node name="Options" type="Control" parent="GameInfo"]
-visible = false
 anchors_preset = 0
 offset_top = -23.0
 offset_right = 40.0
@@ -463,8 +464,8 @@ offset_bottom = 17.0
 layout_mode = 1
 offset_left = -2.0
 offset_top = 2.0
-offset_right = 268.0
-offset_bottom = 292.0
+offset_right = 281.0
+offset_bottom = 381.0
 color = Color(0, 0, 0, 0.521569)
 
 [node name="DescriptionOptions" type="Label" parent="GameInfo/Options"]
@@ -519,6 +520,23 @@ offset_left = 26.0
 offset_top = 247.0
 offset_right = 160.0
 offset_bottom = 275.0
+theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
+theme_override_font_sizes/font_size = 18
+text = "true"
+
+[node name="DescriptionRecenter" type="Label" parent="GameInfo/Options"]
+offset_left = 24.0
+offset_top = 289.0
+offset_right = 232.0
+offset_bottom = 317.0
+theme_override_font_sizes/font_size = 20
+text = "Recenter [Z]"
+
+[node name="Recenter" type="Label" parent="GameInfo/Options"]
+offset_left = 24.0
+offset_top = 321.0
+offset_right = 158.0
+offset_bottom = 349.0
 theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
 theme_override_font_sizes/font_size = 18
 text = "true"

@@ -79,7 +79,7 @@ public partial class WiimoteManager : Node
 			// y_axis_calculations
 			// TODO
 			
-			GD.Print(inputBalanceTopLeft, inputBalanceTopRight, inputBalanceBottomLeft, inputBalanceBottomRight);
+			//GD.Print(inputBalanceTopLeft, inputBalanceTopRight, inputBalanceBottomLeft, inputBalanceBottomRight);
 			}
 			
 			if (wiiDevice.WiimoteState.ExtensionType == ExtensionType.Nunchuk) {    
