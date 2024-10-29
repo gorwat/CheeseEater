@@ -6,7 +6,8 @@ extends Node3D
 @export var rotation_smoothing: float = 0.2  # Adjust for smoother rotation (0 = instant, higher = smoother)
 @export var smoothing_speed: float = 15.0  # higher value will smoothen but introduce delay
 @export var min_camera_distance: float = 1.5
-@export var recenter_speed: float = 5.0  # Recentering aggressiveness
+@export var recenter_speed: float = 3.0  # Recentering aggressiveness
+@export var recenter_enable: bool = false
 
 var max_camera_distance: float  # Maximum camera distance, set based on camera_offset.z
 var target_rotation_angle: float = 0.0
@@ -14,6 +15,9 @@ var current_rotation_angle: float = 0.0
 
 var desired_spring_length: float
 var current_spring_length: float
+
+var rotation_input_time: float = 0.0
+
 
 @onready var spring_arm: SpringArm3D = $SpringArm3D
 @onready var camera_node: Camera3D = $SpringArm3D/Camera3D
@@ -55,20 +59,22 @@ func _ready():
 func _process(delta: float) -> void:
 	if not follow_target:
 		return
+		
+	if rotation_input_time > 0.0:
+		rotation_input_time -= delta
 
 	# Handle camera rotation input
 	var rotation_delta = 0.0
-	var camera_input = false
 	if Input.is_action_pressed("camera_left"):
 		rotation_delta += deg_to_rad(rotation_speed_deg) * delta
-		camera_input = true
+		rotation_input_time = 0.5
 	if Input.is_action_pressed("camera_right"):
 		rotation_delta -= deg_to_rad(rotation_speed_deg) * delta
-		camera_input = true
+		rotation_input_time = 0.5
 
 	target_rotation_angle += rotation_delta
 
-	if not camera_input:
+	if rotation_input_time <= 0.0 and recenter_enable:
 		# Check if player is moving
 		var player_velocity = follow_target.velocity
 		if player_velocity.length_squared() > 0.01:
@@ -78,6 +84,7 @@ func _process(delta: float) -> void:
 			target_rotation_angle = lerp_angle(target_rotation_angle, player_rotation_y, recenter_smoothing)
 
 	current_rotation_angle = lerp_angle(current_rotation_angle, target_rotation_angle, rotation_smoothing)
+		
 	spring_arm.rotation.y = current_rotation_angle
 	global_position = follow_target.global_position
 	probe_node.force_shapecast_update()
