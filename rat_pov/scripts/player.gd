@@ -36,13 +36,13 @@ func _physics_process(delta: float) -> void:
 
 	# Handle movement input
 	var movement_input = Vector2.ZERO
-	if Input.is_action_pressed("move_forward"):
+	if Input.is_action_pressed("move_forward") or %WiimoteManager.balance_go_forward:
 		movement_input.y += 1
-	if Input.is_action_pressed("move_back"):
+	if Input.is_action_pressed("move_back") or %WiimoteManager.balance_go_back:
 		movement_input.y -= 1
-	if Input.is_action_pressed("move_left"):
+	if Input.is_action_pressed("move_left") or %WiimoteManager.balance_go_left:
 		movement_input.x -= 1
-	if Input.is_action_pressed("move_right"):
+	if Input.is_action_pressed("move_right") or %WiimoteManager.balance_go_right:
 		movement_input.x += 1
 
 	movement_input = movement_input.normalized()
