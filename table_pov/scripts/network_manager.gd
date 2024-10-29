@@ -78,6 +78,10 @@ func start_game(session_duration: int):
 	game_started.emit(session_duration)
 	
 @rpc
+func set_rat_anim(anim: String):
+	pass #%Player.ANIMPLAYER.play(anim)
+	
+@rpc
 func force_quit():
 	rat_force_quit.emit()
 	

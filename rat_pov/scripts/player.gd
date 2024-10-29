@@ -11,6 +11,7 @@ extends CharacterBody3D
 var rat_caught = false
 
 signal rat_moved(position: Vector3, rotation: Vector3)
+signal anim_changed(anim: String)
 
 func _ready() -> void:
 	animation_player.movie_quit_on_finish = true
@@ -75,10 +76,12 @@ func _physics_process(delta: float) -> void:
 		if not animation_player.current_animation == "Armature|Walk":
 			animation_player.speed_scale = 3
 			animation_player.play("Armature|Walk")
+			anim_changed.emit("Armature|Walk")
 	else:
 		if not animation_player.current_animation == "Armature|Idle":
 			animation_player.speed_scale = 1.0
 			animation_player.play("Armature|Idle")
+			anim_changed.emit("Armature|Idle")
 
 func _on_network_manager_rat_was_caught() -> void:
 	rat_caught = true
