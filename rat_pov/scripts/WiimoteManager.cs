@@ -22,7 +22,9 @@ public partial class WiimoteManager : Node
 	private float inputBalanceBottomLeft;
 	private float inputBalanceBottomRight;
 	
-	// Balance Board - calculated (TODO)
+	// Balance Board - calculated
+	private float balanceThresh = 15;
+	
 	public float balance_x_axis;
 	public float balance_y_axis;
 	
@@ -61,10 +63,17 @@ public partial class WiimoteManager : Node
 		foreach (Wiimote wiiDevice in deviceCollection) {
 			if (wiiDevice.WiimoteState.ExtensionType == ExtensionType.BalanceBoard) {    
 			inputBalanceWeight      = wiiDevice.WiimoteState.BalanceBoardState.WeightKg;
+			
 			inputBalanceTopLeft     = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.TopLeft;
 			inputBalanceTopRight    = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.TopRight;
 			inputBalanceBottomLeft  = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomLeft;
 			inputBalanceBottomRight = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomRight;
+			
+			// x axis calculations
+			// TODO
+			
+			// y_axis_calculations
+			// TODO
 			
 			GD.Print(inputBalanceTopLeft, inputBalanceTopRight, inputBalanceBottomLeft, inputBalanceBottomRight);
 			}
@@ -75,6 +84,7 @@ public partial class WiimoteManager : Node
 			nunchuk_z           = wiiDevice.WiimoteState.NunchukState.Z;
 			nunchuk_c           = wiiDevice.WiimoteState.NunchukState.C;
 			
+			// x axis calculation
 			if (inputNunchuckX < nunchukMidVal - nunchukThresh) {
 				nunchuk_x_axis = -1;
 			} else if (inputNunchuckX > nunchukMidVal + nunchukThresh) {
@@ -83,10 +93,11 @@ public partial class WiimoteManager : Node
 				nunchuk_x_axis = 0;
 			}
 			
+			// y axis calculation
 			if (inputNunchuckY < nunchukMidVal - nunchukThresh) {
-				nunchuk_y_axis = -1;
-			} else if (inputNunchuckY > nunchukMidVal + nunchukThresh) {
 				nunchuk_y_axis = 1;
+			} else if (inputNunchuckY > nunchukMidVal + nunchukThresh) {
+				nunchuk_y_axis = -1;
 			} else {
 				nunchuk_y_axis = 0;
 			}
