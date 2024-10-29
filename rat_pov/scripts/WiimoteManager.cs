@@ -16,27 +16,42 @@ public partial class WiimoteManager : Node
 	private WiimoteCollection deviceCollection;
 
 	// Balance Board - input
-	private float rwWeight;
-	private float rwTopLeft;
-	private float rwTopRight;
-	private float rwBottomLeft;
-	private float rwBottomRight;
+	private float inputBalanceWeight;
+	private float inputBalanceTopLeft;
+	private float inputBalanceTopRight;
+	private float inputBalanceBottomLeft;
+	private float inputBalanceBottomRight;
 	
-	// Balance Board - calculated (TODO)
-	public float x_axis;
-	public float y_axis;
+	// Balance Board - calculated
+	private float balanceThresh = 15;
 	
-	// Nunchuk
-	public float nunchuk_x; // should be converted to better values
-	public float nunchuk_y; // should be converted to better values
+	public float balance_x_axis;
+	public float balance_y_axis;
+	
+	// Nunchuk - input
+	private float inputNunchuckX; // should be converted to better values
+	private float inputNunchuckY; // should be converted to better values
 	public bool nunchuk_z;
 	public bool nunchuk_c;
 	
+	// Nunchuk - calculated
+	private int nunchukMidVal = 122;
+	private int nunchukThresh = 50;
+	
+	public float nunchuk_x_axis;
+	public float nunchuk_y_axis;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
-	{		
-		deviceCollection = new WiimoteCollection();
-		deviceCollection.FindAllWiimotes();
+	{	
+		
+		try 	{
+			deviceCollection = new WiimoteCollection();
+			deviceCollection.FindAllWiimotes();
+		} catch {
+			GD.Print("NO WIIMOTES FOUND");
+		}
+		
 		
 		foreach (Wiimote wiiDevice in deviceCollection) {
 			wiiDevice.Connect();
@@ -53,22 +68,47 @@ public partial class WiimoteManager : Node
 	{
 		foreach (Wiimote wiiDevice in deviceCollection) {
 			if (wiiDevice.WiimoteState.ExtensionType == ExtensionType.BalanceBoard) {    
-			rwWeight      = wiiDevice.WiimoteState.BalanceBoardState.WeightKg;
-			rwTopLeft     = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.TopLeft;
-			rwTopRight    = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.TopRight;
-			rwBottomLeft  = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomLeft;
-			rwBottomRight = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomRight;
+			inputBalanceWeight      = wiiDevice.WiimoteState.BalanceBoardState.WeightKg;
 			
-			GD.Print(rwTopLeft, rwTopRight, rwBottomLeft, rwBottomRight);
+			inputBalanceTopLeft     = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.TopLeft;
+			inputBalanceTopRight    = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.TopRight;
+			inputBalanceBottomLeft  = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomLeft;
+			inputBalanceBottomRight = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomRight;
+			
+			// x axis calculations
+			// TODO
+			
+			// y_axis_calculations
+			// TODO
+			
+			GD.Print(inputBalanceTopLeft, inputBalanceTopRight, inputBalanceBottomLeft, inputBalanceBottomRight);
 			}
 			
 			if (wiiDevice.WiimoteState.ExtensionType == ExtensionType.Nunchuk) {    
-			nunchuk_x      = wiiDevice.WiimoteState.NunchukState.RawJoystick.X;
-			nunchuk_y      = wiiDevice.WiimoteState.NunchukState.RawJoystick.Y;
-			nunchuk_z      = wiiDevice.WiimoteState.NunchukState.Z;
-			nunchuk_c      = wiiDevice.WiimoteState.NunchukState.C;
+			inputNunchuckX      = wiiDevice.WiimoteState.NunchukState.RawJoystick.X;
+			inputNunchuckY      = wiiDevice.WiimoteState.NunchukState.RawJoystick.Y;
+			nunchuk_z           = wiiDevice.WiimoteState.NunchukState.Z;
+			nunchuk_c           = wiiDevice.WiimoteState.NunchukState.C;
 			
-			GD.Print(nunchuk_x, " ", nunchuk_y, " ", nunchuk_z, " ", nunchuk_c);
+			// x axis calculation
+			if (inputNunchuckX < nunchukMidVal - nunchukThresh) {
+				nunchuk_x_axis = -1;
+			} else if (inputNunchuckX > nunchukMidVal + nunchukThresh) {
+				nunchuk_x_axis = 1;
+			} else {
+				nunchuk_x_axis = 0;
+			}
+			
+			// y axis calculation
+			if (inputNunchuckY < nunchukMidVal - nunchukThresh) {
+				nunchuk_y_axis = 1;
+			} else if (inputNunchuckY > nunchukMidVal + nunchukThresh) {
+				nunchuk_y_axis = -1;
+			} else {
+				nunchuk_y_axis = 0;
+			}
+			
+			GD.Print("Input: ", inputNunchuckX, " ", inputNunchuckY, " Calculated: ", nunchuk_x_axis, " ", nunchuk_y_axis);
 			}
 		}
 	}
