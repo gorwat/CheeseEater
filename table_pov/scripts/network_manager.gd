@@ -116,3 +116,4 @@ func rat_caught():
 func relay_table_controls(direction: Vector3, cage_drop: bool):
 	%CageController.relay_cage_drop = cage_drop;
 	%CageController.relay_direction = direction;
+	
