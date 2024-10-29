@@ -3,6 +3,7 @@ using System;
 using System.Runtime.InteropServices;
 using WiimoteLib;
 
+
 // did not need, since dll was managed and not unmanaged, so I just put it in the project
 // and referenced it in the .csproj-file that was created when I added the dll to the project files
 public static class WiimoteDLL
@@ -25,8 +26,8 @@ public partial class WiimoteManager : Node
 	// Balance Board - calculated
 	private float balanceThresh = 15;
 	
-	public float balance_x_axis;
-	public float balance_y_axis;
+	public float balance_x_axis = 0.0f;
+	public float balance_y_axis = 0.0f;
 	public bool balance_go_left = false;
 	public bool balance_go_right = false;
 	public bool balance_go_forward = false;
@@ -44,6 +45,14 @@ public partial class WiimoteManager : Node
 	
 	public float nunchuk_x_axis = 0.0f;
 	public float nunchuk_y_axis = 0.0f;
+	
+	public static float Absf(float x) {
+		if (x < 0.0f) {
+			return -x;
+		} else {
+			return x;
+		}
+	}
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -77,21 +86,29 @@ public partial class WiimoteManager : Node
 			inputBalanceBottomLeft  = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomLeft;
 			inputBalanceBottomRight = wiiDevice.WiimoteState.BalanceBoardState.SensorValuesKg.BottomRight;
 			
+			
+			
+			
 			// reset inputs
 			balance_go_left = false;
 			balance_go_right = false;
 			balance_go_forward = false;
 			balance_go_back = false;
 
-			// x axis calculations	
-			if (inputBalanceBottomLeft + inputBalanceTopLeft > balanceThresh) balance_go_left = true;
-			if (inputBalanceBottomRight + inputBalanceTopRight < balanceThresh) balance_go_right = true;
+			balance_x_axis = (inputBalanceBottomRight + inputBalanceTopRight) - (inputBalanceBottomLeft + inputBalanceTopLeft);
+			balance_y_axis = (inputBalanceTopLeft + inputBalanceTopRight) - (inputBalanceBottomLeft + inputBalanceBottomRight);
 			
-			// y_axis_calculations
-			if (inputBalanceBottomLeft + inputBalanceBottomRight > balanceThresh) balance_go_back = true;
-			if (inputBalanceTopLeft + inputBalanceTopRight < balanceThresh) balance_go_forward = true;
+			if (Absf(balance_x_axis) < balanceThresh) balance_x_axis = 0.0f;
+			if (Absf(balance_y_axis) < balanceThresh) balance_y_axis = 0.0f;
+
+			if (balance_y_axis < 0.0f) balance_go_back = true;
+			if (balance_y_axis > 0.0f) balance_go_forward = true;
 			
-			GD.Print(inputBalanceTopLeft, inputBalanceTopRight, inputBalanceBottomLeft, inputBalanceBottomRight);
+			if (balance_x_axis < 0.0f) balance_go_left = true;
+			if (balance_x_axis > 0.0f) balance_go_right = true;
+			
+			//GD.Print(inputBalanceTopLeft, inputBalanceTopRight, inputBalanceBottomLeft, inputBalanceBottomRight);
+			//GD.Print(balance_go_left, " ", balance_go_right, " ", balance_go_forward, " ", balance_go_back);
 			}
 			
 			if (wiiDevice.WiimoteState.ExtensionType == ExtensionType.Nunchuk) {    
@@ -122,4 +139,6 @@ public partial class WiimoteManager : Node
 			}
 		}
 	}
+	
+	
 }
