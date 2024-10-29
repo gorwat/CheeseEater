@@ -56,6 +56,14 @@ func	 _process(delta: float) -> void:
 		else:
 			options.find_child("NeedTable").text = "false"
 			enable_start_buttons() 
+	
+	if (Input.is_action_just_pressed("toggle_camera_recenter")):
+		if (options.find_child("Recenter").text == "false"):
+			options.find_child("Recenter").text = "true"
+			%CameraRig.recenter_enable = true
+		else:
+			options.find_child("Recenter").text = "false"
+			%CameraRig.recenter_enable = false
 		
 	if (Input.is_action_just_pressed("toggle_options_visible")):
 		options.visible = not options.visible

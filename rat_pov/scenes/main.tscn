@@ -51,8 +51,10 @@ script = ExtResource("1_ofn0t")
 environment = SubResource("Environment_7us62")
 
 [node name="CameraRig" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
+unique_name_in_owner = true
 script = ExtResource("3_itbph")
 follow_target = NodePath("../Player")
+recenter_enable = true
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraRig"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102446, 0)
@@ -460,7 +462,6 @@ theme_override_font_sizes/font_size = 30
 text = "Restart!"
 
 [node name="Options" type="Control" parent="GameInfo"]
-visible = false
 anchors_preset = 0
 offset_top = -23.0
 offset_right = 40.0
@@ -471,7 +472,7 @@ layout_mode = 1
 offset_left = -2.0
 offset_top = 2.0
 offset_right = 268.0
-offset_bottom = 292.0
+offset_bottom = 356.0
 color = Color(0, 0, 0, 0.521569)
 
 [node name="DescriptionOptions" type="Label" parent="GameInfo/Options"]
@@ -529,6 +530,25 @@ offset_bottom = 275.0
 theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
 theme_override_font_sizes/font_size = 18
 text = "true"
+
+[node name="DescriptionRecenter" type="Label" parent="GameInfo/Options"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 284.0
+offset_right = 229.0
+offset_bottom = 312.0
+theme_override_font_sizes/font_size = 20
+text = "Camera recenter [Z]"
+
+[node name="Recenter" type="Label" parent="GameInfo/Options"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 316.0
+offset_right = 157.0
+offset_bottom = 344.0
+theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
+theme_override_font_sizes/font_size = 18
+text = "false"
 
 [node name="Cage" parent="." instance=ExtResource("11_0d2vl")]
 unique_name_in_owner = true
