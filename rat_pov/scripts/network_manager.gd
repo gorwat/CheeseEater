@@ -50,8 +50,10 @@ func _on_game_info_game_started(session_duration : int) -> void:
 	
 func _on_game_info_force_quit() -> void:
 	force_quit.rpc()
-
-
+	
+func _on_player_anim_changed(anim: String):
+	set_rat_anim.rpc(anim)
+	
 # rpcs called from rat
 @rpc
 func set_rat_position(position : Vector3, rotation : Vector3):
@@ -59,6 +61,10 @@ func set_rat_position(position : Vector3, rotation : Vector3):
 	
 @rpc
 func start_game(session_duration: int):
+	pass
+	
+@rpc
+func set_rat_anim(anim: String):
 	pass
 	
 @rpc
