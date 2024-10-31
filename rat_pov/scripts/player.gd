@@ -7,14 +7,24 @@ extends CharacterBody3D
 
 @onready var step_sound: AudioStreamPlayer = $RatTippyTaps
 @onready var animation_player: AnimationPlayer = $Sketchfab_Scene/AnimationPlayer
+@onready var obstacle_check: RayCast3D = $RayCast3D  # Add a RayCast3D node pointing forward to check for obstacles
 
 var rat_caught = false
 
 signal rat_moved(position: Vector3, rotation: Vector3)
 signal anim_changed(anim: String)
 
+# Variables to track movement and raycast interval
+var previous_position: Vector3 = Vector3.ZERO
+var movement_threshold: float = 0.1
+var raycast_interval: float = 0.3  # Interval for raycast checking in seconds
+var raycast_timer: float = 0.2  # Timer to control raycast checking frequency
+var near_obstacle: bool = false  # Track if an obstacle is nearby
+
 func _ready() -> void:
+	previous_position = position
 	animation_player.movie_quit_on_finish = true
+	obstacle_check.enabled = false  # Start with the raycast disabled
 
 func _process(delta: float) -> void:
 	# Play footstep sounds only when the rat is moving and on the ground
@@ -31,7 +41,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.y = 0  # Reset vertical velocity when on the ground
 
-	if %GameInfo.current_game_state != 1: # 1 is GameState running :))
+	if %GameInfo.current_game_state != 1:  # 1 is GameState running
 		return
 
 	# Handle movement input
@@ -70,15 +80,28 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-	# Emit signal if moving
-	if velocity.length_squared() > 0.0:
+	# Update raycast timer
+	raycast_timer += delta
+	if raycast_timer >= raycast_interval:
+		raycast_timer = 0.0
+		obstacle_check.enabled = true  # Enable the raycast to perform a check
+		if obstacle_check.is_colliding():
+			near_obstacle = true
+		else:
+			near_obstacle = false
+		obstacle_check.enabled = false  # Disable the raycast until the next interval
+
+	# Check movement by velocity length squared and obstacle proximity
+	if velocity.length_squared() > movement_threshold and !near_obstacle:
+		# Character is moving and no obstacle nearby
 		rat_moved.emit(self.position, self.rotation)
-		if not animation_player.current_animation == "Armature|Walk":
+		if animation_player.current_animation != "Armature|Walk":
 			animation_player.speed_scale = 3
 			animation_player.play("Armature|Walk")
 			anim_changed.emit("Armature|Walk")
 	else:
-		if not animation_player.current_animation == "Armature|Idle":
+		# Character is not moving or near an obstacle
+		if animation_player.current_animation != "Armature|Idle":
 			animation_player.speed_scale = 1.0
 			animation_player.play("Armature|Idle")
 			anim_changed.emit("Armature|Idle")
@@ -90,3 +113,4 @@ func _on_game_info_game_started(session_duration: int) -> void:
 	rat_caught = false
 	position = Vector3(0, -0.285, 0)
 	rotation = Vector3(0, 0, 0)
+	previous_position = position  # Reset previous position

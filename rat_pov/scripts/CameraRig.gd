@@ -1,13 +1,13 @@
 extends Node3D
 
-@export var follow_target: CharacterBody3D  # The player character to follow
+@export var follow_target: CharacterBody3D
 @export var rotation_speed_deg: float = 180.0  # Rotation speed in degrees per second
 @export var camera_offset: Vector3 = Vector3(0, 1, 2)  # Camera offset from the player
 @export var rotation_smoothing: float = 0.2  # Adjust for smoother rotation (0 = instant, higher = smoother)
-@export var smoothing_speed: float = 15.0  # higher value smoothens but introduces delay
+@export var smoothing_speed: float = 15.0  # Higher value smoothens but introduces delay
 @export var min_camera_distance: float = 1.5
 @export var recenter_speed: float = 3.0  # Recentering aggressiveness
-@export var recenter_enable: bool = true  # Enable automatic recentering (default)
+@export var recenter_enable: bool = true  # Enable automatic recentering
 
 var max_camera_distance: float  # Maximum camera distance, set based on camera_offset.z
 var target_rotation_angle: float = 0.0
@@ -17,7 +17,7 @@ var desired_spring_length: float
 var current_spring_length: float
 
 var rotation_input_time: float = 0.0
-var backward_movement_time: float = 0.0  # backwards movement timer (s key)
+var backward_movement_time: float = 0.0  # Backwards movement timer (s key)
 
 @onready var spring_arm: SpringArm3D = $SpringArm3D
 @onready var camera_node: Camera3D = $SpringArm3D/Camera3D
@@ -51,10 +51,17 @@ func _ready():
 		if probe_node.shape == null:
 			probe_node.shape = SphereShape3D.new()
 			(probe_node.shape as SphereShape3D).radius = 0.3  # Adjust as needed
-		probe_node.collision_mask = 1  # Adjust to match your collision layers
+		probe_node.collision_mask = 1  # Adjust to match collision layers
 		probe_node.target_position = Vector3(0, 0, -max_camera_distance)
 	else:
 		print("Error: 'Probe' node not found under 'SpringArm3D'.")
+
+	# Connect to signals from GameInfo (if applicable)
+	var game_info = get_node("../GameInfo")
+	if game_info.has_method("recenter_speed_changed"):
+		game_info.recenter_speed_changed.connect(_on_recenter_speed_changed)
+	if game_info.has_method("rotation_speed_changed"):
+		game_info.rotation_speed_changed.connect(_on_rotation_speed_changed)
 
 func _process(delta: float) -> void:
 	if not follow_target:
@@ -74,10 +81,8 @@ func _process(delta: float) -> void:
 
 	target_rotation_angle += rotation_delta
 
-	# Determine if player is moving backward
 	var moving_backward = Input.is_action_pressed("move_back")
 
-	# Update backward movement timer
 	if moving_backward:
 		backward_movement_time += delta
 	else:
@@ -128,3 +133,9 @@ func _on_game_info_game_started(session_duration: int) -> void:
 	target_rotation_angle = 0.0
 	spring_arm.rotation.y = 0.0
 	probe_node.force_shapecast_update()
+
+func _on_recenter_speed_changed(new_speed: float) -> void:
+	recenter_speed = new_speed
+
+func _on_rotation_speed_changed(new_speed: float) -> void:
+	rotation_speed_deg = new_speed

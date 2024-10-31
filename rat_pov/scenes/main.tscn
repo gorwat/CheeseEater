@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://hp2x18qw2hh3" path="res://art/audio/mixkit-light-rain-atmosphere-2474.ogg" id="6_8wg4h"]
 [ext_resource type="PackedScene" uid="uid://cmohcowv2ef6d" path="res://scenes/small_objects/cheese.tscn" id="9_7sksj"]
 [ext_resource type="Script" path="res://scripts/cheese_manager.gd" id="9_36pyg"]
-[ext_resource type="PackedScene" uid="uid://bvn8p1xhe2bwk" path="res://scenes/cage.tscn" id="11_0d2vl"]
+[ext_resource type="PackedScene" uid="uid://6j5hyd78pfso" path="res://scenes/cage.tscn" id="11_0d2vl"]
 [ext_resource type="Script" path="res://scripts/game_info.gd" id="11_dayo2"]
 [ext_resource type="Script" path="res://scripts/clock.gd" id="12_5qip8"]
 [ext_resource type="Script" path="res://scripts/WiimoteManager.cs" id="13_u50lo"]
@@ -132,8 +132,7 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -1.0
-offset_bottom = -99.0
+offset_bottom = -98.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("11_dayo2")
@@ -465,83 +464,151 @@ layout_mode = 1
 offset_left = -2.0
 offset_top = 2.0
 offset_right = 281.0
-offset_bottom = 381.0
+offset_bottom = 724.0
 color = Color(0, 0, 0, 0.521569)
 
 [node name="DescriptionOptions" type="Label" parent="GameInfo/Options"]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 41.0
-offset_right = 219.0
-offset_bottom = 69.0
+offset_left = 20.0
+offset_top = 40.0
+offset_right = 215.0
+offset_bottom = 68.0
 theme_override_font_sizes/font_size = 20
 text = "Toggle options [ESC]"
 
 [node name="DescriptionReset" type="Label" parent="GameInfo/Options"]
 layout_mode = 0
-offset_left = 25.0
-offset_top = 90.0
-offset_right = 192.0
-offset_bottom = 118.0
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 187.0
+offset_bottom = 108.0
 theme_override_font_sizes/font_size = 20
 text = "Reset [R]"
 
 [node name="DescriptionSession" type="Label" parent="GameInfo/Options"]
 layout_mode = 1
-offset_left = 25.0
-offset_top = 140.0
-offset_right = 241.0
-offset_bottom = 168.0
+offset_left = 20.0
+offset_top = 120.0
+offset_right = 236.0
+offset_bottom = 148.0
 theme_override_font_sizes/font_size = 20
 text = "Session duration [+/-] "
 
 [node name="SessionDuration" type="Label" parent="GameInfo/Options"]
 layout_mode = 0
-offset_left = 26.0
-offset_top = 172.0
-offset_right = 160.0
-offset_bottom = 200.0
+offset_left = 20.0
+offset_top = 150.0
+offset_right = 154.0
+offset_bottom = 181.0
 theme_override_colors/font_color = Color(0.69, 0.69, 0.69, 1)
 theme_override_font_sizes/font_size = 20
 text = "60"
 
 [node name="DescriptionConnectionReq" type="Label" parent="GameInfo/Options"]
 layout_mode = 0
-offset_left = 26.0
-offset_top = 215.0
-offset_right = 234.0
-offset_bottom = 243.0
+offset_left = 20.0
+offset_top = 190.0
+offset_right = 228.0
+offset_bottom = 218.0
 theme_override_font_sizes/font_size = 20
 text = "Need table [T]"
 
 [node name="NeedTable" type="Label" parent="GameInfo/Options"]
 layout_mode = 0
-offset_left = 26.0
-offset_top = 247.0
-offset_right = 160.0
-offset_bottom = 275.0
+offset_left = 20.0
+offset_top = 220.0
+offset_right = 154.0
+offset_bottom = 251.0
 theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
 theme_override_font_sizes/font_size = 18
 text = "true"
 
 [node name="DescriptionRecenter" type="Label" parent="GameInfo/Options"]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 289.0
-offset_right = 232.0
-offset_bottom = 317.0
+offset_left = 20.0
+offset_top = 260.0
+offset_right = 228.0
+offset_bottom = 288.0
 theme_override_font_sizes/font_size = 20
 text = "Recenter [Z]"
 
 [node name="Recenter" type="Label" parent="GameInfo/Options"]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 321.0
-offset_right = 158.0
-offset_bottom = 349.0
+offset_left = 20.0
+offset_top = 290.0
+offset_right = 154.0
+offset_bottom = 321.0
 theme_override_colors/font_color = Color(0.73, 0.73, 0.73, 1)
 theme_override_font_sizes/font_size = 18
 text = "true"
+
+[node name="DescriptionPlayerSpeedInput" type="Label" parent="GameInfo/Options"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 330.0
+offset_right = 228.0
+offset_bottom = 358.0
+theme_override_font_sizes/font_size = 20
+text = "Mouse Speed (Input)"
+
+[node name="PlayerSpeedInput" type="LineEdit" parent="GameInfo/Options"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 360.0
+offset_right = 154.0
+offset_bottom = 391.0
+theme_override_font_sizes/font_size = 20
+
+[node name="DescriptionRecenterSpeedInput" type="Label" parent="GameInfo/Options"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 400.0
+offset_right = 228.0
+offset_bottom = 428.0
+theme_override_font_sizes/font_size = 20
+text = "Camera Recentering Speed"
+
+[node name="RecenterSpeedInput" type="LineEdit" parent="GameInfo/Options"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 430.0
+offset_right = 154.0
+offset_bottom = 466.0
+theme_override_font_sizes/font_size = 20
+
+[node name="DescriptionRotationSpeedInput" type="Label" parent="GameInfo/Options"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 470.0
+offset_right = 228.0
+offset_bottom = 498.0
+theme_override_font_sizes/font_size = 20
+text = "Camera Rotation Speed"
+
+[node name="RotationSpeedInput" type="LineEdit" parent="GameInfo/Options"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 500.0
+offset_right = 154.0
+offset_bottom = 536.0
+theme_override_font_sizes/font_size = 20
+
+[node name="DescriptionWiiCheckBox" type="Label" parent="GameInfo/Options"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 540.0
+offset_right = 228.0
+offset_bottom = 568.0
+theme_override_font_sizes/font_size = 20
+text = "Wii Mode"
+
+[node name="WiiCheckBox" type="CheckBox" parent="GameInfo/Options"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 560.0
+offset_right = 49.0
+offset_bottom = 584.0
+scale = Vector2(3, 3)
 
 [node name="Cage" parent="." instance=ExtResource("11_0d2vl")]
 unique_name_in_owner = true
